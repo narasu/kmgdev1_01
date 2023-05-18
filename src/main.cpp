@@ -1,7 +1,9 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include <IEntity.h>
-#include <Entity.h>
+#include "IEntity.h"
+#include "Entity.h"
+#include "Player.h"
+
 int main()
 {
     sf::RenderWindow* window;
@@ -11,8 +13,8 @@ int main()
     window->setSize(windowSize);
     window->setPosition(windowPosition);
     window->setFramerateLimit(60);
-    Entity entity = Entity();
-    //IEntity* player = new AnimationDecorator(new Entity());
+    Player* player = new Player();
+    delete(player);
 
     while (window->isOpen()) {
 

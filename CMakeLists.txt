@@ -4,15 +4,9 @@ project(kmgdev1_01)
 set(CMAKE_CXX_STANDARD 17)
 
 
-add_executable(kmgdev1_01 src/main.cpp)
+add_executable(kmgdev1_01 src/main.cpp src/Entity.cpp src/Player.cpp)
 
 include_directories(C:/SFML/include)
-target_include_directories(kmgdev1_01
-        PRIVATE
-        src/include/
-        src/include/interfaces/
-        src/include/entity/
-        src/include/utility)
 
 
 

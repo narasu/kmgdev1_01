@@ -1,4 +1,4 @@
-#include <IEntity.h>
+#include "IEntity.h"
 #pragma once
 
 class EntityDecorator : public IEntity {
