@@ -3,9 +3,18 @@ project(kmgdev1_01)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(kmgdev1_01 src/main.cpp src/Player.cpp src/Player.h src/Enemy.cpp src/Enemy.h src/abstract/GameEntity.h src/abstract/GameEntity.cpp)
+
+add_executable(kmgdev1_01 src/main.cpp)
 
 include_directories(C:/SFML/include)
+target_include_directories(kmgdev1_01
+        PRIVATE
+        src/include/
+        src/include/interfaces/
+        src/include/entity/
+        src/include/utility)
+
+
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake_modules")
 find_package(SFML REQUIRED system window graphics)
