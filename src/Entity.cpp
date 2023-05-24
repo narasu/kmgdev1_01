@@ -1,6 +1,5 @@
-#include <iostream>
 #include "Entity.h"
-#pragma once
+
 Entity::Entity() {
     texture = new sf::Texture();
     sprite = new sf::Sprite();
@@ -9,13 +8,19 @@ Entity::Entity() {
 Entity::~Entity() {
     delete(texture);
     delete(sprite);
-    std::cout << "Entity destructor" << std::endl;
 }
 
-void Entity::update() {
+void Entity::update(float _delta) {
 
 }
 
 sf::Sprite Entity::getSprite() {
     return *sprite;
+}
+
+void Entity::initializeTexture() {
+    if (!texture->loadFromFile(getTexturePath())) {
+        return;
+    }
+    sprite->setTexture(*texture);
 }

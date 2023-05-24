@@ -1,8 +1,7 @@
-#include <iostream>
 #include <SFML/Graphics.hpp>
-#include "IEntity.h"
-#include "Entity.h"
+#include <list>
 #include "Player.h"
+#include "Enemy.h"
 
 int main()
 {
@@ -13,8 +12,16 @@ int main()
     window->setSize(windowSize);
     window->setPosition(windowPosition);
     window->setFramerateLimit(60);
+    sf::Clock deltaClock = sf::Clock();
+
+    std::list<Entity*> entityList;
     Player* player = new Player();
-    delete(player);
+    entityList.push_back(player);
+    Enemy* enemy = new Enemy();
+    entityList.push_back(enemy);
+    for (Entity* entity : entityList) {
+        entity->initializeTexture();
+    }
 
     while (window->isOpen()) {
 
@@ -25,12 +32,19 @@ int main()
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) window->close();
 
         }
-        //player->update();
 
         window->clear(sf::Color::Black);
-        //window->draw(player->getSprite());
+        sf::Time deltaTime = deltaClock.restart();
+        for (Entity* entity : entityList) {
+            entity->update(deltaTime.asSeconds());
+            window->draw(entity->getSprite());
+        }
+
         window->display();
     }
-    //delete(player);
+
+    for (Entity* entity : entityList) {
+        delete entity;
+    }
     return 0;
 }
