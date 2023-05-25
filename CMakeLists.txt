@@ -4,7 +4,7 @@ project(kmgdev1_01)
 set(CMAKE_CXX_STANDARD 17)
 
 
-add_executable(kmgdev1_01 src/main.cpp src/Entity.h src/Entity.cpp src/Player.h src/Player.cpp src/Enemy.cpp src/Enemy.h src/Spawner.cpp src/Spawner.h src/Animator.cpp src/Animator.h)
+add_executable(kmgdev1_01 src/main.cpp src/Entity.h src/Entity.cpp src/Player.h src/Player.cpp src/Enemy.cpp src/Enemy.h src/Spawner.cpp src/Spawner.h src/Animator.cpp src/Animator.h src/TextureManager.cpp src/TextureManager.h)
 
 include_directories(C:/SFML/include)
 

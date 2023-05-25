@@ -3,13 +3,9 @@
 
 class Enemy : public Entity {
 public:
-    Enemy();
-    ~Enemy() override;
+    explicit Enemy(sf::Texture* _texture);
     void update(float _delta) override;
-    void initializeTexture() override;
 protected:
-    std::string getTexturePath() override;
-    std::string texturePath = "assets/sprites/enemy_crustachnid_sheet.png";
 private:
-    Animator* animator;
+    Animator animator;
 };

@@ -2,6 +2,7 @@
 #include <list>
 #include "Player.h"
 #include "Enemy.h"
+#include "TextureManager.h"
 
 int main()
 {
@@ -14,14 +15,14 @@ int main()
     window->setFramerateLimit(60);
     sf::Clock deltaClock = sf::Clock();
 
+    TextureManager* textureManager = new TextureManager();
+
     std::list<Entity*> entityList;
-    Player* player = new Player();
+    Player* player = new Player(textureManager->getTexture("player"));
     entityList.push_back(player);
-    Enemy* enemy = new Enemy();
+    Enemy* enemy = new Enemy(textureManager->getTexture("enemy01"));
     entityList.push_back(enemy);
-    for (Entity* entity : entityList) {
-        entity->initializeTexture();
-    }
+
 
     while (window->isOpen()) {
 
@@ -45,6 +46,9 @@ int main()
 
     for (Entity* entity : entityList) {
         delete entity;
+        entity = nullptr;
     }
+    delete textureManager;
+    textureManager = nullptr;
     return 0;
 }

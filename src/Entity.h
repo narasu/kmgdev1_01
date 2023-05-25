@@ -3,13 +3,13 @@
 
 class Entity  {
 public:
-    Entity();
+    //Entity();
+    explicit Entity(sf::Texture* _texture);
+    Entity(const Entity& _entity); //copy constructor
+    Entity& operator=(const Entity& _entity); //assignment operator
     virtual ~Entity();
-    virtual void update(float _delta);
+    virtual void update(float _delta) = 0;
     virtual sf::Sprite getSprite();
-    virtual void initializeTexture();
 protected:
-    virtual std::string getTexturePath() = 0;
-    sf::Texture* texture;
     sf::Sprite* sprite;
 };
