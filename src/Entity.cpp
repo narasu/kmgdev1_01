@@ -1,9 +1,5 @@
 #include "Entity.h"
 
-//Entity::Entity() {
-//
-//}
-
 Entity::Entity(sf::Texture* _texture)  {
     sprite = new sf::Sprite();
     sprite->setTexture(*_texture);
@@ -25,11 +21,11 @@ Entity &Entity::operator=(const Entity &_entity) {
 }
 
 Entity::~Entity() {
-    delete(sprite);
+    delete sprite;
     sprite = nullptr;
 }
 
-sf::Sprite Entity::getSprite() {
+sf::Sprite& Entity::getSprite() {
     return *sprite;
 }
 

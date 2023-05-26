@@ -1,7 +1,3 @@
-//
-// Created by Yamada on 25-5-2023.
-//
-
 #include "TextureManager.h"
 
 TextureManager::TextureManager() {
@@ -15,42 +11,58 @@ TextureManager::TextureManager() {
         { "enemy03", newTexture("assets/sprites/enemy_macrobe_sheet.png") }
     };
 }
-/*
-
-TextureManager::TextureManager(const TextureManager &_entity) {
-
-}
-
-TextureManager &TextureManager::operator=(const TextureManager &_entity) {
-
-}
-*/
-TextureManager::~TextureManager() {
-    for (auto i : textureMap) {
-        delete i.second;
-        i.second=nullptr;
-    }
-}
-
-
-sf::Texture *TextureManager::newTexture(const std::string& _path) {
-    sf::Texture* texture = new sf::Texture();
-    if (texture->loadFromFile(_path)) {
-        return texture;
-    }
-    //if loading the file was unsuccessful, delete the pointer we just made
-    delete(texture);
-    texture = nullptr;
-    return texture;
-}
 
 sf::Texture *TextureManager::getTexture(const std::string& _name) {
+
 
     if (auto search = textureMap.find(_name); search == textureMap.end()) {
         return nullptr;
     }
-    if (!textureMap[_name]) {
-        return nullptr;
-    }
+
     return textureMap[_name];
+}
+
+sf::Texture *TextureManager::newTexture(const std::string& _path) {
+    sf::Texture *texture = new sf::Texture();
+    if (texture->loadFromFile(_path)) {
+        return texture;
+    }
+    //if loading the file was unsuccessful, delete the pointer we just made
+    delete texture;
+    texture = nullptr;
+    return nullptr;
+}
+
+TextureManager::TextureManager(const TextureManager &_textureManager) {
+    if (this == &_textureManager) {
+        return;
+    }
+    textureMap = copyTextureMap(_textureManager.textureMap);
+}
+
+TextureManager &TextureManager::operator=(const TextureManager &_textureManager) {
+    if (this == &_textureManager) {
+        return *this;
+    }
+    textureMap = copyTextureMap(_textureManager.textureMap);
+    return *this;
+}
+
+TextureManager::~TextureManager() {
+    for (auto const& i : textureMap) {
+        delete i.second;
+        textureMap[i.first] = nullptr;
+    }
+}
+
+std::map<std::string, sf::Texture *> TextureManager::copyTextureMap(std::map<std::string, sf::Texture*> _map) {
+    std::map<std::string, sf::Texture *> m;
+    for (auto const& pair : _map) {
+        m.insert(
+                std::map<std::string, sf::Texture *>::value_type(
+                        pair.first, new sf::Texture(*_map.at(pair.first))
+                        )
+        );
+    }
+    return m;
 }

@@ -3,7 +3,8 @@
 
 
 Enemy::Enemy(sf::Texture *_texture) : Entity(_texture) {
-    animator = Animator(*sprite, int(_texture->getSize().x) / 2, int(_texture->getSize().y), 2, 2);
+    int cellCount = 2;
+    animator = Animator(*sprite, int(_texture->getSize().x) / cellCount, int(_texture->getSize().y), cellCount, 2);
 }
 
 void Enemy::update(float _delta) {

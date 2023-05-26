@@ -3,11 +3,14 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "TextureManager.h"
+#include "Spawner.h"
 
 int main()
 {
     sf::RenderWindow* window;
-    window = new sf::RenderWindow(sf::VideoMode(320, 180), "Alien Exile");
+
+    sf::Vector2<int> viewportSize(320,180);
+    window = new sf::RenderWindow(sf::VideoMode(viewportSize.x, viewportSize.y), "Alien Exile");
     sf::Vector2<int> windowPosition(0,0);
     sf::Vector2<unsigned int> windowSize(1280,720);
     window->setSize(windowSize);
@@ -16,13 +19,11 @@ int main()
     sf::Clock deltaClock = sf::Clock();
 
     TextureManager* textureManager = new TextureManager();
+    Spawner spawner = Spawner(viewportSize.x, 2.0f);
 
     std::list<Entity*> entityList;
     Player* player = new Player(textureManager->getTexture("player"));
     entityList.push_back(player);
-    Enemy* enemy = new Enemy(textureManager->getTexture("enemy01"));
-    entityList.push_back(enemy);
-
 
     while (window->isOpen()) {
 
@@ -34,12 +35,22 @@ int main()
 
         }
 
-        window->clear(sf::Color::Black);
+        //game logic calls
         sf::Time deltaTime = deltaClock.restart();
+        if (spawner.updateTimer(deltaTime.asSeconds())) {
+            entityList.push_back(spawner.spawnEnemy(textureManager->getTexture("enemy01")));
+        }
         for (Entity* entity : entityList) {
             entity->update(deltaTime.asSeconds());
+        }
+        //end game logic calls
+
+        //draw calls
+        window->clear(sf::Color::Black);
+        for (Entity* entity : entityList) {
             window->draw(entity->getSprite());
         }
+        //end draw calls
 
         window->display();
     }
