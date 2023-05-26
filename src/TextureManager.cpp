@@ -1,7 +1,8 @@
 #include "TextureManager.h"
 
 TextureManager::TextureManager() {
-    textureMap = std::map<std::string, sf::Texture*> {
+
+    textureMap = new std::map<std::string, sf::Texture*> {
         { "splash_screen", newTexture("assets/sprites/splash_screen.png") },
         { "title", newTexture("assets/sprites/title.png") },
         { "player", newTexture("assets/sprites/player.png") },
@@ -13,13 +14,10 @@ TextureManager::TextureManager() {
 }
 
 sf::Texture *TextureManager::getTexture(const std::string& _name) {
-
-
-    if (auto search = textureMap.find(_name); search == textureMap.end()) {
+    if (auto search = textureMap->find(_name); search == textureMap->end()) {
         return nullptr;
     }
-
-    return textureMap[_name];
+    return textureMap->at(_name);
 }
 
 sf::Texture *TextureManager::newTexture(const std::string& _path) {
@@ -37,30 +35,30 @@ TextureManager::TextureManager(const TextureManager &_textureManager) {
     if (this == &_textureManager) {
         return;
     }
-    textureMap = copyTextureMap(_textureManager.textureMap);
+    textureMap = new std::map<std::string, sf::Texture *>(copyTextureMap(*_textureManager.textureMap));
 }
 
 TextureManager &TextureManager::operator=(const TextureManager &_textureManager) {
     if (this == &_textureManager) {
         return *this;
     }
-    textureMap = copyTextureMap(_textureManager.textureMap);
+    textureMap = new std::map<std::string, sf::Texture *>(copyTextureMap(*_textureManager.textureMap));
     return *this;
 }
 
 TextureManager::~TextureManager() {
-    for (auto const& i : textureMap) {
-        delete i.second;
-        textureMap[i.first] = nullptr;
+    for (std::map<std::string, sf::Texture *>::const_iterator it = textureMap->begin(); it != textureMap->end(); ++it) {
+        delete (*it).second;
     }
+    textureMap->clear();
 }
 
-std::map<std::string, sf::Texture *> TextureManager::copyTextureMap(std::map<std::string, sf::Texture*> _map) {
+std::map<std::string, sf::Texture *> TextureManager::copyTextureMap(std::map<std::string, sf::Texture *> &_map) {
     std::map<std::string, sf::Texture *> m;
-    for (auto const& pair : _map) {
+    for (std::map<std::string, sf::Texture *>::const_iterator it = _map.begin(); it != _map.end(); ++it) {
         m.insert(
                 std::map<std::string, sf::Texture *>::value_type(
-                        pair.first, new sf::Texture(*_map.at(pair.first))
+                        it->first, new sf::Texture(*_map.at(it->first))
                         )
         );
     }

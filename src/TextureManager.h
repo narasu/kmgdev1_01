@@ -10,6 +10,6 @@ public:
     sf::Texture *newTexture(const std::string& _path);
     sf::Texture *getTexture(const std::string& _name);
 private:
-    std::map<std::string, sf::Texture*> textureMap;
-    std::map<std::string, sf::Texture*> copyTextureMap(std::map<std::string, sf::Texture*> _map);
+    std::map<std::string, sf::Texture*> *textureMap;
+    std::map<std::string, sf::Texture*> copyTextureMap(std::map<std::string, sf::Texture *> &_map);
 };

@@ -1,8 +1,10 @@
+#include <iostream>
 #include "Entity.h"
 
 Entity::Entity(sf::Texture* _texture)  {
     sprite = new sf::Sprite();
     sprite->setTexture(*_texture);
+    std::cout << "entity ctor" << std::endl;
 }
 
 Entity::Entity(const Entity &_entity) {
@@ -21,6 +23,7 @@ Entity &Entity::operator=(const Entity &_entity) {
 }
 
 Entity::~Entity() {
+    std::cout << "entity dtor" << std::endl;
     delete sprite;
     sprite = nullptr;
 }
