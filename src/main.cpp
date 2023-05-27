@@ -1,20 +1,29 @@
 #include <SFML/Graphics.hpp>
 #include <list>
 #include <cstdlib>
+#include <iostream>
 #include "Player.h"
 #include "TextureManager.h"
 #include "EntityManager.h"
 #include "Spawner.h"
-#include "math/Vector2.h"
+#include "hiro/Vector2.h"
+#include "hiro/CollisionShape.h"
 
 int main()
 {
+    Hiro::CollisionShape c = Hiro::CollisionShape(5.0f, 4.0f, 2.0f);
+    Hiro::CollisionShape d = Hiro::CollisionShape(9.0f, 4.0f, 2.0f);
+
+    if (c.isColliding(d)) {
+        std::cout << "collision happened" << std::endl;
+    }
+
     //game initialization
     sf::RenderWindow* window;
-    Math::Vector2<int> viewportSize(320,180);
+    Hiro::Vector2<int> viewportSize(320, 180);
     window = new sf::RenderWindow(sf::VideoMode(viewportSize.x, viewportSize.y), "Alien Exile");
-    Math::Vector2<int> windowPosition(0,0);
-    Math::Vector2<unsigned int> windowSize(1280,720);
+    Hiro::Vector2<int> windowPosition(0, 0);
+    Hiro::Vector2<unsigned int> windowSize(1280, 720);
     window->setSize(windowSize.toSFML());
     window->setPosition(windowPosition.toSFML());
     window->setFramerateLimit(60);
