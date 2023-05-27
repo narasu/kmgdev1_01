@@ -19,7 +19,7 @@ bool Spawner::updateTimer(float _delta) {
 
 Enemy *Spawner::spawnEnemy(sf::Texture *_texture) {
     Enemy* enemy = new Enemy(_texture);
-    int random = (rand() % xRange);
+    float random = float(rand() % xRange);
     enemy->getSprite().setPosition(random, .0f);
     return enemy;
 }

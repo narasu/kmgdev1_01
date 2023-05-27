@@ -5,17 +5,18 @@
 #include "TextureManager.h"
 #include "EntityManager.h"
 #include "Spawner.h"
+#include "math/Vector2.h"
 
 int main()
 {
     //game initialization
     sf::RenderWindow* window;
-    sf::Vector2<int> viewportSize(320,180);
+    Math::Vector2<int> viewportSize(320,180);
     window = new sf::RenderWindow(sf::VideoMode(viewportSize.x, viewportSize.y), "Alien Exile");
-    sf::Vector2<int> windowPosition(0,0);
-    sf::Vector2<unsigned int> windowSize(1280,720);
-    window->setSize(windowSize);
-    window->setPosition(windowPosition);
+    Math::Vector2<int> windowPosition(0,0);
+    Math::Vector2<unsigned int> windowSize(1280,720);
+    window->setSize(windowSize.toSFML());
+    window->setPosition(windowPosition.toSFML());
     window->setFramerateLimit(60);
     sf::Clock deltaClock = sf::Clock();
     //std::srand(26);
@@ -47,7 +48,7 @@ int main()
 
         //begin draw calls
         window->clear(sf::Color::Black);
-        std::list<Entity*> entities = entityManager->getEntities();
+        std::list<Entity*> entities = entityManager->getEntityList();
         for (std::list<Entity*>::const_iterator it = entities.begin(); it != entities.end(); ++it) {
             window->draw((*it)->getSprite());
         }

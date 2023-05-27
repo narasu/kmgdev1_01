@@ -11,7 +11,7 @@ public:
     EntityManager(const EntityManager&  _entityManager); //copy constructor
     EntityManager& operator=(const EntityManager& _entityManager); //assignment operator
     void updateAll(float _delta, float _boundsY);
-    std::list<Entity*> getEntities();
+    std::list<Entity*> getEntityList();
     void addEntity(Entity* _entity);
 private:
     std::list<Entity*> *entityList;

@@ -23,7 +23,7 @@ void EntityManager::addEntity(Entity *_entity) {
 }
 
 
-std::list<Entity *> EntityManager::getEntities() {
+std::list<Entity *> EntityManager::getEntityList() {
     return *entityList;
 }
 
