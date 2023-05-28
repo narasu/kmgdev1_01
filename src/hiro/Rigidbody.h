@@ -10,6 +10,7 @@ namespace Hiro {
         void addForce(Vector2<float> _force);
         void addForce(float _forceX, float _forceY);
         Vector2<float> getVelocity();
+        void setVelocity(Vector2<float> _velocity);
         void setVelocity(float _xVel, float _yVel);
         void applyFriction();
     private:

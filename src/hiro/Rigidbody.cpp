@@ -18,7 +18,6 @@ namespace Hiro {
         /*if (velocity.sqrMagnitude() > powf(maxVelocity, 2)) {
              velocity.clampMagnitude(maxVelocity);
         }*/
-        //std::cout << -_force.normalized() << std::endl;
 
     }
     void Rigidbody::addForce(float _forceX, float _forceY) {
@@ -41,13 +40,16 @@ namespace Hiro {
     }
 
     Vector2<float> Rigidbody::getVelocity() {
-        //std::cout << velocity << std::endl;
         return velocity;
+    }
+    void Rigidbody::setVelocity(Vector2<float> _velocity) {
+        velocity = _velocity;
     }
 
     void Rigidbody::setVelocity(float _xVel, float _yVel) {
         velocity.x = _xVel;
         velocity.y = _yVel;
     }
+
 
 }

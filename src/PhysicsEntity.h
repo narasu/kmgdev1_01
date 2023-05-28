@@ -8,6 +8,7 @@ public:
     PhysicsEntity(sf::Texture *_texture, float _mass, float _friction);
     ~PhysicsEntity() override;
     void update(float _delta) override;
+    Hiro::Vector2<float> getPosition();
 protected:
     Hiro::Rigidbody* rigidbody;
     Hiro::Vector2<float> position = Hiro::V2_ZERO<float>;

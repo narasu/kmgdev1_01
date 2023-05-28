@@ -21,7 +21,9 @@ void Enemy::update(float _delta) {
     Hiro::Vector2<float> movement = Hiro::Vector2<float>(0.0f, 15.0f);
 
     //horizontal movement is handled by forces based on a cosine shape.
-    float d = std::cos(position.y * 0.4f) * 7.5f;
+    float waveLength = position.y * 0.4f;
+    float amplitude = 7.5f;
+    float d = std::cos(waveLength) * amplitude;
     rigidbody->addForce(d, .0f);
     rigidbody->applyFriction();
     movement += rigidbody->getVelocity();

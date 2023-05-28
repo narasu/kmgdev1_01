@@ -18,12 +18,16 @@ PhysicsEntity::~PhysicsEntity() {
 void PhysicsEntity::update(float _delta) {
     //reset velocity to 0 if its magnitude is below 0.01
     if (rigidbody->getVelocity().sqrMagnitude() < 0.0001f) {
-        rigidbody->setVelocity(.0f, .0f);
+        rigidbody->setVelocity(Hiro::V2_ZERO<float>);
     }
 
     // render sprite at nearest round values to prevent sub-pixel displacement
     // does this make everything super jittery? yes
-    // it also sells the arcade aesthetic beautifully, so it's here to stay
+    // but it really sells the arcade aesthetic, so it's here to stay
     sprite->setPosition(roundf(position.x), roundf(position.y));
+}
+
+Hiro::Vector2<float> PhysicsEntity::getPosition() {
+    return position;
 }
 

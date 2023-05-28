@@ -8,13 +8,14 @@
 #include "EntityManager.h"
 #include "Spawner.h"
 
+const int VIEWPORT_WIDTH = 320;
+const int VIEWPORT_HEIGHT = 180;
 
 int main()
 {
     //game initialization
     sf::RenderWindow* window;
-    Hiro::Vector2<int> viewportSize(320, 180);
-    window = new sf::RenderWindow(sf::VideoMode(viewportSize.x, viewportSize.y), "Alien Exile");
+    window = new sf::RenderWindow(sf::VideoMode(VIEWPORT_WIDTH, VIEWPORT_HEIGHT), "Alien Exile");
     Hiro::Vector2<int> windowPosition(0, 0);
     Hiro::Vector2<unsigned int> windowSize(1280, 720);
     window->setSize(windowSize.toSFML());
@@ -24,10 +25,11 @@ int main()
     //std::srand(26);
     TextureManager* textureManager = new TextureManager();
     EntityManager* entityManager = new EntityManager();
-    Spawner spawner = Spawner(viewportSize.x, 2.0f);
+    Spawner spawner = Spawner(VIEWPORT_WIDTH, 2.0f);
 
     //spawn player
-    entityManager->addEntity(new Player(textureManager->getTexture("player")));
+    Player* player = new Player(textureManager->getTexture("player"));
+    entityManager->addEntity(player);
 
     while (window->isOpen()) {
         //inputs to close window
@@ -42,10 +44,12 @@ int main()
         if (spawner.updateTimer(deltaTime.asSeconds())) {
             int random123 = rand() % 3 + 1;
             entityManager->addEntity(
-                    spawner.spawnEnemy(textureManager->getTexture("enemy0" + std::to_string(random123)))
+                    spawner.spawnEnemy(
+                            textureManager->getTexture("enemy0" + std::to_string(random123)),
+                            player->getPosition().x)
                     );
         }
-        entityManager->updateAll(deltaTime.asSeconds(), float(viewportSize.y));
+        entityManager->updateAll(deltaTime.asSeconds(), float(VIEWPORT_HEIGHT));
         //end game logic calls
 
         //begin draw calls

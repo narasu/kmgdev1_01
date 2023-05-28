@@ -18,9 +18,7 @@ void Player::update(float _delta) {
     rigidbody->addForce(Hiro::Vector2<float>(float(direction) * moveSpeed, .0f));
     rigidbody->applyFriction();
     position += rigidbody->getVelocity().toSFML() * _delta;
-    //sprite->move(rigidbody->getVelocity().toSFML() * _delta);
     PhysicsEntity::update(_delta);
-    std::cout << "velocity:" << rigidbody->getVelocity() << ". position: " << position << std::endl;
 }
 
 Player::~Player() {
