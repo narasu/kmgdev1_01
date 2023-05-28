@@ -1,16 +1,12 @@
-#include "Entity.h"
-#include "hiro/Rigidbody.h"
-#include "hiro/CollisionShape.h"
+#include "PhysicsEntity.h"
 
 #pragma once
 
-class Player : public Entity {
+class Player : public PhysicsEntity {
 public:
     explicit Player(sf::Texture *_texture);
     ~Player() override;
     void update(float _delta) override;
 private:
     float moveSpeed = 150.f;
-    Hiro::Rigidbody* rigidbody;
-    //Hiro::CollisionShape* collisionShape;
 };

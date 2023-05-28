@@ -1,5 +1,7 @@
 #include <iostream>
 #include "Entity.h"
+#include "hiro/Vector2.h"
+#include <cmath>
 
 Entity::Entity(sf::Texture* _texture)  {
     sprite = new sf::Sprite();
@@ -29,13 +31,3 @@ Entity::~Entity() {
 sf::Sprite& Entity::getSprite() {
     return *sprite;
 }
-
-/*
-void Entity::initializeTexture() {
-    if (!texture->loadFromFile(getTexturePath())) {
-        return;
-    }
-    sprite->setTexture(*texture);
-}
-*/
-

@@ -19,6 +19,11 @@ namespace Hiro {
             static_assert(std::is_arithmetic_v<T>);
         }
 
+        Vector2<T>(const sf::Vector2<T> &_vector2) {
+            x = _vector2.x;
+            y = _vector2.y;
+        }
+
         template <typename U>
         explicit Vector2<T>(Vector2<U> &_vector2) {
             if (std::is_same_v<T, U>) {
@@ -30,6 +35,7 @@ namespace Hiro {
             y = static_cast<T>(_vector2.y);
         }
 
+
         template <typename U>
         Vector2<T>& operator=(const Vector2<U>& _rhVector2) {
             if (std::is_same_v<T, U>) {
@@ -39,6 +45,12 @@ namespace Hiro {
             }
             x = static_cast<T>(_rhVector2.x);
             y = static_cast<T>(_rhVector2.y);
+            return *this;
+        }
+
+        Vector2<T>& operator=(const sf::Vector2<T>& _rhVector2) {
+            x = _rhVector2.x;
+            y = _rhVector2.y;
             return *this;
         }
 

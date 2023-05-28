@@ -1,9 +1,8 @@
 #include <iostream>
 #include "Player.h"
 
-Player::Player(sf::Texture *_texture) : Entity (_texture){
+Player::Player(sf::Texture *_texture) : PhysicsEntity(_texture, 5.0f, 0.9f) {
     sprite->setPosition(155.f, 145.f);
-    rigidbody = new Hiro::Rigidbody(5.0f, 0.9f);
 }
 
 void Player::update(float _delta) {
@@ -22,6 +21,7 @@ void Player::update(float _delta) {
     }
     rigidbody->applyFriction();
     sprite->move(rigidbody->getVelocity().toSFML() * _delta);
+    PhysicsEntity::update(_delta);
 }
 
 Player::~Player() {

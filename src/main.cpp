@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <iostream>
 #include "Player.h"
+#include "Enemy.h"
 #include "TextureManager.h"
 #include "EntityManager.h"
 #include "Spawner.h"

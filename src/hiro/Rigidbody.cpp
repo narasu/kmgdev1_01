@@ -9,7 +9,6 @@ namespace Hiro {
 
     Rigidbody::Rigidbody(float _mass, float _friction) : mass(_mass), friction(_friction){}
 
-    // addForce(10, 10)
     void Rigidbody::addForce(Vector2<float> _force) {
         Vector2<float> acceleration = Vector2<float>(_force.x / mass, _force.y / mass);
         velocity += acceleration;
@@ -20,6 +19,12 @@ namespace Hiro {
 
     void Rigidbody::applyFriction() {
         velocity *= friction;
+        if (fabs(velocity.x) <= 0.001) {
+            velocity.x = 0;
+        }
+        if (fabs(velocity.y) <= 0.001) {
+            velocity.y = 0;
+        }
     }
 
     Vector2<float> Rigidbody::getVelocity() {
