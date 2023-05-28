@@ -10,6 +10,7 @@ namespace Hiro {
     struct Vector2 {
     public:
         T x, y;
+
         Vector2() {
             static_assert(std::is_arithmetic_v<T>);
         }
@@ -116,4 +117,22 @@ namespace Hiro {
             return sf::Vector2<T>(x, y);
         }
     };
+
+    template <typename T>
+    static const Vector2<T> V2_ZERO = Vector2(static_cast<T>(0), static_cast<T>(0));
+
+    template <typename T>
+    static const Vector2<T> V2_ONE = Vector2(static_cast<T>(1), static_cast<T>(1));
+
+    template <typename T>
+    static const Vector2<T> V2_DOWN = Vector2(static_cast<T>(0), static_cast<T>(1));
+
+    template <typename T>
+    static const Vector2<T> V2_UP = Vector2(static_cast<T>(0), static_cast<T>(-1));
+
+    template <typename T>
+    static const Vector2<T> V2_RIGHT = Vector2(static_cast<T>(1), static_cast<T>(0));
+
+    template <typename T>
+    static const Vector2<T> V2_LEFT = Vector2(static_cast<T>(-1), static_cast<T>(0));
 }
