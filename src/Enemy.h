@@ -4,7 +4,8 @@
 
 class Enemy : public PhysicsEntity {
 public:
-    explicit Enemy(sf::Texture* _texture);
+    Enemy(sf::Texture* _texture, Hiro::Vector2<float> _startPosition);
+    Enemy(sf::Texture* _texture, float _startX, float _startY);
     void update(float _delta) override;
 private:
     Animator animator;

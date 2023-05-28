@@ -10,5 +10,6 @@ public:
     void update(float _delta) override;
 protected:
     Hiro::Rigidbody* rigidbody;
+    Hiro::Vector2<float> position = Hiro::V2_ZERO<float>;
     //Hiro::CollisionShape* collisionShape;
 };

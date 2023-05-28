@@ -48,12 +48,32 @@ namespace Hiro {
             return *this;
         }
 
+        Vector2<T>& operator=(const Vector2<T>& _rhVector2) {
+            x = _rhVector2.x;
+            y = _rhVector2.y;
+            return *this;
+        }
+
+        Vector2<T> operator-() {
+            Vector2<T> v;
+            v.x = -x;
+            v.y = -y;
+            return v;
+        }
+
         Vector2<T>& operator=(const sf::Vector2<T>& _rhVector2) {
             x = _rhVector2.x;
             y = _rhVector2.y;
             return *this;
         }
 
+        bool operator==(sf::Vector2<T> _rhVector2) {
+            return x == _rhVector2.x && y == _rhVector2.y;
+        }
+
+        bool operator!=(sf::Vector2<T> _rhVector2) {
+            return x != _rhVector2.x || y != _rhVector2.y;
+        }
 
         Vector2 operator+(const Vector2& _rhVector2) {
             return Vector2<T>(x+_rhVector2.x, y+_rhVector2.y);
@@ -108,12 +128,13 @@ namespace Hiro {
             return x*x + y*y;
         }
 
-        double magnitude() {
-            return sqrt(double(sqrMagnitude()));
+        T magnitude() {
+            return sqrt(sqrMagnitude());
         }
 
-        Vector2<double> normalized() {
-            return Vector2<double>(double(x) / magnitude(), double(y) / magnitude());
+        Vector2<T> normalized() {
+            static_assert(std::is_floating_point_v<T>);
+            return Vector2<T>(x / magnitude(), y / magnitude());
         }
 
         void normalizeVector() {

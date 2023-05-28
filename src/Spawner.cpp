@@ -1,10 +1,10 @@
 #include "Spawner.h"
 
-Spawner::Spawner() : xRange(320), spawnInterval(1.0f) {
+Spawner::Spawner() : viewportWidth(320), spawnInterval(1.0f) {
 
 }
 
-Spawner::Spawner(int _xRange, float _spawnInterval) : xRange(_xRange), spawnInterval(_spawnInterval) {
+Spawner::Spawner(int _viewportWidth, float _spawnInterval) : viewportWidth(_viewportWidth), spawnInterval(_spawnInterval) {
 
 }
 
@@ -18,8 +18,9 @@ bool Spawner::updateTimer(float _delta) {
 }
 
 Enemy *Spawner::spawnEnemy(sf::Texture *_texture) {
-    Enemy* enemy = new Enemy(_texture);
-    float random = float(rand() % xRange);
+
+    float random = float(rand() % (viewportWidth - 20)) + 10.0f;
+    Enemy* enemy = new Enemy(_texture, random, .0f);
     enemy->getSprite().setPosition(random, .0f);
     return enemy;
 }

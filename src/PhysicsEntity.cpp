@@ -16,10 +16,14 @@ PhysicsEntity::~PhysicsEntity() {
 }
 
 void PhysicsEntity::update(float _delta) {
-    // round position to nearest whole number to prevent sub-pixel displacement
+    //reset velocity to 0 if its magnitude is below 0.01
+    if (rigidbody->getVelocity().sqrMagnitude() < 0.0001f) {
+        rigidbody->setVelocity(.0f, .0f);
+    }
+
+    // render sprite at nearest round values to prevent sub-pixel displacement
     // does this make everything super jittery? yes
-    // it also sells the arcade aesthetic beautifully
-    // so it's here to stay
-    sprite->setPosition(round(sprite->getPosition().x), round(sprite->getPosition().y));
+    // it also sells the arcade aesthetic beautifully, so it's here to stay
+    sprite->setPosition(roundf(position.x), roundf(position.y));
 }
 
