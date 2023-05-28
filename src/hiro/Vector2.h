@@ -19,7 +19,7 @@ namespace Hiro {
         }
 
         template <typename U>
-        Vector2<T>(Vector2<U> &_vector2) {
+        explicit Vector2<T>(Vector2<U> &_vector2) {
             if (std::is_same_v<T, U>) {
                 x = _vector2.x;
                 y = _vector2.y;

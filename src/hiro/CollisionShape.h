@@ -1,7 +1,7 @@
 #include "Vector2.h"
 #include <cmath>
-
 #pragma once
+
 namespace Hiro {
     class CollisionShape {
     public:
@@ -11,10 +11,5 @@ namespace Hiro {
         Vector2<float> localPosition;
         float radius;
         bool isColliding(CollisionShape &_collisionShape);
-
-
-        // get sqrMagnitude m of delta between 2 vectors (in other words, distance)
-        // bool isColliding = m - (r1 + r2)^2 <= 0
     };
-
 }

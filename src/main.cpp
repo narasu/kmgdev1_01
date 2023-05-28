@@ -6,18 +6,10 @@
 #include "TextureManager.h"
 #include "EntityManager.h"
 #include "Spawner.h"
-#include "hiro/Vector2.h"
-#include "hiro/CollisionShape.h"
+
 
 int main()
 {
-    Hiro::CollisionShape c = Hiro::CollisionShape(5.0f, 4.0f, 2.0f);
-    Hiro::CollisionShape d = Hiro::CollisionShape(9.0f, 4.0f, 2.0f);
-
-    if (c.isColliding(d)) {
-        std::cout << "collision happened" << std::endl;
-    }
-
     //game initialization
     sf::RenderWindow* window;
     Hiro::Vector2<int> viewportSize(320, 180);
