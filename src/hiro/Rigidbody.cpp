@@ -25,7 +25,9 @@ namespace Hiro {
     }
 
     void Rigidbody::applyFriction() {
-
+        if (friction == .0f) {
+            return;
+        }
         Vector2<float> oppositeDirection = -(velocity.normalized());
         Vector2<float> f;
         if (pow(friction, 2) <= velocity.sqrMagnitude()) {
@@ -34,9 +36,7 @@ namespace Hiro {
         else {
             f = -velocity;
         }
-        if (f.sqrMagnitude() > .0f) {
-            addForce(f);
-        }
+        addForce(f);
     }
 
     Vector2<float> Rigidbody::getVelocity() {

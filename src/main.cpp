@@ -30,7 +30,7 @@ int main()
     //std::srand(26);
     TextureManager* textureManager = new TextureManager();
     EntityManager* entityManager = new EntityManager();
-    Spawner spawner = Spawner(VIEWPORT_WIDTH, 2.0f);
+    Spawner spawner = Spawner(VIEWPORT_WIDTH, 3.0f);
 
 
     Vector2<float> a = V2_ONE<float>;

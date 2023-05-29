@@ -7,6 +7,7 @@ void EntityManager::updateAll(float _delta, float _boundsY) {
     for(std::list<Entity*>::iterator it = entityList->begin(); it!=entityList->end();) {
         (*it)->update(_delta);
 
+
         //if an entity reaches the bottom of the screen, delete it
         if ((*it)->getSprite().getPosition().y > _boundsY) {
             delete *it;

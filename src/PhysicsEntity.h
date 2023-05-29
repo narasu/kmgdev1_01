@@ -2,15 +2,15 @@
 #include "hiro/Rigidbody.h"
 
 #pragma once
-
+using namespace Hiro;
 class PhysicsEntity : public Entity {
 public:
     PhysicsEntity(sf::Texture *_texture, float _mass, float _friction);
     ~PhysicsEntity() override;
     void update(float _delta) override;
-    Hiro::Vector2<float> getPosition();
+    Vector2<float> getPosition();
 protected:
-    Hiro::Rigidbody* rigidbody;
-    Hiro::Vector2<float> position = Hiro::V2_ZERO<float>;
-    //Hiro::CollisionShape* collisionShape;
+    Rigidbody* rigidbody;
+    Vector2<float> position = V2_ZERO<float>;
+    //CollisionShape* collisionShape;
 };

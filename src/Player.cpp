@@ -2,7 +2,7 @@
 #include "Player.h"
 
 Player::Player(sf::Texture *_texture) : PhysicsEntity(_texture, 5.0f, 76.0f) {
-    position = Hiro::Vector2<float>(155.f, 145.f);
+    position = Vector2<float>(155.f, 145.f);
 }
 
 void Player::update(float _delta) {
@@ -15,9 +15,8 @@ void Player::update(float _delta) {
         direction+=1;
     }
 
-    rigidbody->addForce(Hiro::Vector2<float>(float(direction) * moveSpeed, .0f));
-    rigidbody->applyFriction();
-    position += rigidbody->getVelocity().toSFML() * _delta;
+    rigidbody->addForce(moveSpeed * direction, .0f);
+
     PhysicsEntity::update(_delta);
 }
 

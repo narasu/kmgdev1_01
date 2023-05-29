@@ -5,7 +5,7 @@
 #include "PhysicsEntity.h"
 
 PhysicsEntity::PhysicsEntity(sf::Texture *_texture, float _mass, float _friction) : Entity(_texture) {
-    rigidbody = new Hiro::Rigidbody(_mass, _friction);
+    rigidbody = new Rigidbody(_mass, _friction);
     // collisionShape = new collisionshape
 }
 
@@ -16,9 +16,12 @@ PhysicsEntity::~PhysicsEntity() {
 }
 
 void PhysicsEntity::update(float _delta) {
+    rigidbody->applyFriction();
+    position += rigidbody->getVelocity() * _delta;
+
     //reset velocity to 0 if its magnitude is below 0.01
     if (rigidbody->getVelocity().sqrMagnitude() < 0.0001f) {
-        rigidbody->setVelocity(Hiro::V2_ZERO<float>);
+        rigidbody->setVelocity(V2_ZERO<float>);
     }
 
     // render sprite at nearest round values to prevent sub-pixel displacement
@@ -27,7 +30,7 @@ void PhysicsEntity::update(float _delta) {
     sprite->setPosition(roundf(position.x), roundf(position.y));
 }
 
-Hiro::Vector2<float> PhysicsEntity::getPosition() {
+Vector2<float> PhysicsEntity::getPosition() {
     return position;
 }
 

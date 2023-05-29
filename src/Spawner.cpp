@@ -18,7 +18,7 @@ Enemy *Spawner::spawnEnemy(sf::Texture *_texture, float _positionBias) {
     float randomPosition = static_cast<float>(rand() % viewportWidth);
 
     //move next spawn slightly away from the last one
-    float offset = 30.0f;
+    float offset = 50.0f;
     float p = lastSpawnPosition - randomPosition;
     while (fabsf(p) < offset) {
 
@@ -32,13 +32,13 @@ Enemy *Spawner::spawnEnemy(sf::Texture *_texture, float _positionBias) {
         p = lastSpawnPosition - randomPosition;
     }
 
-    //keep spawns within the play area, on the opposite side to avoid negating previous changes
+    //keep spawns within the play area, on the opposite side to avoid negating previous offset
     float vpWidthf = static_cast<float>(viewportWidth);
     if (randomPosition < .0f) {
         randomPosition += vpWidthf;
     }
     else if (randomPosition > vpWidthf - offset) {
-        randomPosition -= vpWidthf;
+        randomPosition -= vpWidthf - offset;
     }
 
     //small chance that the enemy will spawn closer to the player, never twice in a row
