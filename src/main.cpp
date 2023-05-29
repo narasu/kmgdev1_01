@@ -7,17 +7,22 @@
 #include "TextureManager.h"
 #include "EntityManager.h"
 #include "Spawner.h"
+#include "hiro/Mathf.h"
 
+
+using namespace Hiro;
 const int VIEWPORT_WIDTH = 320;
 const int VIEWPORT_HEIGHT = 180;
+
 
 int main()
 {
     //game initialization
     sf::RenderWindow* window;
     window = new sf::RenderWindow(sf::VideoMode(VIEWPORT_WIDTH, VIEWPORT_HEIGHT), "Alien Exile");
-    Hiro::Vector2<int> windowPosition(0, 0);
-    Hiro::Vector2<unsigned int> windowSize(1280, 720);
+    Vector2<int> windowPosition(0, 0);
+
+    Vector2<unsigned int> windowSize(1280, 720);
     window->setSize(windowSize.toSFML());
     window->setPosition(windowPosition.toSFML());
     window->setFramerateLimit(60);
@@ -26,6 +31,13 @@ int main()
     TextureManager* textureManager = new TextureManager();
     EntityManager* entityManager = new EntityManager();
     Spawner spawner = Spawner(VIEWPORT_WIDTH, 2.0f);
+
+
+    Vector2<float> a = V2_ONE<float>;
+    Vector2<float> b = Vector2<float>(5.0f, 5.0f);
+
+    //Mathf mathf;
+    std::cout << Mathf::distance(a, b) << std::endl;
 
     //spawn player
     Player* player = new Player(textureManager->getTexture("player"));

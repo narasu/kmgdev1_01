@@ -4,7 +4,7 @@ project(kmgdev1_01)
 set(CMAKE_CXX_STANDARD 17)
 
 
-add_executable(kmgdev1_01 src/main.cpp src/Entity.h src/Entity.cpp src/PhysicsEntity.h src/PhysicsEntity.cpp src/Player.h src/Player.cpp src/Enemy.cpp src/Enemy.h src/Spawner.cpp src/Spawner.h src/Animator.cpp src/Animator.h src/TextureManager.cpp src/TextureManager.h src/StateMachine.cpp src/StateMachine.h src/EntityManager.cpp src/EntityManager.h src/hiro/Vector2.h src/hiro/Rigidbody.h src/hiro/CollisionShape.h src/hiro/Rigidbody.cpp)
+add_executable(kmgdev1_01 src/main.cpp src/Entity.h src/Entity.cpp src/PhysicsEntity.h src/PhysicsEntity.cpp src/Player.h src/Player.cpp src/Enemy.cpp src/Enemy.h src/Spawner.cpp src/Spawner.h src/Animator.cpp src/Animator.h src/TextureManager.cpp src/TextureManager.h src/StateMachine.cpp src/StateMachine.h src/EntityManager.cpp src/EntityManager.h src/hiro/Vector2.h src/hiro/Rigidbody.h src/hiro/CollisionShape.h src/hiro/Rigidbody.cpp src/hiro/AABB.h src/hiro/Mathf.cpp src/hiro/Mathf.h)
 
 include_directories(C:/SFML/include)
 

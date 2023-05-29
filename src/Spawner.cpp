@@ -1,4 +1,5 @@
 #include "Spawner.h"
+#include "hiro/Mathf.h"
 
 Spawner::Spawner() : viewportWidth(320), spawnInterval(1.0f) {}
 
@@ -20,7 +21,8 @@ Enemy *Spawner::spawnEnemy(sf::Texture *_texture, float _positionBias) {
     float offset = 30.0f;
     float p = lastSpawnPosition - randomPosition;
     while (fabsf(p) < offset) {
-        int sign = (0 < p) - (p < 0);
+
+        int sign = Hiro::Mathf::sign(p);
         if (sign == 1) {
             randomPosition -= 1.0f;
         }
@@ -35,9 +37,9 @@ Enemy *Spawner::spawnEnemy(sf::Texture *_texture, float _positionBias) {
         int randomChance = rand() % 100;
         if (randomChance > 70) {
             float b = _positionBias - randomPosition;
-            int sign = (0 < b) - (b < 0);
+            int sign = Hiro::Mathf::sign(b);
             std::cout << "moving to player" << std::endl;
-            randomPosition += fabsf(_positionBias - randomPosition) * float(sign) * 0.75f;
+            randomPosition += fabsf(_positionBias - randomPosition) * static_cast<float>(sign) * 0.75f;
             biasTriggered = true;
         }
     }

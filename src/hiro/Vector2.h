@@ -3,8 +3,6 @@
 #include <SFML/Graphics.hpp>
 #pragma once
 
-//definitions included in header file because of generic type
-
 namespace Hiro {
     template <class T>
     struct Vector2 {
