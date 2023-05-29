@@ -1,7 +1,7 @@
 //
 // Created by Yamada on 28-5-2023.
 //
-#include "Rigidbody.h"
+#include "hiro.h"
 #include <iostream>
 
 namespace Hiro {

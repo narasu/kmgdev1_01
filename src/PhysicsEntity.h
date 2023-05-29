@@ -1,5 +1,5 @@
 #include "Entity.h"
-#include "hiro/Rigidbody.h"
+#include "hiro/hiro.h"
 
 #pragma once
 using namespace Hiro;
@@ -12,5 +12,6 @@ public:
 protected:
     Rigidbody* rigidbody;
     Vector2<float> position = V2_ZERO<float>;
+    float maxVelocityMagnitude = .0f;
     //CollisionShape* collisionShape;
 };

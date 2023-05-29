@@ -7,7 +7,7 @@
 #include "TextureManager.h"
 #include "EntityManager.h"
 #include "Spawner.h"
-#include "hiro/Mathf.h"
+#include "hiro/hiro.h"
 
 
 using namespace Hiro;

@@ -16,6 +16,11 @@ PhysicsEntity::~PhysicsEntity() {
 }
 
 void PhysicsEntity::update(float _delta) {
+    if (maxVelocityMagnitude != .0f) {
+        //std::cout << rigidbody->getVelocity().clamped(maxVelocityMagnitude) << std::endl;
+        rigidbody->setVelocity(rigidbody->getVelocity().clamped(maxVelocityMagnitude));
+    }
+
     rigidbody->applyFriction();
     position += rigidbody->getVelocity() * _delta;
 

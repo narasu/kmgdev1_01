@@ -1,3 +1,4 @@
+#include "hiro.h"
 #pragma once
 
 namespace Hiro {

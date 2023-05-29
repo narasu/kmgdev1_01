@@ -6,7 +6,6 @@
 
 Enemy::Enemy(sf::Texture *_texture, Vector2<float> _startPosition) : PhysicsEntity(_texture, 1.0f, .0f) {
     position = _startPosition;
-    startX = _startPosition.x;
     int cellCount = 2;
     animator = Animator(*sprite, static_cast<int>(_texture->getSize().x) / cellCount, static_cast<int>(_texture->getSize().y), cellCount, 2);
     rigidbody->addForce(.0f, 13.0f);

@@ -1,5 +1,4 @@
-#include "Vector2.h"
-#include "CollisionShape.h"
+#include "hiro.h"
 #pragma once
 
 namespace Hiro {

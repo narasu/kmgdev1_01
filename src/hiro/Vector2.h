@@ -1,6 +1,8 @@
 #include <cmath>
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "hiro.h"
+
 #pragma once
 
 namespace Hiro {
@@ -128,6 +130,30 @@ namespace Hiro {
 
         T magnitude() {
             return sqrt(sqrMagnitude());
+        }
+
+        void clampMagnitude(T _max) {
+            // sqrMagnitude = _max*_max
+            // x*x + y*y = _max*_max
+            // x*x = _max*_max - y*y
+            // y*y = _max*_max - x*x
+            if (sqrMagnitude() < _max*_max) {
+                return;
+            }
+
+            x*x > 0 ? x = static_cast<T>(sqrt(_max*_max - y*y)) * static_cast<T>(Mathf::sign(x)) : x = T(0);
+            y*y > 0 ? y = static_cast<T>(sqrt(_max*_max - x*x)) * static_cast<T>(Mathf::sign(y)) : y = T(0);
+        }
+
+        Vector2<T> clamped(T _max) {
+            if (sqrMagnitude() < _max*_max) {
+                return *this;
+            }
+            Vector2<T> v = *this;
+            v.x*v.x > 0 ? v.x = static_cast<T>(sqrt(_max*_max - y*y)) * static_cast<T>(Mathf::sign(v.x)) : v.x = T(0);
+            v.y*v.y > 0 ? v.y = static_cast<T>(sqrt(_max*_max - x*x)) * static_cast<T>(Mathf::sign(v.y)) : v.y = T(0);
+
+            return v;
         }
 
         Vector2<T> normalized() {
