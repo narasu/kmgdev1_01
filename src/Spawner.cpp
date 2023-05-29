@@ -15,7 +15,7 @@ bool Spawner::updateTimer(float _delta) {
 }
 
 Enemy *Spawner::spawnEnemy(sf::Texture *_texture, float _positionBias) {
-    float randomPosition = float(rand() % viewportWidth);
+    float randomPosition = static_cast<float>(rand() % viewportWidth);
 
     //move next spawn slightly away from the last one
     float offset = 30.0f;
@@ -32,26 +32,26 @@ Enemy *Spawner::spawnEnemy(sf::Texture *_texture, float _positionBias) {
         p = lastSpawnPosition - randomPosition;
     }
 
+    //keep spawns within the play area, on the opposite side to avoid negating previous changes
+    float vpWidthf = static_cast<float>(viewportWidth);
+    if (randomPosition < .0f) {
+        randomPosition += vpWidthf;
+    }
+    else if (randomPosition > vpWidthf - offset) {
+        randomPosition -= vpWidthf;
+    }
+
     //small chance that the enemy will spawn closer to the player, never twice in a row
     if (!biasTriggered) {
         int randomChance = rand() % 100;
         if (randomChance > 70) {
             float b = _positionBias - randomPosition;
             int sign = Hiro::Mathf::sign(b);
-            std::cout << "moving to player" << std::endl;
             randomPosition += fabsf(_positionBias - randomPosition) * static_cast<float>(sign) * 0.75f;
             biasTriggered = true;
         }
     }
     biasTriggered = false;
-
-    //lastly, keep spawns within the play area
-    if (randomPosition < .0f) {
-        randomPosition = .0f;
-    }
-    else if (randomPosition > 320.0f - offset) {
-        randomPosition = 320.0f - offset;
-    }
 
     lastSpawnPosition = randomPosition;
     return new Enemy(_texture, randomPosition, .0f);
