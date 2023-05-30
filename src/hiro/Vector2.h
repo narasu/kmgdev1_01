@@ -132,19 +132,6 @@ namespace Hiro {
             return sqrt(sqrMagnitude());
         }
 
-        void clampMagnitude(T _max) {
-            // sqrMagnitude = _max*_max
-            // x*x + y*y = _max*_max
-            // x*x = _max*_max - y*y
-            // y*y = _max*_max - x*x
-            if (sqrMagnitude() < _max*_max) {
-                return;
-            }
-
-            x*x > 0 ? x = static_cast<T>(sqrt(_max*_max - y*y)) * static_cast<T>(Mathf::sign(x)) : x = T(0);
-            y*y > 0 ? y = static_cast<T>(sqrt(_max*_max - x*x)) * static_cast<T>(Mathf::sign(y)) : y = T(0);
-        }
-
         Vector2<T> clamped(T _max) {
             if (sqrMagnitude() < _max*_max) {
                 return *this;
@@ -156,12 +143,17 @@ namespace Hiro {
             return v;
         }
 
+        void clampMagnitude(T _max) {
+            *this = clamped(_max);
+        }
+
         Vector2<T> normalized() {
             static_assert(std::is_floating_point_v<T>);
             return Vector2<T>(x / magnitude(), y / magnitude());
         }
 
         void normalizeVector() {
+            static_assert(std::is_floating_point_v<T>);
             *this /= magnitude();
         }
 
@@ -177,19 +169,4 @@ namespace Hiro {
 
     template <typename T>
     static const Vector2<T> V2_ZERO = Vector2(static_cast<T>(0), static_cast<T>(0));
-
-    template <typename T>
-    static const Vector2<T> V2_ONE = Vector2(static_cast<T>(1), static_cast<T>(1));
-
-    template <typename T>
-    static const Vector2<T> V2_DOWN = Vector2(static_cast<T>(0), static_cast<T>(1));
-
-    template <typename T>
-    static const Vector2<T> V2_UP = Vector2(static_cast<T>(0), static_cast<T>(-1));
-
-    template <typename T>
-    static const Vector2<T> V2_RIGHT = Vector2(static_cast<T>(1), static_cast<T>(0));
-
-    template <typename T>
-    static const Vector2<T> V2_LEFT = Vector2(static_cast<T>(-1), static_cast<T>(0));
 }

@@ -20,10 +20,11 @@ void Enemy::update(float _delta) {
 
     //horizontal movement is based on a cosine shape.
     float t = position.y * 0.25f;
-    float dir = std::cos(t);
-    float amplitude = 1.0f;
-    float forceScalar = dir * amplitude;
+    float amplitude = 25.0f;
+    float xVel = std::cos(t) * amplitude;
 
-    rigidbody->addForce(forceScalar, .0f);
+    rigidbody->setVelocity(xVel, rigidbody->getVelocity().y);
+
+    //rigidbody->addForce(xVel, .0f);
     PhysicsEntity::update(_delta);
 }

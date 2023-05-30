@@ -32,13 +32,6 @@ int main()
     EntityManager* entityManager = new EntityManager();
     Spawner spawner = Spawner(VIEWPORT_WIDTH, 3.0f);
 
-
-    Vector2<float> a = V2_ONE<float>;
-    Vector2<float> b = Vector2<float>(5.0f, 5.0f);
-
-    //Mathf mathf;
-    std::cout << Mathf::distance(a, b) << std::endl;
-
     //spawn player
     Player* player = new Player(textureManager->getTexture("player"));
     entityManager->addEntity(player);
