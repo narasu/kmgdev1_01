@@ -24,4 +24,5 @@ namespace Hiro {
 #include "CollisionData.h"
 #include "CollisionShape.h"
 #include "Rigidbody.h"
+
 #endif //KMGDEV1_01_HIRO_H

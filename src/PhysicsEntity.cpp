@@ -1,7 +1,3 @@
-//
-// Created by Yamada on 28-5-2023.
-//
-
 #include "PhysicsEntity.h"
 
 PhysicsEntity::PhysicsEntity(sf::Texture *_texture, float _mass, float _friction) : Entity(_texture) {
@@ -16,10 +12,6 @@ PhysicsEntity::~PhysicsEntity() {
 }
 
 void PhysicsEntity::update(float _delta) {
-    if (maxVelocityMagnitude != .0f) {
-        rigidbody->setVelocity(rigidbody->getVelocity().clamped(maxVelocityMagnitude));
-    }
-
     rigidbody->applyFriction();
     position += rigidbody->getVelocity() * _delta;
 
@@ -29,7 +21,7 @@ void PhysicsEntity::update(float _delta) {
     }
 
     // render sprite at nearest round values to prevent sub-pixel displacement
-    // does this make everything super jittery? yes
+    // does this make everything jittery? yes
     // but it really sells the arcade aesthetic, so it's here to stay
     sprite->setPosition(roundf(position.x), roundf(position.y));
 }

@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Player.h"
 
-Player::Player(sf::Texture *_texture) : PhysicsEntity(_texture, 5.0f, 76.0f) {
+Player::Player(sf::Texture *_texture) : PhysicsEntity(_texture, 4.0f, 150.0f) {
     position = Vector2<float>(155.f, 145.f);
     maxVelocityMagnitude = 150.0f;
 }

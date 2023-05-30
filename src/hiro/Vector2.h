@@ -19,59 +19,17 @@ namespace Hiro {
             static_assert(std::is_arithmetic_v<T>);
         }
 
-        Vector2<T>(const sf::Vector2<T> &_vector2) {
-            x = _vector2.x;
-            y = _vector2.y;
-        }
-
-        template <typename U>
-        explicit Vector2<T>(Vector2<U> &_vector2) {
-            if (std::is_same_v<T, U>) {
-                x = _vector2.x;
-                y = _vector2.y;
-                return;
-            }
-            x = static_cast<T>(_vector2.x);
-            y = static_cast<T>(_vector2.y);
-        }
-
-
-        template <typename U>
-        Vector2<T>& operator=(const Vector2<U>& _rhVector2) {
-            if (std::is_same_v<T, U>) {
-                x = _rhVector2.x;
-                y = _rhVector2.y;
-                return *this;
-            }
-            x = static_cast<T>(_rhVector2.x);
-            y = static_cast<T>(_rhVector2.y);
-            return *this;
-        }
-
         Vector2<T>& operator=(const Vector2<T>& _rhVector2) {
             x = _rhVector2.x;
             y = _rhVector2.y;
             return *this;
         }
 
-        Vector2<T> operator-() {
-            Vector2<T> v;
-            v.x = -x;
-            v.y = -y;
-            return v;
-        }
-
-        Vector2<T>& operator=(const sf::Vector2<T>& _rhVector2) {
-            x = _rhVector2.x;
-            y = _rhVector2.y;
-            return *this;
-        }
-
-        bool operator==(sf::Vector2<T> _rhVector2) {
+        bool operator==(Vector2<T> _rhVector2) {
             return x == _rhVector2.x && y == _rhVector2.y;
         }
 
-        bool operator!=(sf::Vector2<T> _rhVector2) {
+        bool operator!=(Vector2<T> _rhVector2) {
             return x != _rhVector2.x || y != _rhVector2.y;
         }
 
@@ -85,6 +43,10 @@ namespace Hiro {
             return *this;
         }
 
+        Vector2<T> operator-() {
+            return Vector2<T>(-x, -y);
+        }
+
         Vector2 operator-(const Vector2& _rhVector2) {
             return Vector2(x-_rhVector2.x, y-_rhVector2.y);
         }
@@ -93,6 +55,10 @@ namespace Hiro {
             x -= _rhVector2.x;
             y -= _rhVector2.y;
             return *this;
+        }
+
+        T operator*(const Vector2& _rhVector2) {
+            return x * _rhVector2.x + y * _rhVector2.y;
         }
 
         Vector2 operator*(const T& _rhScalar) {
@@ -113,10 +79,6 @@ namespace Hiro {
             x /= _rhScalar;
             y /= _rhScalar;
             return *this;
-        }
-
-        T operator*(const Vector2& _rhVector2) {
-            return x * _rhVector2.x + y * _rhVector2.y;
         }
 
         friend std::ostream& operator<<(std::ostream& _out,const Vector2 &_rhVector2) {
@@ -157,11 +119,26 @@ namespace Hiro {
             *this /= magnitude();
         }
 
-        double distanceTo(Vector2 _rhVector) {
-            return (_rhVector - *this).magnitude();
+        //SFML Vector2 conversions
+        explicit Vector2<T>(const sf::Vector2<T> &_vector2) {
+            x = _vector2.x;
+            y = _vector2.y;
         }
 
-        //conversion to SFML Vector2 for use in SFML methods that only take sf::Vector2<T> as argument
+        Vector2<T>& operator=(const sf::Vector2<T>& _rhVector2) {
+            x = _rhVector2.x;
+            y = _rhVector2.y;
+            return *this;
+        }
+
+        bool operator==(sf::Vector2<T> _rhVector2) {
+            return x == _rhVector2.x && y == _rhVector2.y;
+        }
+
+        bool operator!=(sf::Vector2<T> _rhVector2) {
+            return x != _rhVector2.x || y != _rhVector2.y;
+        }
+
         sf::Vector2<T> toSFML() {
             return sf::Vector2<T>(x, y);
         }

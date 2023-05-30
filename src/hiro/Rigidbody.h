@@ -11,6 +11,7 @@ namespace Hiro {
         Vector2<float> getVelocity();
         void setVelocity(Vector2<float> _velocity);
         void setVelocity(float _xVel, float _yVel);
+        float getFriction();
         void applyFriction();
     private:
         Vector2<float> velocity = V2_ZERO<float>;
