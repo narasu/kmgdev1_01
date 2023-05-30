@@ -4,8 +4,7 @@
 
 class Player : public PhysicsEntity {
 public:
-    explicit Player(sf::Texture *_texture);
-    ~Player() override;
+    explicit Player(const sf::Texture *_texture);
     void update(float _delta) override;
 private:
     float moveSpeed = 150.f;

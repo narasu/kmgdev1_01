@@ -7,12 +7,10 @@
 #include "Player.h"
 #include "Spawner.h"
 
-
-using namespace Hiro;
 const int VIEWPORT_WIDTH = 320;
 const int VIEWPORT_HEIGHT = 180;
 
-
+using namespace Hiro;
 int main()
 {
     //game initialization
@@ -42,7 +40,6 @@ int main()
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) window->close();
         }
 
-        //begin game logic calls
         sf::Time deltaTime = deltaClock.restart();
         if (spawner.updateTimer(deltaTime.asSeconds())) {
             int random123 = rand() % 3 + 1;

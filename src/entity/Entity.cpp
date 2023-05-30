@@ -3,7 +3,7 @@
 #include "../hiro/Hiro.h"
 #include <cmath>
 
-Entity::Entity(sf::Texture* _texture)  {
+Entity::Entity(const sf::Texture *_texture)  {
     sprite = new sf::Sprite();
     sprite->setTexture(*_texture);
 }

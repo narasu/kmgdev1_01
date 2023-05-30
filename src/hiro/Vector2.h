@@ -25,11 +25,11 @@ namespace Hiro {
             return *this;
         }
 
-        bool operator==(Vector2<T> _rhVector2) {
+        bool operator==(const Vector2<T> &_rhVector2) {
             return x == _rhVector2.x && y == _rhVector2.y;
         }
 
-        bool operator!=(Vector2<T> _rhVector2) {
+        bool operator!=(const Vector2<T> &_rhVector2) {
             return x != _rhVector2.x || y != _rhVector2.y;
         }
 
@@ -94,7 +94,7 @@ namespace Hiro {
             return sqrt(sqrMagnitude());
         }
 
-        Vector2<T> clamped(T _max) {
+        Vector2<T> clamped(const T _max) {
             if (sqrMagnitude() < _max*_max) {
                 return *this;
             }
@@ -105,7 +105,7 @@ namespace Hiro {
             return v;
         }
 
-        void clampMagnitude(T _max) {
+        void clampMagnitude(const T _max) {
             *this = clamped(_max);
         }
 
@@ -120,6 +120,7 @@ namespace Hiro {
         }
 
         //SFML Vector2 conversions
+
         explicit Vector2<T>(const sf::Vector2<T> &_vector2) {
             x = _vector2.x;
             y = _vector2.y;
@@ -131,11 +132,11 @@ namespace Hiro {
             return *this;
         }
 
-        bool operator==(sf::Vector2<T> _rhVector2) {
+        bool operator==(const sf::Vector2<T> _rhVector2) {
             return x == _rhVector2.x && y == _rhVector2.y;
         }
 
-        bool operator!=(sf::Vector2<T> _rhVector2) {
+        bool operator!=(const sf::Vector2<T> _rhVector2) {
             return x != _rhVector2.x || y != _rhVector2.y;
         }
 

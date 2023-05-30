@@ -1,6 +1,6 @@
 #include "Entity.h"
 
-PhysicsEntity::PhysicsEntity(sf::Texture *_texture, float _mass, float _friction) : Entity(_texture) {
+PhysicsEntity::PhysicsEntity(const sf::Texture *_texture, float _mass, float _friction) : Entity(_texture) {
     rigidbody = new Rigidbody(_mass, _friction);
     // collisionShape = new collisionshape
 }
