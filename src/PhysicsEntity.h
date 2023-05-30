@@ -1,5 +1,5 @@
 #include "Entity.h"
-#include "hiro/hiro.h"
+#include "hiro/Hiro.h"
 
 #pragma once
 using namespace Hiro;

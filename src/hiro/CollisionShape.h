@@ -1,4 +1,4 @@
-#include "hiro.h"
+#include "Hiro.h"
 #include <cmath>
 #pragma once
 

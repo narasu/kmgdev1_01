@@ -1,8 +1,7 @@
 //
 // Created by Yamada on 28-5-2023.
 //
-#include "hiro.h"
-#include "Rigidbody.h"
+#include "Hiro.h"
 
 #include <iostream>
 

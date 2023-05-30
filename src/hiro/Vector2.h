@@ -1,7 +1,7 @@
 #include <cmath>
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "hiro.h"
+#include "Hiro.h"
 
 #pragma once
 

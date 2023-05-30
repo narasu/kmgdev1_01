@@ -2,7 +2,7 @@
 // Created by Yamada on 29-5-2023.
 //
 
-#include "hiro.h"
+#include "Hiro.h"
 
 namespace Hiro {
 } // Hiro
