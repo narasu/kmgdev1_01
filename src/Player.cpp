@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Player.h"
 
-Player::Player(sf::Texture *_texture) : PhysicsEntity(_texture, 4.0f, 150.0f) {
+Player::Player(const sf::Texture *_texture) : PhysicsEntity(_texture, 5.0f, 150.0f) {
     position = Vector2<float>(155.f, 145.f);
 }
 
@@ -18,9 +18,4 @@ void Player::update(float _delta) {
     rigidbody->addForce(moveSpeed * direction, .0f);
 
     PhysicsEntity::update(_delta);
-}
-
-Player::~Player() {
-    delete rigidbody;
-    rigidbody = nullptr;
 }

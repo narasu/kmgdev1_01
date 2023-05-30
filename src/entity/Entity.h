@@ -7,7 +7,7 @@
 
 class Entity  {
 public:
-    explicit Entity(sf::Texture* _texture);
+    explicit Entity(const sf::Texture *_texture);
     Entity(const Entity& _entity); //copy constructor
     Entity& operator=(const Entity& _entity); //assignment operator
     virtual ~Entity();

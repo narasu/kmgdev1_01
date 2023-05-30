@@ -5,7 +5,7 @@
 using namespace Hiro;
 class PhysicsEntity : public Entity {
 public:
-    PhysicsEntity(sf::Texture *_texture, float _mass, float _friction);
+    PhysicsEntity(const sf::Texture *_texture, float _mass, float _friction);
     ~PhysicsEntity() override;
     void update(float _delta) override;
     Vector2<float> getPosition();
