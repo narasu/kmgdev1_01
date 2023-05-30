@@ -1,4 +1,4 @@
-#include "EntityManager.h"
+#include "Managers.h"
 
 EntityManager::EntityManager() : entityList(new std::list<Entity*>) {
 }

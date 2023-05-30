@@ -1,4 +1,8 @@
+#ifndef KMGDEV1_01_ENTITY_H
+#define KMGDEV1_01_ENTITY_H
+
 #include <SFML/Graphics.hpp>
+#include "../hiro/Hiro.h"
 #pragma once
 
 class Entity  {
@@ -12,3 +16,9 @@ public:
 protected:
     sf::Sprite* sprite;
 };
+
+class PhysicsEntity;
+
+#include "PhysicsEntity.h"
+
+#endif

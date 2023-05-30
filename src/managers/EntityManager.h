@@ -1,7 +1,6 @@
-#include <SFML/Graphics.hpp>
 #include <list>
-#include "Entity.h"
-
+#include "Managers.h"
+#include "../entity/Entity.h"
 #pragma once
 
 class EntityManager {

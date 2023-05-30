@@ -2,12 +2,10 @@
 #include <list>
 #include <cstdlib>
 #include <iostream>
-#include "Player.h"
-#include "Enemy.h"
-#include "TextureManager.h"
-#include "EntityManager.h"
-#include "Spawner.h"
 #include "hiro/Hiro.h"
+#include "managers/Managers.h"
+#include "Player.h"
+#include "Spawner.h"
 
 
 using namespace Hiro;

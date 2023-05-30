@@ -1,4 +1,4 @@
-#include "PhysicsEntity.h"
+#include "Entity.h"
 
 PhysicsEntity::PhysicsEntity(sf::Texture *_texture, float _mass, float _friction) : Entity(_texture) {
     rigidbody = new Rigidbody(_mass, _friction);

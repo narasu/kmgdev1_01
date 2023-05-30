@@ -14,11 +14,11 @@ bool Spawner::updateTimer(float _delta) {
     return true;
 }
 
-Enemy *Spawner::spawnEnemy(sf::Texture *_texture, float _positionBias) {
+Enemy *Spawner::spawnEnemy(sf::Texture *_texture, float _playerX) {
     float randomPosition = static_cast<float>(rand() % viewportWidth);
 
     //move next spawn slightly away from the last one
-    float offset = 50.0f;
+    float offset = 20.0f;
     float p = lastSpawnPosition - randomPosition;
     while (fabsf(p) < offset) {
 
@@ -45,9 +45,9 @@ Enemy *Spawner::spawnEnemy(sf::Texture *_texture, float _positionBias) {
     if (!biasTriggered) {
         int randomChance = rand() % 100;
         if (randomChance > 70) {
-            float b = _positionBias - randomPosition;
+            float b = _playerX - randomPosition;
             int sign = Hiro::Mathf::sign(b);
-            randomPosition += fabsf(_positionBias - randomPosition) * static_cast<float>(sign) * 0.75f;
+            randomPosition += fabsf(_playerX - randomPosition) * static_cast<float>(sign) * 0.85f;
             biasTriggered = true;
         }
     }

@@ -3,7 +3,6 @@
 
 Player::Player(sf::Texture *_texture) : PhysicsEntity(_texture, 4.0f, 150.0f) {
     position = Vector2<float>(155.f, 145.f);
-    maxVelocityMagnitude = 150.0f;
 }
 
 void Player::update(float _delta) {

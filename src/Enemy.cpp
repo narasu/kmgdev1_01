@@ -3,7 +3,7 @@
 #include "Enemy.h"
 
 
-Enemy::Enemy(sf::Texture *_texture, Vector2<float> _startPosition) : PhysicsEntity(_texture, 4.0f, 25.0f) {
+Enemy::Enemy(sf::Texture *_texture, Vector2<float> _startPosition) : PhysicsEntity(_texture, 4.0f, 999.0f) {
     position = _startPosition;
     int cellCount = 2;
     animator = Animator(*sprite, static_cast<int>(_texture->getSize().x) / cellCount, static_cast<int>(_texture->getSize().y), cellCount, 2);
@@ -18,7 +18,7 @@ void Enemy::update(float _delta) {
     animator.animate(*sprite, _delta);
 
     //note: adjusting t and amplitude will not have a 1:1 effect in-game as it's a force scalar and not a position
-    //force.t will also affect position.amplitude and force.amplitude will also affect position.t
+    //force.t will affect position.amplitude and force.amplitude will affect position.t
     float t = position.y * 0.25f;
     float amplitude = 15.0f;
     float x = std::cos(t) * amplitude;

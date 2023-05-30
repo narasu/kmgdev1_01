@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Entity.h"
-#include "hiro/hiro.h"
+#include "../hiro/Hiro.h"
 #include <cmath>
 
 Entity::Entity(sf::Texture* _texture)  {

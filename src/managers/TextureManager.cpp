@@ -1,4 +1,4 @@
-#include "TextureManager.h"
+#include "Managers.h"
 
 TextureManager::TextureManager() {
 
@@ -27,7 +27,7 @@ sf::Texture *TextureManager::newTexture(const std::string& _path) {
     }
     //if loading the file was unsuccessful, delete the pointer we just made
     delete texture;
-    texture = nullptr;
+    texture = nullptr; // <- not sure if necessary? does this pointer stop existing at the end of the method?
     return nullptr;
 }
 
