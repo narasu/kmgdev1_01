@@ -5,7 +5,6 @@ namespace Hiro {
     struct CollisionData {
     public:
         AABB<float> bounds;
-        bool isColliding(CollisionShape &_other);
     };
 
 }

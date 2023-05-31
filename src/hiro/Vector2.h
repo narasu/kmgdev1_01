@@ -57,10 +57,6 @@ namespace Hiro {
             return *this;
         }
 
-        T operator*(const Vector2& _rhVector2) {
-            return x * _rhVector2.x + y * _rhVector2.y;
-        }
-
         Vector2 operator*(const T& _rhScalar) {
             return Vector2(x*_rhScalar, y*_rhScalar);
         }
@@ -84,6 +80,16 @@ namespace Hiro {
         friend std::ostream& operator<<(std::ostream& _out,const Vector2 &_rhVector2) {
             _out << "(" << _rhVector2.x << ", " << _rhVector2.y << ")";
             return _out;
+        }
+
+        static T distance(Vector2<T> _lhVector, Vector2<T> _rhVector) {
+            Vector2<T> v = _rhVector - _lhVector;
+            return v.magnitude();
+        }
+
+
+        static T dot(const Vector2<T>& _lhVector2, const Vector2<T>& _rhVector2) {
+            return _lhVector2.x * _rhVector2.x + _lhVector2.y * _rhVector2.y;
         }
 
         T sqrMagnitude() {

@@ -11,11 +11,11 @@ namespace Hiro {
 
     struct Vertex;
     struct Edge;
-    struct Polygon;
+    struct Triangle;
 
     struct CollisionData;
     class CollisionShape;
-    class CollisionPolygon;
+    class CollisionTriangle;
     class Rigidbody;
 }
 
@@ -24,10 +24,10 @@ namespace Hiro {
 #include "AABB.h"
 #include "Vertex.h"
 #include "Edge.h"
-#include "Polygon.h"
+#include "Triangle.h"
 #include "CollisionData.h"
 #include "CollisionShape.h"
-#include "CollisionPolygon.h"
+#include "CollisionTriangle.h"
 #include "Rigidbody.h"
 
 #endif //KMGDEV1_01_HIRO_H

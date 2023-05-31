@@ -2,7 +2,7 @@
 #pragma once
 
 namespace Hiro {
-    class CollisionPolygon : public CollisionShape {
+    class CollisionTriangle : public CollisionShape {
 
     };
 

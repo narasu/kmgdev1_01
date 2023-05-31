@@ -3,11 +3,11 @@
 
 
 namespace Hiro {
-    Edge::Edge(Polygon &_parent) : parent(_parent), pointA(V2_ZERO<float>) , pointB(V2_ZERO<float>) {
+    Edge::Edge(Triangle &_parent) : parent(_parent), pointA(V2_ZERO<float>) , pointB(V2_ZERO<float>) {
 
     }
 
-    Edge::Edge(Polygon &_parent, const Vector2<float> _pointA, const Vector2<float> _pointB) : parent(_parent), pointA(_pointA), pointB(_pointB) {
+    Edge::Edge(Triangle &_parent, const Vector2<float> _pointA, const Vector2<float> _pointB) : parent(_parent), pointA(_pointA), pointB(_pointB) {
 
     }
 

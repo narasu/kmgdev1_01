@@ -1,7 +1,5 @@
 #include <iostream>
 #include "Entity.h"
-#include "../hiro/Hiro.h"
-#include <cmath>
 
 Entity::Entity(const sf::Texture *_texture)  {
     sprite = new sf::Sprite();
