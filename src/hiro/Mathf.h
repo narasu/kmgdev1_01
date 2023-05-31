@@ -1,4 +1,5 @@
 #include "Hiro.h"
+#include <cmath>
 #pragma once
 
 namespace Hiro {
@@ -14,5 +15,7 @@ namespace Hiro {
         static int sign(T _number) {
             return (0 < _number) - (_number < 0);
         }
+
+        static constexpr float RAD2DEG = 180 / M_PI;
     };
 }

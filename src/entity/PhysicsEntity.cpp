@@ -23,10 +23,6 @@ void PhysicsEntity::update(float _delta) {
     // render sprite at nearest round values to prevent sub-pixel displacement
     // does this make everything jittery? yes
     // but it really sells the arcade aesthetic, so it's here to stay
-    sprite->setPosition(roundf(position.x), roundf(position.y));
-}
-
-Vector2<float> PhysicsEntity::getPosition() {
-    return position;
+    sprite->setPosition(roundf(position.x - origin.x), roundf(position.y - origin.y));
 }
 

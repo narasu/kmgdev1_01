@@ -82,7 +82,7 @@ namespace Hiro {
         }
 
         friend std::ostream& operator<<(std::ostream& _out,const Vector2 &_rhVector2) {
-            _out << "(" << _rhVector2.x << ", " << _rhVector2.y << ")" << std::endl;
+            _out << "(" << _rhVector2.x << ", " << _rhVector2.y << ")";
             return _out;
         }
 
@@ -144,7 +144,7 @@ namespace Hiro {
             return sf::Vector2<T>(x, y);
         }
     };
-
     template <typename T>
     static const Vector2<T> V2_ZERO = Vector2(static_cast<T>(0), static_cast<T>(0));
+
 }

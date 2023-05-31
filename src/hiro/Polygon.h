@@ -5,7 +5,8 @@ namespace Hiro {
     public:
         Polygon(Vector2<float> _pointA, Vector2<float> _pointB, Vector2<float> _pointC);
         Vector2<float> position;
-        Edge edges[3];
+        Vector2<float> centroid;
+        std::vector<Edge> edges;
         Vertex vertices[3];
     };
 

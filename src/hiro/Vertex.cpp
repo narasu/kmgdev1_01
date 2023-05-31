@@ -4,10 +4,10 @@
 
 namespace Hiro {
 
-    Vertex::Vertex() : localPosition(.0f, .0f){}
+    Vertex::Vertex() : localPosition(.0f, .0f), angle(.0f){}
 
-    Vertex::Vertex(Vector2<float> _position) : localPosition(_position){}
+    Vertex::Vertex(Vector2<float> _localPosition, float _angle) : localPosition(_localPosition), angle(_angle){}
 
-    Vertex::Vertex(float _posX, float _posY) : localPosition(_posX, _posY) {}
+    Vertex::Vertex(float _posX, float _posY, float _angle) : localPosition(_posX, _posY), angle(_angle) {}
 
 }

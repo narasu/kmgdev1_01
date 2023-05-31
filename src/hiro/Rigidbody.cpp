@@ -11,15 +11,7 @@ namespace Hiro {
     Rigidbody::Rigidbody(float _mass, float _friction) : mass(_mass), friction(_friction){}
 
     void Rigidbody::addForce(Vector2<float> _force) {
-
-        Vector2<float> acceleration = Vector2<float>(_force.x / mass, _force.y / mass);
-        velocity += acceleration;
-
-        //TODO: implement Vector2.clampMagnitude
-        /*if (velocity.sqrMagnitude() > powf(maxVelocity, 2)) {
-             velocity.clampMagnitude(maxVelocity);
-        }*/
-
+        velocity += _force / mass;
     }
     void Rigidbody::addForce(float _forceX, float _forceY) {
         addForce(Vector2<float>(_forceX, _forceY));

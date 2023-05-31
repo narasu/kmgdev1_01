@@ -6,11 +6,13 @@ namespace Hiro {
     public:
         Vector2<float> pointA;
         Vector2<float> pointB;
-        Edge();
-        Edge(const Vector2<float> _pointA, const Vector2<float> _pointB);
-        Vector2<float> getLength();
+        explicit Edge(Polygon &parent);
+        Edge(Polygon &parent, Vector2<float> _pointA, Vector2<float> _pointB);
+        Vector2<float> edgeVector(bool _global = false);
         Vector2<float> getMidPoint();
-        Vector2<float> getNormal(const Vector2<float> _center);
+        Vector2<float> getNormal(Vector2<float> _center);
+    private:
+        Polygon &parent;
     };
 
 } // Hiro

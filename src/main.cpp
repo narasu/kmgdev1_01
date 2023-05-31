@@ -18,6 +18,8 @@ int main()
     window = new sf::RenderWindow(sf::VideoMode(VIEWPORT_WIDTH, VIEWPORT_HEIGHT), "Alien Exile");
     Vector2<int> windowPosition(0, 0);
 
+    Polygon p = Polygon(Vector2<float>(160.0f, 146.0f), Vector2<float>(163.5f, 161.0f), Vector2<float>(155.5f, 161.0f));
+
     Vector2<unsigned int> windowSize(1280, 720);
     window->setSize(windowSize.toSFML());
     window->setPosition(windowPosition.toSFML());
@@ -58,6 +60,22 @@ int main()
         for (std::list<Entity*>::const_iterator it = entities.begin(); it != entities.end(); ++it) {
             window->draw((*it)->getSprite());
         }
+        p.position = player->getPosition();
+
+        sf::CircleShape pCentroid = sf::CircleShape(0.5f);
+        pCentroid.setPosition(p.position.x - pCentroid.getRadius(), p.position.y - pCentroid.getRadius());
+        pCentroid.setFillColor(sf::Color::Blue);
+
+        for (auto& edge : p.edges) {
+            sf::RectangleShape edgeRect = sf::RectangleShape(sf::Vector2f(edge.edgeVector().magnitude(), 0.25f));
+            edgeRect.setPosition(edge.pointA.toSFML() + p.position.toSFML());
+            edgeRect.setRotation(atan2f(edge.edgeVector().y, edge.edgeVector().x) * Mathf::RAD2DEG);
+            edgeRect.setOutlineColor(sf::Color::Blue);
+            edgeRect.setFillColor(sf::Color::Blue);
+            window->draw(edgeRect);
+        }
+
+        window->draw(pCentroid);
         window->display();
         //end draw calls
     }

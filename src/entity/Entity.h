@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "../hiro/Hiro.h"
 #pragma once
-
+using namespace Hiro;
 class Entity  {
 public:
     explicit Entity(const sf::Texture *_texture);
@@ -13,8 +13,11 @@ public:
     virtual ~Entity();
     virtual void update(float _delta) = 0;
     virtual sf::Sprite& getSprite();
+    virtual Vector2<float> getPosition();
 protected:
     sf::Sprite* sprite;
+    Vector2<float> position = V2_ZERO<float>;
+    Vector2<float> origin;
 };
 
 class PhysicsEntity;

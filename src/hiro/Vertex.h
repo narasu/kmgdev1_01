@@ -5,10 +5,11 @@ namespace Hiro {
 
     struct Vertex {
     public:
-        Vector2<float> localPosition;
         Vertex();
-        explicit Vertex(Vector2<float> _position);
-        Vertex(float _posX, float _posY);
+        explicit Vertex(Vector2<float> _localPosition, float _angle);
+        Vertex(float _posX, float _posY, float _angle);
+        Vector2<float> localPosition;
+        float angle;
     };
 
 }

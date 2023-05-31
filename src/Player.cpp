@@ -2,7 +2,7 @@
 #include "Player.h"
 
 Player::Player(const sf::Texture *_texture) : PhysicsEntity(_texture, 5.0f, 150.0f) {
-    position = Vector2<float>(155.f, 145.f);
+    position = Vector2<float>(160.f, 155.f);
 }
 
 void Player::update(float _delta) {
