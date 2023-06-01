@@ -23,6 +23,7 @@ Entity &Entity::operator=(const Entity &_entity) {
 }
 
 void Entity::update(float _delta) {
+
     // round to whole numbers to prevent sub-pixel positions
     // does this make everything jittery and also slightly inaccurate? yes
     // but it really sells the arcade aesthetic, so it's here to stay

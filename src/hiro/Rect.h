@@ -39,8 +39,11 @@ namespace Hiro {
         explicit Rect<T>(sf::Rect<T> _rect) {
             Rect<T>(Vector2<T>(_rect.left, _rect.top), Vector2<T>(_rect.width, _rect.height));
         }
+        float xScalar() {
+            return max.x - min.x;
+        }
 
-        Vector2<T> getInterval() {
+        Vector2<T> xInterval() {
             return Vector2<T>(min.x, max.x);
         }
 

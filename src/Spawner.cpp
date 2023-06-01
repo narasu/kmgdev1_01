@@ -54,5 +54,5 @@ std::shared_ptr<Enemy> Spawner::spawnEnemy(const sf::Texture &_texture, float _p
     biasTriggered = false;
 
     lastSpawnPosition = randomPosition;
-    return std::make_shared<Enemy>(_texture, randomPosition, .0f, Rect<float>());
+    return std::make_shared<Enemy>(_texture, randomPosition, .0f, Rect<float>(.0f, .0f, 5.0f, 8.0f));
 }

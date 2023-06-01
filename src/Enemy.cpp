@@ -17,7 +17,7 @@ void Enemy::update(float _delta) {
 
     // cosine-based horizontal movement
     // note: adjusting t and amplitude may not have the expected effect on movement
-    // as it's a force scalar and does not manipulate position directly
+    // as it's a force xScalar and does not manipulate position directly
     float t = position.y * 0.25f;
     float amplitude = 20.0f;
     float x = std::cos(t) * amplitude;
