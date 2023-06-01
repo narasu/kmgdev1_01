@@ -29,12 +29,12 @@ int main()
     window->setFramerateLimit(60);
     sf::Clock deltaClock = sf::Clock();
     //std::srand(26);
-    TextureManager* textureManager = new TextureManager();
-    EntityManager* entityManager = new EntityManager();
+    auto textureManager = new TextureManager();
+    auto entityManager = new EntityManager();
     Spawner spawner = Spawner(VIEWPORT_WIDTH, 3.0f);
 
     //spawn player
-    Player* player = new Player(textureManager->getTexture("player"));
+    Player* player = new Player(*textureManager->getTexture("player"));
     entityManager->addEntity(player);
 
     while (window->isOpen()) {
@@ -45,40 +45,42 @@ int main()
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) window->close();
         }
 
+        //begin game logic calls
+
         sf::Time deltaTime = deltaClock.restart();
         if (spawner.updateTimer(deltaTime.asSeconds())) {
             int random123 = rand() % 3 + 1;
             entityManager->addEntity(
                     spawner.spawnEnemy(
-                            textureManager->getTexture("enemy0" + std::to_string(random123)),
+                            *textureManager->getTexture("enemy0" + std::to_string(random123)),
                             player->getPosition().x)
                     );
         }
         entityManager->updateAll(deltaTime.asSeconds(), float(VIEWPORT_HEIGHT));
+        t.position = player->getPosition();
         //end game logic calls
 
         //begin draw calls
         window->clear(sf::Color::Black);
         std::list<Entity*> entities = entityManager->getEntityList();
-        for (std::list<Entity*>::const_iterator it = entities.begin(); it != entities.end(); ++it) {
+        for (auto it = entities.begin(); it != entities.end(); ++it) {
             window->draw((*it)->getSprite());
         }
-        t.position = player->getPosition();
 
+        //triangle draw test
         sf::CircleShape pCentroid = sf::CircleShape(0.5f);
         pCentroid.setPosition(t.position.x - pCentroid.getRadius(), t.position.y - pCentroid.getRadius());
         pCentroid.setFillColor(sf::Color::Blue);
-
         for (auto& edge : t.edges) {
-            sf::RectangleShape edgeRect = sf::RectangleShape(sf::Vector2f(edge.edgeVector().magnitude(), 0.25f));
+            sf::RectangleShape edgeRect = sf::RectangleShape(sf::Vector2f(edge.projectionAxis().magnitude(), 0.25f));
             edgeRect.setPosition(edge.pointA.toSFML() + t.position.toSFML());
-            edgeRect.setRotation(atan2f(edge.edgeVector().y, edge.edgeVector().x) * Mathf::RAD2DEG);
+            edgeRect.setRotation(atan2f(edge.projectionAxis().y, edge.projectionAxis().x) * Mathf::RAD2DEG);
             edgeRect.setOutlineColor(sf::Color::Blue);
             edgeRect.setFillColor(sf::Color::Blue);
             window->draw(edgeRect);
         }
-
         window->draw(pCentroid);
+
         window->display();
         //end draw calls
     }

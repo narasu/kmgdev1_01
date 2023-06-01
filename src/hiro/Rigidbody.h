@@ -1,3 +1,5 @@
+// Component for physics objects which handles force calculations
+
 #include "Hiro.h"
 #pragma once
 

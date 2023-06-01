@@ -1,3 +1,5 @@
+// General math functions and shorthand
+
 #include "Hiro.h"
 #include <cmath>
 #pragma once

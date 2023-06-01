@@ -2,7 +2,6 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Hiro.h"
-
 #pragma once
 
 namespace Hiro {
@@ -82,16 +81,6 @@ namespace Hiro {
             return _out;
         }
 
-        static T distance(Vector2<T> _lhVector, Vector2<T> _rhVector) {
-            Vector2<T> v = _rhVector - _lhVector;
-            return v.magnitude();
-        }
-
-
-        static T dot(const Vector2<T>& _lhVector2, const Vector2<T>& _rhVector2) {
-            return _lhVector2.x * _rhVector2.x + _lhVector2.y * _rhVector2.y;
-        }
-
         T sqrMagnitude() {
             return x*x + y*y;
         }
@@ -125,8 +114,17 @@ namespace Hiro {
             *this /= magnitude();
         }
 
-        //SFML Vector2 conversions
+        static T distance(Vector2<T> _lhVector, Vector2<T> _rhVector) {
+            Vector2<T> v = _rhVector - _lhVector;
+            return v.magnitude();
+        }
 
+
+        static T dot(const Vector2<T>& _lhVector2, const Vector2<T>& _rhVector2) {
+            return _lhVector2.x * _rhVector2.x + _lhVector2.y * _rhVector2.y;
+        }
+
+        //SFML Vector2 conversions
         explicit Vector2<T>(const sf::Vector2<T> &_vector2) {
             x = _vector2.x;
             y = _vector2.y;

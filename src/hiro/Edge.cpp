@@ -11,15 +11,11 @@ namespace Hiro {
 
     }
 
-    Vector2<float> Edge::edgeVector(bool _global) {
+    Vector2<float> Edge::projectionAxis(bool _global) {
         if (_global) {
             return pointB - pointA + parent.position;
         }
         return pointB - pointA;
-    }
-
-    Vector2<float> Edge::getMidPoint() {
-        return Vector2<float>();
     }
 
     Vector2<float> Edge::getNormal(const Vector2<float> _center) {

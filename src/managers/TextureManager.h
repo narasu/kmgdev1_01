@@ -1,3 +1,5 @@
+// This class creates and manages all textures and passes pointers any instance of Entity
+
 #include "Managers.h"
 #pragma once
 
@@ -7,9 +9,9 @@ public:
     TextureManager(const TextureManager& _textureManager); //copy constructor
     TextureManager& operator=(const TextureManager& _entity); //assignment operator
     ~TextureManager();
-    sf::Texture *newTexture(const std::string& _path);
-    sf::Texture *getTexture(const std::string& _name);
+    std::shared_ptr<sf::Texture> newTexture(const std::string& _path);
+    std::shared_ptr<sf::Texture> getTexture(const std::string& _name);
 private:
-    std::map<std::string, sf::Texture*> *textureMap;
-    std::map<std::string, sf::Texture*> copyTextureMap(std::map<std::string, sf::Texture *> &_map);
+    std::map<std::string, std::shared_ptr<sf::Texture>> *textureMap;
+    std::map<std::string, std::shared_ptr<sf::Texture>> copyTextureMap(std::map<std::string, std::shared_ptr<sf::Texture>> &_map);
 };

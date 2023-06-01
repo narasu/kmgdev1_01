@@ -1,3 +1,4 @@
+//This class manages pointers to each instance of Entity and runs all their update calls.
 #include <list>
 #include "Managers.h"
 #include "../entity/Entity.h"

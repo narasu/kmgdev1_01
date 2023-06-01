@@ -10,8 +10,6 @@ namespace Hiro {
         Vertex vertices[3];
 
         AABB<float> bounds;
-
-
     };
 
 }

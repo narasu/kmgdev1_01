@@ -4,7 +4,7 @@ EntityManager::EntityManager() : entityList(new std::list<Entity*>) {
 }
 
 void EntityManager::updateAll(float _delta, float _boundsY) {
-    for(std::list<Entity*>::iterator it = entityList->begin(); it!=entityList->end();) {
+    for(auto it = entityList->begin(); it!=entityList->end();) {
         (*it)->update(_delta);
 
 
@@ -30,7 +30,7 @@ std::list<Entity *> EntityManager::getEntityList() {
 
 
 EntityManager::~EntityManager() {
-    for (std::list<Entity*>::const_iterator it = entityList->begin(); it != entityList->end(); ++it) {
+    for (auto it = entityList->begin(); it != entityList->end(); ++it) {
         delete *it;
     }
     entityList->clear();
@@ -55,7 +55,7 @@ EntityManager &EntityManager::operator=(const EntityManager &_entityManager) {
 
 std::list<Entity *> EntityManager::copyEntityList(std::list<Entity *> &_list) {
     std::list<Entity *> l;
-    for (std::list<Entity*>::const_iterator it = _list.begin(); it != _list.end(); ++it) {
+    for (auto it = _list.begin(); it != _list.end(); ++it) {
         l.push_back(*it);
     }
     return l;

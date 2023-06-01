@@ -14,7 +14,7 @@ bool Spawner::updateTimer(float _delta) {
     return true;
 }
 
-Enemy *Spawner::spawnEnemy(sf::Texture *_texture, float _playerX) {
+Enemy *Spawner::spawnEnemy(sf::Texture &_texture, float _playerX) {
     float randomPosition = static_cast<float>(rand() % viewportWidth);
 
     //move next spawn slightly away from the last one

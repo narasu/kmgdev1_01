@@ -2,6 +2,7 @@
 #define KMGDEV1_01_MANAGERS_H
 
 #include <SFML/Graphics.hpp>
+#include <memory>
 #pragma once
 
 class TextureManager;

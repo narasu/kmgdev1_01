@@ -14,11 +14,14 @@ namespace Hiro {
                 Edge(*this, localPointC, localPointA)
         };
 
-        std::cout << edges[0].edgeVector() << edges[1].edgeVector() << edges[2].edgeVector() << std::endl;
+        std::cout << edges[0].projectionAxis() << edges[1].projectionAxis() << edges[2].projectionAxis() << std::endl;
 
-        float a = (edges[1].edgeVector().sqrMagnitude() + edges[2].edgeVector().sqrMagnitude() - edges[0].edgeVector().sqrMagnitude()) / (2 * edges[1].edgeVector().magnitude() * edges[2].edgeVector().magnitude());
-        float b = (edges[0].edgeVector().sqrMagnitude() + edges[2].edgeVector().sqrMagnitude() - edges[1].edgeVector().sqrMagnitude()) / (2 * edges[0].edgeVector().magnitude() * edges[2].edgeVector().magnitude());
-        float c = (edges[0].edgeVector().sqrMagnitude() + edges[1].edgeVector().sqrMagnitude() - edges[2].edgeVector().sqrMagnitude()) / (2 * edges[0].edgeVector().magnitude() * edges[1].edgeVector().magnitude());
+        float a = (edges[1].projectionAxis().sqrMagnitude() + edges[2].projectionAxis().sqrMagnitude() - edges[0].projectionAxis().sqrMagnitude()) /
+                (2 * edges[1].projectionAxis().magnitude() * edges[2].projectionAxis().magnitude());
+        float b = (edges[0].projectionAxis().sqrMagnitude() + edges[2].projectionAxis().sqrMagnitude() - edges[1].projectionAxis().sqrMagnitude()) /
+                (2 * edges[0].projectionAxis().magnitude() * edges[2].projectionAxis().magnitude());
+        float c = (edges[0].projectionAxis().sqrMagnitude() + edges[1].projectionAxis().sqrMagnitude() - edges[2].projectionAxis().sqrMagnitude()) /
+                (2 * edges[0].projectionAxis().magnitude() * edges[1].projectionAxis().magnitude());
 
         vertices[0] = Vertex(_pointA - position, a);
         vertices[1] = Vertex(_pointB - position, b);

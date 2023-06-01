@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Player.h"
 
-Player::Player(const sf::Texture *_texture) : PhysicsEntity(_texture, 5.0f, 150.0f) {
+Player::Player(const sf::Texture &_texture) : PhysicsEntity(_texture, 5.0f, 150.0f) {
     position = Vector2<float>(160.f, 155.f);
 }
 
