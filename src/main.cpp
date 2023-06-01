@@ -17,12 +17,6 @@ int main()
     sf::RenderWindow* window;
     window = new sf::RenderWindow(sf::VideoMode(VIEWPORT_WIDTH, VIEWPORT_HEIGHT), "Alien Exile");
     Vector2<int> windowPosition(0, 0);
-
-
-    Triangle t = Triangle(Vector2<float>(160.0f, 146.0f), Vector2<float>(163.5f, 161.0f), Vector2<float>(155.5f, 161.0f));
-    Triangle y = Triangle(Vector2<float>(160.0f, 146.0f), Vector2<float>(163.5f, 161.0f), Vector2<float>(155.5f, 161.0f));
-
-    float z = Vector2<float>::distance(t.position, y.position);
     Vector2<unsigned int> windowSize(1280, 720);
     window->setSize(windowSize.toSFML());
     window->setPosition(windowPosition.toSFML());
@@ -57,7 +51,6 @@ int main()
                     );
         }
         entityManager->updateAll(deltaTime.asSeconds(), float(VIEWPORT_HEIGHT));
-        t.position = player->getPosition();
         //end game logic calls
 
         //begin draw calls
@@ -67,19 +60,6 @@ int main()
             window->draw((*it)->getSprite());
         }
 
-        //triangle draw test
-        sf::CircleShape pCentroid = sf::CircleShape(0.5f);
-        pCentroid.setPosition(t.position.x - pCentroid.getRadius(), t.position.y - pCentroid.getRadius());
-        pCentroid.setFillColor(sf::Color::Blue);
-        for (auto& edge : t.edges) {
-            sf::RectangleShape edgeRect = sf::RectangleShape(sf::Vector2f(edge.projectionAxis().magnitude(), 0.25f));
-            edgeRect.setPosition(edge.pointA.toSFML() + t.position.toSFML());
-            edgeRect.setRotation(atan2f(edge.projectionAxis().y, edge.projectionAxis().x) * Mathf::RAD2DEG);
-            edgeRect.setOutlineColor(sf::Color::Blue);
-            edgeRect.setFillColor(sf::Color::Blue);
-            window->draw(edgeRect);
-        }
-        window->draw(pCentroid);
 
         window->display();
         //end draw calls

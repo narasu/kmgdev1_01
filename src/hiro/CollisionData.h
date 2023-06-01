@@ -4,7 +4,7 @@ namespace Hiro {
 
     struct CollisionData {
     public:
-        AABB<float> bounds;
+        Rect<float> bounds;
     };
 
 }
