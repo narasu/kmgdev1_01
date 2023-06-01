@@ -11,14 +11,12 @@ namespace Hiro {
     template <typename T>
     struct Rect;
 
-    struct CollisionData;
     class Rigidbody;
 }
 
 #include "Mathf.h"
 #include "Vector2.h"
 #include "Rect.h"
-#include "CollisionData.h"
 #include "Rigidbody.h"
 
 #endif //KMGDEV1_01_HIRO_H

@@ -1,5 +1,6 @@
 #include "Managers.h"
 
+
 EntityManager::EntityManager() : entityList(std::make_unique<std::list<std::shared_ptr<Entity>>>()) {
 }
 
@@ -9,6 +10,7 @@ void EntityManager::updateAll(float _delta, float _boundsY) {
 
         //if an entity reaches the bottom of the screen, delete it
         if ((*it)->getSprite().getPosition().y > _boundsY) {
+            //it->reset();
             it = entityList->erase(it);
         }
         else {

@@ -43,19 +43,19 @@ int main()
         sf::Time deltaTime = deltaClock.restart();
         if (spawner.updateTimer(deltaTime.asSeconds())) {
             int random123 = rand() % 3 + 1;
-            entityManager->addEntity(
-                    spawner.spawnEnemy(
-                            *textureManager->getTexture("enemy0" + std::to_string(random123)),
-                            player->getPosition().x)
-                    );
+            std::string randomEnemy = "enemy0" + std::to_string(random123);
+            std::shared_ptr<Enemy> e = spawner.spawnEnemy(
+                    *textureManager->getTexture(randomEnemy),
+                    player->getPosition().x);
+
+            entityManager->addEntity(e);
         }
         entityManager->updateAll(deltaTime.asSeconds(), float(VIEWPORT_HEIGHT));
         //end game logic calls
 
         //begin draw calls
         window->clear(sf::Color::Black);
-        auto& entities = entityManager->getEntityList();
-        for (auto & it : *entities) {
+        for (auto & it : *entityManager->getEntityList()) {
             window->draw(it->getSprite());
         }
         window->display();

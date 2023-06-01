@@ -15,7 +15,7 @@ bool Spawner::updateTimer(float _delta) {
 }
 
 std::shared_ptr<Enemy> Spawner::spawnEnemy(const sf::Texture &_texture, float _playerX) {
-    float randomPosition = static_cast<float>(rand() % viewportWidth);
+    auto randomPosition = static_cast<float>(rand() % viewportWidth);
 
     //move next spawn slightly away from the last one
     float offset = 20.0f;
@@ -33,7 +33,7 @@ std::shared_ptr<Enemy> Spawner::spawnEnemy(const sf::Texture &_texture, float _p
     }
 
     //keep spawns within the play area, on the opposite side to avoid negating previous offset
-    float vpWidthf = static_cast<float>(viewportWidth);
+    auto vpWidthf = static_cast<float>(viewportWidth);
     if (randomPosition < .0f) {
         randomPosition += vpWidthf;
     }

@@ -4,7 +4,7 @@ project(kmgdev1_01)
 set(CMAKE_CXX_STANDARD 17)
 
 
-add_executable(kmgdev1_01 src/main.cpp src/hiro/Hiro.h src/entity/Entity.h src/entity/Entity.cpp src/entity/PhysicsEntity.h src/entity/PhysicsEntity.cpp src/Player.h src/Player.cpp src/Enemy.cpp src/Enemy.h src/Spawner.cpp src/Spawner.h src/Animator.cpp src/Animator.h src/managers/TextureManager.cpp src/managers/TextureManager.h src/managers/EntityManager.cpp src/managers/EntityManager.h src/hiro/Vector2.h src/hiro/Rigidbody.h src/hiro/Rigidbody.cpp src/hiro/Rect.h src/hiro/Mathf.h src/hiro/CollisionData.cpp src/hiro/CollisionData.h src/managers/Managers.h)
+add_executable(kmgdev1_01 src/main.cpp src/hiro/Hiro.h src/entity/Entity.h src/entity/Entity.cpp src/entity/PhysicsEntity.h src/entity/PhysicsEntity.cpp src/Player.h src/Player.cpp src/Enemy.cpp src/Enemy.h src/Spawner.cpp src/Spawner.h src/Animator.cpp src/Animator.h src/managers/Managers.h src/managers/TextureManager.cpp src/managers/TextureManager.h src/managers/EntityManager.cpp src/managers/EntityManager.h src/hiro/Vector2.h src/hiro/Rigidbody.h src/hiro/Rigidbody.cpp src/hiro/Rect.h src/hiro/Mathf.h src/managers/CollisionManager.cpp src/managers/CollisionManager.h)
 
 include_directories(C:/SFML/include)
 

@@ -13,7 +13,7 @@ Animator::Animator(sf::Sprite& _sprite, int _cellWidth, int _cellHeight, int _ce
 void Animator::animate(sf::Sprite& _sprite, float _delta) {
 
     animationDelta += _delta;
-    float rate = 1.f/ float(frameRate);
+    float rate = 1.0f/ float(frameRate);
     if (animationDelta < rate) {
         return;
     }
