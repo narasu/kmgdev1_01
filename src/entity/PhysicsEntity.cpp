@@ -1,5 +1,4 @@
 #include "Entity.h"
-#include "PhysicsEntity.h"
 
 
 PhysicsEntity::PhysicsEntity(const sf::Texture &_texture, float _mass, float _friction, Rect<float> _localBounds) : Entity(_texture), bounds(_localBounds)  {
@@ -24,10 +23,13 @@ void PhysicsEntity::update(float _delta) {
 }
 
 Rect<float> PhysicsEntity::getBoundsGlobal() {
-    return Rect<float>(bounds.x + position.x, bounds.y + position.y, bounds.w + position.x, bounds.h + position.y);
+    return Rect<float>(bounds.x + position.x, bounds.y + position.y, bounds.w, bounds.h);
 }
 
 void PhysicsEntity::onCollision() {
-
+    std::cout << "collision" << std::endl;
 }
 
+bool PhysicsEntity::isDestroyed() {
+    return destroyed;
+}

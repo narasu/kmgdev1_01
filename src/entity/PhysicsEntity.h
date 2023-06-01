@@ -10,8 +10,10 @@ public:
     ~PhysicsEntity() override;
     void update(float _delta) override;
     Rect<float> getBoundsGlobal();
-    void onCollision();
+    virtual void onCollision();
+    bool isDestroyed() override;
 protected:
     Rigidbody* rigidbody;
     Rect<float> bounds;
+
 };

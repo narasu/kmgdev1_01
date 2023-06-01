@@ -18,10 +18,12 @@ public:
     virtual void update(float _delta);
     virtual sf::Sprite& getSprite();
     virtual Vector2<float> getPosition();
+    virtual bool isDestroyed() = 0;
 protected:
     std::unique_ptr<sf::Sprite> sprite;
     Vector2<float> position = V2_ZERO<float>;
     Vector2<float> origin;
+    bool destroyed = false;
 };
 
 class PhysicsEntity;

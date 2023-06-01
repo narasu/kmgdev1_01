@@ -25,3 +25,8 @@ void Enemy::update(float _delta) {
     rigidbody->addForce(x, 15.0f);
     PhysicsEntity::update(_delta);
 }
+
+void Enemy::onCollision() {
+    PhysicsEntity::onCollision();
+    destroyed = true;
+}
