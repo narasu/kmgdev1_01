@@ -1,16 +1,14 @@
 #include "Managers.h"
 
-EntityManager::EntityManager() : entityList(new std::list<Entity*>) {
+EntityManager::EntityManager() : entityList(std::make_unique<std::list<std::shared_ptr<Entity>>>()) {
 }
 
 void EntityManager::updateAll(float _delta, float _boundsY) {
     for(auto it = entityList->begin(); it!=entityList->end();) {
         (*it)->update(_delta);
 
-
         //if an entity reaches the bottom of the screen, delete it
         if ((*it)->getSprite().getPosition().y > _boundsY) {
-            delete *it;
             it = entityList->erase(it);
         }
         else {
@@ -19,44 +17,40 @@ void EntityManager::updateAll(float _delta, float _boundsY) {
     }
 }
 
-void EntityManager::addEntity(Entity *_entity) {
+void EntityManager::addEntity(const std::shared_ptr<Entity> &_entity) {
     entityList->push_back(_entity);
 }
 
 
-std::list<Entity *> EntityManager::getEntityList() {
-    return *entityList;
+std::unique_ptr<std::list<std::shared_ptr<Entity>>>& EntityManager::getEntityList() {
+    return entityList;
 }
 
 
 EntityManager::~EntityManager() {
-    for (auto it = entityList->begin(); it != entityList->end(); ++it) {
-        delete *it;
-    }
+
     entityList->clear();
-    delete entityList;
-    entityList = nullptr;
 }
 
 EntityManager::EntityManager(const EntityManager &_entityManager) {
     if (this == &_entityManager) {
         return;
     }
-    entityList = new std::list<Entity*>(copyEntityList(*_entityManager.entityList));
+    entityList = std::make_unique<std::list<std::shared_ptr<Entity>>>(copyEntityList(*_entityManager.entityList));
 }
 
 EntityManager &EntityManager::operator=(const EntityManager &_entityManager) {
     if (this == &_entityManager) {
         return *this;
     }
-    entityList = new std::list<Entity*>(copyEntityList(*_entityManager.entityList));
+    entityList = std::make_unique<std::list<std::shared_ptr<Entity>>>(copyEntityList(*_entityManager.entityList));
     return *this;
 }
 
-std::list<Entity *> EntityManager::copyEntityList(std::list<Entity *> &_list) {
-    std::list<Entity *> l;
-    for (auto it = _list.begin(); it != _list.end(); ++it) {
-        l.push_back(*it);
+std::list<std::shared_ptr<Entity>> EntityManager::copyEntityList(const std::list<std::shared_ptr<Entity>> &_list) {
+    std::list<std::shared_ptr<Entity>> l;
+    for (const auto & it : _list) {
+        l.push_back(it);
     }
     return l;
 }

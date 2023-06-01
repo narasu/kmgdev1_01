@@ -2,20 +2,22 @@
 #include "Enemy.h"
 
 
-Enemy::Enemy(const sf::Texture &_texture, Vector2<float> _startPosition) : PhysicsEntity(_texture, 4.0f, 999.0f) {
+Enemy::Enemy(const sf::Texture &_texture, Vector2<float> _startPosition, Rect<float> _localBounds) :
+PhysicsEntity(_texture, 4.0f, 999.0f, _localBounds) {
     position = _startPosition;
     int cellCount = 2;
     animator = Animator(*sprite, static_cast<int>(_texture.getSize().x) / cellCount, static_cast<int>(_texture.getSize().y), cellCount, 2);
 }
 
-Enemy::Enemy(const sf::Texture &_texture, float _startX, float _startY) :
-    Enemy(_texture, Vector2<float>(_startX, _startY)) {}
+Enemy::Enemy(const sf::Texture &_texture, float _startX, float _startY, Rect<float> _localBounds) :
+    Enemy(_texture, Vector2<float>(_startX, _startY), _localBounds) {}
 
 void Enemy::update(float _delta) {
-    //animate the texture
     animator.animate(*sprite, _delta);
 
-    //note: adjusting t and amplitude will not have a 1:1 effect on the localPosition as it's a force scalar
+    // cosine-based horizontal movement
+    // note: adjusting t and amplitude may not have the expected effect on movement
+    // as it's a force scalar and does not manipulate position directly
     float t = position.y * 0.25f;
     float amplitude = 20.0f;
     float x = std::cos(t) * amplitude;

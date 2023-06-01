@@ -1,3 +1,5 @@
+// forward declarations of math and physics classes
+
 #ifndef KMGDEV1_01_HIRO_H
 #define KMGDEV1_01_HIRO_H
 #pragma once

@@ -1,10 +1,10 @@
 #include "Entity.h"
+#include "PhysicsEntity.h"
 
-PhysicsEntity::PhysicsEntity(const sf::Texture &_texture, float _mass, float _friction) : Entity(_texture) {
+
+PhysicsEntity::PhysicsEntity(const sf::Texture &_texture, float _mass, float _friction, Rect<float> _localBounds) : Entity(_texture), bounds(_localBounds)  {
     rigidbody = new Rigidbody(_mass, _friction);
-    // collisionShape = new collisionshape
 }
-
 PhysicsEntity::~PhysicsEntity() {
     delete rigidbody;
     rigidbody = nullptr;

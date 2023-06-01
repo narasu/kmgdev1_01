@@ -14,7 +14,7 @@ bool Spawner::updateTimer(float _delta) {
     return true;
 }
 
-Enemy *Spawner::spawnEnemy(sf::Texture &_texture, float _playerX) {
+std::shared_ptr<Enemy> Spawner::spawnEnemy(const sf::Texture &_texture, float _playerX) {
     float randomPosition = static_cast<float>(rand() % viewportWidth);
 
     //move next spawn slightly away from the last one
@@ -54,5 +54,5 @@ Enemy *Spawner::spawnEnemy(sf::Texture &_texture, float _playerX) {
     biasTriggered = false;
 
     lastSpawnPosition = randomPosition;
-    return new Enemy(_texture, randomPosition, .0f);
+    return std::make_shared<Enemy>(_texture, randomPosition, .0f, Rect<float>());
 }

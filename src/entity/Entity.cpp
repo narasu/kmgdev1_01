@@ -23,11 +23,10 @@ Entity &Entity::operator=(const Entity &_entity) {
 }
 
 void Entity::update(float _delta) {
-    // draw sprite so the entity's position represents its center
     // round to whole numbers to prevent sub-pixel positions
     // does this make everything jittery and also slightly inaccurate? yes
     // but it really sells the arcade aesthetic, so it's here to stay
-    sprite->setPosition(roundf(position.x - origin.x), roundf(position.y - origin.y));
+    sprite->setPosition(roundf(position.x), roundf(position.y));
 }
 
 sf::Sprite& Entity::getSprite() {

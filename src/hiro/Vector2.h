@@ -1,3 +1,5 @@
+// Vector2 with a generic type
+
 #include <cmath>
 #include <iostream>
 #include <SFML/Graphics.hpp>

@@ -23,12 +23,12 @@ int main()
     window->setFramerateLimit(60);
     sf::Clock deltaClock = sf::Clock();
     //std::srand(26);
-    auto textureManager = new TextureManager();
-    auto entityManager = new EntityManager();
+    auto textureManager = std::make_unique<TextureManager>();
+    auto entityManager = std::make_unique<EntityManager>();
     Spawner spawner = Spawner(VIEWPORT_WIDTH, 3.0f);
 
     //spawn player
-    Player* player = new Player(*textureManager->getTexture("player"));
+    auto player = std::make_shared<Player>(*textureManager->getTexture("player"), Rect<float>(.0f, 2.0f, 6.0f, 8.0f));
     entityManager->addEntity(player);
 
     while (window->isOpen()) {
@@ -40,7 +40,6 @@ int main()
         }
 
         //begin game logic calls
-
         sf::Time deltaTime = deltaClock.restart();
         if (spawner.updateTimer(deltaTime.asSeconds())) {
             int random123 = rand() % 3 + 1;
@@ -55,20 +54,13 @@ int main()
 
         //begin draw calls
         window->clear(sf::Color::Black);
-        std::list<Entity*> entities = entityManager->getEntityList();
-        for (auto it = entities.begin(); it != entities.end(); ++it) {
-            window->draw((*it)->getSprite());
+        auto& entities = entityManager->getEntityList();
+        for (auto & it : *entities) {
+            window->draw(it->getSprite());
         }
-
-
         window->display();
         //end draw calls
     }
 
-    //cleanup
-    delete entityManager;
-    entityManager = nullptr;
-    delete textureManager;
-    textureManager = nullptr;
     return 0;
 }
