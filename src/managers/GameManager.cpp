@@ -1,8 +1,10 @@
 #include "Managers.h"
+#include "../GameData.h"
 
+GameManager::GameManager(std::shared_ptr<EntityManager> _entityManager, std::shared_ptr<TextureManager> _textureManager) :
+entityManager(_entityManager), textureManager(_textureManager){
 
-GameManager::GameManager() {
-    state = "splash";
+    state = "start";
     stateEnter();
 }
 
@@ -12,8 +14,10 @@ void GameManager::stateEnter() {
     }
 
     else if (state == "start") {
-        // create entity manager, player, title, background, press key text
-
+        // create player, title, background, press key text
+        entityManager->setPlayer(
+                std::make_unique<Player>(*textureManager->getTexture("player"), BOUNDS.at("player"))
+                );
     }
 
     else if (state == "play") {
@@ -72,8 +76,4 @@ void GameManager::stateSwitch(std::string _state) {
 
 std::string GameManager::getState() {
     return state;
-}
-
-EntityManager &GameManager::getEntityManager() {
-    return *entityManager;
 }

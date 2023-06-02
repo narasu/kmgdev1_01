@@ -1,10 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <list>
-#include <cstdlib>
 #include <iostream>
 #include "hiro/Hiro.h"
 #include "managers/Managers.h"
-#include "Player.h"
 #include "Spawner.h"
 #include "GameData.h"
 
@@ -22,15 +20,10 @@ int main()
     window->setFramerateLimit(60);
     sf::Clock deltaClock = sf::Clock();
     //std::srand(26);
-    auto textureManager = std::make_unique<TextureManager>();
+    auto textureManager = std::make_shared<TextureManager>();
+    auto entityManager = std::make_shared<EntityManager>();
+    auto gameManager = std::make_unique<GameManager>(entityManager, textureManager);
 
-    auto gameManager = std::make_unique<GameManager>();
-    std::string gameState = "splash";
-
-
-    auto entityManager = std::make_unique<EntityManager>(
-            std::make_unique<Player>(*textureManager->getTexture("player"), Rect<float>(.0f, 2.0f, 6.0f, 8.0f))
-            );
     auto spawner = Spawner(3.0f);
 
     while (window->isOpen()) {
@@ -49,9 +42,9 @@ int main()
             std::string randomEnemy = "enemy0" + std::to_string(random123);
             entityManager->addEnemy(
                     spawner.spawnEnemy(
-                        *textureManager->getTexture(randomEnemy),
-                        collisionRects.at(randomEnemy),
-                        entityManager->getPlayer().getPosition().x)
+                            *textureManager->getTexture(randomEnemy),
+                            BOUNDS.at(randomEnemy),
+                            entityManager->getPlayer().getPosition().x)
                     );
         }
         entityManager->updateAll(deltaTime.asSeconds());
