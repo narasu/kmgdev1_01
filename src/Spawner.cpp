@@ -1,9 +1,9 @@
 #include "Spawner.h"
-#include "hiro/Mathf.h"
+#include "GameData.h"
 
-Spawner::Spawner() : viewportWidth(320), spawnInterval(1.0f) {}
+Spawner::Spawner() : spawnInterval(1.0f) {}
 
-Spawner::Spawner(int _viewportWidth, float _spawnInterval) : viewportWidth(_viewportWidth), spawnInterval(_spawnInterval) {}
+Spawner::Spawner(float _spawnInterval) : spawnInterval(_spawnInterval) {}
 
 bool Spawner::updateTimer(float _delta) {
     if (time < spawnInterval) {
@@ -14,16 +14,14 @@ bool Spawner::updateTimer(float _delta) {
     return true;
 }
 
-std::unique_ptr<Enemy> Spawner::spawnEnemy(const sf::Texture &_texture, float _playerX) {
-    auto randomPosition = static_cast<float>(rand() % viewportWidth);
+std::unique_ptr<Enemy> Spawner::spawnEnemy(const sf::Texture &_texture, const Rect<float> _bounds, float _playerX) {
+    auto randomPosition = static_cast<float>(rand() % VIEWPORT_WIDTH);
 
     //move next spawn slightly away from the last one
     float offset = 20.0f;
     float p = lastSpawnPosition - randomPosition;
     while (fabsf(p) < offset) {
-
-        int sign = Hiro::Mathf::sign(p);
-        if (sign == 1) {
+        if (Mathf::sign(p) == 1) {
             randomPosition -= 1.0f;
         }
         else {
@@ -33,7 +31,7 @@ std::unique_ptr<Enemy> Spawner::spawnEnemy(const sf::Texture &_texture, float _p
     }
 
     //keep spawns within the play area, on the opposite side to avoid negating previous offset
-    auto vpWidthf = static_cast<float>(viewportWidth);
+    auto vpWidthf = static_cast<float>(VIEWPORT_WIDTH);
     if (randomPosition < .0f) {
         randomPosition += vpWidthf;
     }
@@ -46,13 +44,14 @@ std::unique_ptr<Enemy> Spawner::spawnEnemy(const sf::Texture &_texture, float _p
         int randomChance = rand() % 100;
         if (randomChance > 70) {
             float b = _playerX - randomPosition;
-            int sign = Hiro::Mathf::sign(b);
-            randomPosition += fabsf(_playerX - randomPosition) * static_cast<float>(sign) * 0.85f;
+            randomPosition += fabsf(_playerX - randomPosition) * Mathf::signf(b) * 0.85f;
             biasTriggered = true;
         }
     }
-    biasTriggered = false;
+    else {
+        biasTriggered = false;
+    }
 
     lastSpawnPosition = randomPosition;
-    return std::make_unique<Enemy>(_texture, randomPosition, .0f, Rect<float>(.0f, .0f, 5.0f, 8.0f));
+    return std::make_unique<Enemy>(_texture, randomPosition, .0f, _bounds);
 }

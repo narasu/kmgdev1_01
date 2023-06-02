@@ -5,7 +5,6 @@ Entity::Entity(const sf::Texture &_texture)  {
     sprite = std::make_unique<sf::Sprite>();
     sprite->setTexture(_texture);
     origin = Hiro::Vector2<float>(sprite->getTextureRect().width*0.5f, sprite->getTextureRect().height*0.5f);
-
 }
 
 Entity::Entity(const Entity &_entity) {

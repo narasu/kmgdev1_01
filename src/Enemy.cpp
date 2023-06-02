@@ -1,5 +1,6 @@
 #include <cmath>
 #include "Enemy.h"
+#include "GameData.h"
 
 
 Enemy::Enemy(const sf::Texture &_texture, Vector2<float> _startPosition, Rect<float> _localBounds) :
@@ -24,6 +25,11 @@ void Enemy::update(float _delta) {
 
     rigidbody->addForce(x, 15.0f);
     PhysicsEntity::update(_delta);
+
+    // if the bottom of the screen is reached, flag as destroyed so EntityManager knows to delete it
+    if (position.y > VIEWPORT_HEIGHT) {
+        destroyed = true;
+    }
 }
 
 void Enemy::onCollision() {

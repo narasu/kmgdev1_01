@@ -13,6 +13,11 @@ namespace Hiro {
             return (0 < _number) - (_number < 0);
         }
 
+        template <typename T>
+        static float signf(T _number) {
+            return static_cast<float>((0 < _number) - (_number < 0));
+        }
+
         static constexpr float RAD2DEG = 180 / M_PI;
     };
 }

@@ -7,8 +7,10 @@
 
 class TextureManager;
 class EntityManager;
+class GameManager;
 
 #include "TextureManager.h"
 #include "EntityManager.h"
+#include "GameManager.h"
 
 #endif //KMGDEV1_01_MANAGERS_H

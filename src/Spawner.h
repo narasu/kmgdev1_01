@@ -4,11 +4,10 @@
 class Spawner {
 public:
     Spawner();
-    Spawner(int _viewportWidth, float _spawnInterval);
+    explicit Spawner(float _spawnInterval);
     bool updateTimer(float _delta);
-    std::unique_ptr<Enemy> spawnEnemy(const sf::Texture &_texture, float _playerX);
+    std::unique_ptr<Enemy> spawnEnemy(const sf::Texture &_texture, const Rect<float> _bounds, float _playerX);
 private:
-    int viewportWidth;
     float spawnInterval;
     float time = .0f;
     float lastSpawnPosition = .0f;
