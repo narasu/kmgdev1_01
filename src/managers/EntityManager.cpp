@@ -3,14 +3,20 @@
 
 #include <algorithm>
 
-EntityManager::EntityManager(std::unique_ptr<Player> _player) : player(std::move(_player)) {
+EntityManager::EntityManager() {
     enemies = std::vector<std::unique_ptr<Enemy>>();
     background = std::vector<std::unique_ptr<Entity>>();
 }
 
+EntityManager::EntityManager(std::unique_ptr<Player> _player) : EntityManager() {
+    player = std::move(_player);
+}
+
 void EntityManager::updateAll(float _delta) {
 
-    player->update(_delta);
+    if (player!=nullptr) {
+        player->update(_delta);
+    }
 
     for(auto it = background.begin(); it != background.end();) {
         (*it)->update(_delta);
@@ -38,12 +44,10 @@ void EntityManager::updateAll(float _delta) {
 }
 
 void EntityManager::checkCollisions() {
-    //if there are no enemies, no point in checking collisions
-    if (enemies.empty()) {
+    if (enemies.empty() || player==nullptr) {
         return;
     }
-    
-    //also, no point in checking collisions other than between enemy and player
+
     for (const auto& e : enemies) {
         if (Rect<float>::isOverlapping(e->getBoundsGlobal(), player->getBoundsGlobal())) {
             e->onCollision();
@@ -64,7 +68,9 @@ std::vector<sf::Sprite> EntityManager::getSprites() {
     for (const auto &it : enemies) {
         sprites.push_back(it->getSprite());
     }
-    sprites.push_back(player->getSprite());
+    if (player!=nullptr) {
+        sprites.push_back(player->getSprite());
+    }
     return sprites;
 }
 
@@ -93,6 +99,11 @@ EntityManager &EntityManager::operator=(const EntityManager &_entityManager) {
 Player &EntityManager::getPlayer() {
     return *player;
 }
+
+void EntityManager::setPlayer(std::unique_ptr<Player> _player) {
+    player = std::move(_player);
+}
+
 /*
 
 std::list<std::shared_ptr<Entity>> EntityManager::copyEntityList(const std::list<std::shared_ptr<Entity>> &_list) {

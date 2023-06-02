@@ -8,11 +8,13 @@
 
 class EntityManager {
 public:
+    EntityManager();
     EntityManager(std::unique_ptr<Player> _player);
     ~EntityManager();
     EntityManager(const EntityManager&  _entityManager); //copy constructor
     EntityManager& operator=(const EntityManager& _entityManager); //assignment operator
     void updateAll(float _delta);
+    void setPlayer(std::unique_ptr<Player> _player);
     void addEnemy(std::unique_ptr<Enemy> _enemy);
     void addBackground(const std::unique_ptr<Entity> &_entity);
     std::vector<sf::Sprite> getSprites();

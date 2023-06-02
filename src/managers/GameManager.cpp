@@ -1,5 +1,6 @@
 #include "Managers.h"
 
+
 GameManager::GameManager() {
     state = "splash";
     stateEnter();
@@ -12,6 +13,7 @@ void GameManager::stateEnter() {
 
     else if (state == "start") {
         // create entity manager, player, title, background, press key text
+
     }
 
     else if (state == "play") {
@@ -24,7 +26,7 @@ void GameManager::stateEnter() {
 
 }
 
-void GameManager::stateUpdate() {
+void GameManager::stateUpdate(float _delta) {
     if (state == "splash") {
         // if timer runs out, go to start state
     }
@@ -35,6 +37,8 @@ void GameManager::stateUpdate() {
 
     else if (state == "play") {
         // run update calls here? this might get messy
+
+        // and what about draw calls?
     }
 
     else if (state == "lose") {
@@ -68,4 +72,8 @@ void GameManager::stateSwitch(std::string _state) {
 
 std::string GameManager::getState() {
     return state;
+}
+
+EntityManager &GameManager::getEntityManager() {
+    return *entityManager;
 }

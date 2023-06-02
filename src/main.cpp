@@ -23,6 +23,11 @@ int main()
     sf::Clock deltaClock = sf::Clock();
     //std::srand(26);
     auto textureManager = std::make_unique<TextureManager>();
+
+    auto gameManager = std::make_unique<GameManager>();
+    std::string gameState = "splash";
+
+
     auto entityManager = std::make_unique<EntityManager>(
             std::make_unique<Player>(*textureManager->getTexture("player"), Rect<float>(.0f, 2.0f, 6.0f, 8.0f))
             );
@@ -35,6 +40,7 @@ int main()
             if (event.type == sf::Event::Closed) window->close();
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) window->close();
         }
+
 
         //begin game logic calls
         sf::Time deltaTime = deltaClock.restart();

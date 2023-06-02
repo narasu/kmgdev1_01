@@ -5,11 +5,14 @@ class GameManager {
 public:
     GameManager();
 
-    void stateUpdate();
+    void stateUpdate(float _delta);
     void stateSwitch(std::string _state);
     std::string getState();
+    EntityManager &getEntityManager();
 private:
-    std::string state;
     void stateEnter();
     void stateExit();
+    std::string state;
+
+    std::unique_ptr<EntityManager> entityManager;
 };

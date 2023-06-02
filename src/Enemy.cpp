@@ -11,7 +11,7 @@ PhysicsEntity(_texture, 4.0f, 999.0f, _localBounds) {
 }
 
 Enemy::Enemy(const sf::Texture &_texture, float _startX, float _startY, Rect<float> _localBounds) :
-    Enemy(_texture, Vector2<float>(_startX, _startY), _localBounds) {}
+Enemy(_texture, Vector2<float>(_startX, _startY), _localBounds) {}
 
 void Enemy::update(float _delta) {
     animator.animate(*sprite, _delta);
