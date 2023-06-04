@@ -15,6 +15,7 @@ private:
     void stateExit();
     std::string state;
     sf::Clock deltaClock;
+    float timer = .0f;
     int score = 0;
     int stage = 0;
 

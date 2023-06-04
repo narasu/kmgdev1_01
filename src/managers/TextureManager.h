@@ -1,4 +1,4 @@
-// This class creates and manages all textures and passes pointers any instance of Entity
+// This class creates and manages all textures and passes pointers any instance of BaseEntity
 
 #include "Managers.h"
 #pragma once

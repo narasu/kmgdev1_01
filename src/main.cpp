@@ -15,6 +15,7 @@ int main()
     window->setSize(windowSize.toSFML());
     window->setPosition(windowPosition.toSFML());
     window->setFramerateLimit(60);
+    sf::RectangleShape r = sf::RectangleShape(Vector2<float>(VIEWPORT_WIDTH, HUD_HEIGHT).toSFML());
 
     auto textureManager = std::make_shared<TextureManager>();
     auto entityManager = std::make_shared<EntityManager>();
@@ -37,6 +38,10 @@ int main()
         for (auto & it : entityManager->getSprites()) {
             window->draw(it);
         }
+
+
+        r.setFillColor(sf::Color::Black);
+        window->draw(r);
 
         for (auto &it : interfaceManager->getSprites()) {
             window->draw(it);

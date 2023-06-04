@@ -1,6 +1,6 @@
 #include "PhysicsEntity.h"
 
-PhysicsEntity::PhysicsEntity(const sf::Texture &_texture, float _mass, float _friction, Rect<float> _localBounds) : Entity(_texture), bounds(_localBounds)  {
+PhysicsEntity::PhysicsEntity(const sf::Texture &_texture, float _mass, float _friction, Rect<float> _localBounds) : BaseEntity(_texture), bounds(_localBounds)  {
     rigidbody = new Rigidbody(_mass, _friction);
 }
 PhysicsEntity::~PhysicsEntity() {

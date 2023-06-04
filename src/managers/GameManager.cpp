@@ -1,3 +1,6 @@
+// Executive class that handles game states with a basic finite state machine
+//
+
 #include "Managers.h"
 #include "../GameData.h"
 
@@ -5,45 +8,52 @@
 
 GameManager::GameManager(std::shared_ptr<TextureManager> _textureManager, std::shared_ptr<EntityManager> _entityManager, std::shared_ptr<InterfaceManager> _interfaceManager) :
 textureManager(_textureManager), entityManager(_entityManager), interfaceManager(_interfaceManager) {
-    state = "start";
+    state = "splash";
     stateEnter();
 }
 
 void GameManager::stateEnter() {
     if (state == "splash") {
-        // show splash screen and start a timer or something idk
+        interfaceManager->displayImage("splash", Vector2<float>(VIEWPORT_WIDTH*0.5f, VIEWPORT_HEIGHT*0.5f));
     }
 
     else if (state == "start") {
-        // create player, title, background, press key text
+        spawner = std::make_unique<Spawner>(SPAWN_INTERVAL[0]);
         entityManager->setPlayer(
                 std::make_unique<Player>(*textureManager->getTexture("player"), BOUNDS.at("player"))
                 );
+        interfaceManager->displayImage("title", Vector2<float>(VIEWPORT_WIDTH * 0.5f, 20.0f));
+        interfaceManager->displayImage("start_text", Vector2<float>(VIEWPORT_WIDTH * 0.5f, VIEWPORT_HEIGHT * 0.5f));
     }
 
     else if (state == "play") {
-        std::cout << "play state entered" << std::endl;
-        // create spawner, health, score
-        spawner = std::make_unique<Spawner>(SPAWN_INTERVAL[0]);
-        interfaceManager->initializeScore();
+
+        auto offset = Vector2<int>(6,3);
+        interfaceManager->displayImage("score", Vector2<float>(offset.x, offset.y), false);
+        interfaceManager->initializeScoreAndHealth(offset);
     }
 
     else if (state == "lose") {
-        // show "you died" text + score
+        interfaceManager->displayImage("end_text", Vector2<float>(VIEWPORT_WIDTH * 0.5f, VIEWPORT_HEIGHT * 0.5f - 12.0f));
+        interfaceManager->displayImage("score", Vector2<float>(VIEWPORT_WIDTH * 0.5f - 50.0f, VIEWPORT_HEIGHT * 0.5f), false);
+        interfaceManager->showFinalScore();
     }
-
 }
 
 void GameManager::stateUpdate() {
     auto deltaTime = deltaClock.restart();
 
     if (state == "splash") {
-        // if timer runs out, go to start state
+        timer += deltaTime.asSeconds();
+        if (timer >= 3.0f) {
+            switchState("start");
+            timer = .0f;
+            return;
+        }
     }
 
     else if (state == "start") {
         entityManager->updateAll(deltaTime.asSeconds());
-
         // go to play state when the player moves
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
             switchState("play");
@@ -70,35 +80,53 @@ void GameManager::stateUpdate() {
             );
         }
 
+        int playerHealth = entityManager->getPlayer().getHealth();
         entityManager->updateAll(deltaTime.asSeconds());
+
+        //if health has changed last update, update health UI
+        if (playerHealth != entityManager->getPlayer().getHealth()) {
+            interfaceManager->updateHealth(entityManager->getPlayer().getHealth());
+        }
+
+        //if any enemies are below the bottom of the screen, increment the score and send the new value to UI
         int count = entityManager->getOutOfBoundsCount();
         if (count > 0) {
             score += SCORE_PER_ENEMY[stage] * count;
             interfaceManager->updateScore(score);
+
+            /*if (stage < SCORE_THRESHOLD.size() && score > SCORE_THRESHOLD.at(stage)) {
+                stage++;
+            }*/
         }
     }
 
     else if (state == "lose") {
-        // if key is pressed or timer expired, go to start state
+        timer += deltaTime.asSeconds();
+        if (timer >= 3.0f) {
+            switchState("start");
+            timer = .0f;
+        }
     }
 }
 
 void GameManager::stateExit() {
     if (state == "splash") {
-        // remove splash screen
+        interfaceManager->clearImages();
     }
 
     else if (state == "start") {
-        // hide title, background, press key text
+        interfaceManager->clearImages();
     }
 
     else if (state == "play") {
-        // delete all entities and health
-        entityManager->removeAll();
+        entityManager->clearAll();
+        interfaceManager->clearHealth();
+        interfaceManager->clearImages();
     }
 
     else if (state == "lose") {
-        // delete "you died" text + score
+        interfaceManager->clearScore();
+        interfaceManager->clearImages();
     }
 }
 

@@ -53,5 +53,5 @@ std::unique_ptr<Enemy> Spawner::spawnEnemy(const sf::Texture &_texture, const Re
     }
 
     lastSpawnPosition = randomPosition;
-    return std::make_unique<Enemy>(_texture, randomPosition, .0f, _bounds);
+    return std::make_unique<Enemy>(_texture, randomPosition, HUD_HEIGHT, _bounds);
 }

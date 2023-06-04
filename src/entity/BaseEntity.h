@@ -6,12 +6,12 @@
 #include "../hiro/Hiro.h"
 #pragma once
 using namespace Hiro;
-class Entity  {
+class BaseEntity  {
 public:
-    explicit Entity(const sf::Texture &_texture);
-    Entity(const Entity& _entity); //copy constructor
-    Entity& operator=(const Entity& _entity); //assignment operator
-    virtual ~Entity() = default;
+    explicit BaseEntity(const sf::Texture &_texture);
+    BaseEntity(const BaseEntity& _entity); //copy constructor
+    BaseEntity& operator=(const BaseEntity& _entity); //assignment operator
+    virtual ~BaseEntity() = default;
     virtual void update(float _delta) = 0;
     virtual sf::Sprite& getSprite();
     virtual Vector2<float> getPosition();

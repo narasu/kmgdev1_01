@@ -27,7 +27,7 @@ void Enemy::update(float _delta) {
     PhysicsEntity::update(_delta);
 
     // if the bottom of the screen is reached, flag as destroyed so EntityManager knows to delete it
-    if (position.y > VIEWPORT_HEIGHT) {
+    if (position.y >= VIEWPORT_HEIGHT - 2) {
         outOfBounds = true;
         destroyed = true;
     }

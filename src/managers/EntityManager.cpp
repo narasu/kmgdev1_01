@@ -6,7 +6,7 @@
 
 EntityManager::EntityManager() {
     enemies = std::vector<std::unique_ptr<Enemy>>();
-    background = std::vector<std::unique_ptr<Entity>>();
+    background = std::vector<std::unique_ptr<BaseEntity>>();
 }
 
 EntityManager::EntityManager(std::unique_ptr<Player> _player) : EntityManager() {
@@ -67,13 +67,13 @@ void EntityManager::addEnemy(std::unique_ptr<Enemy> _enemy) {
 std::vector<std::reference_wrapper<sf::Sprite>> EntityManager::getSprites() {
     std::vector<std::reference_wrapper<sf::Sprite>> sprites;
     for (const auto &it : background) {
-        sprites.push_back(it->getSprite());
+        sprites.emplace_back(it->getSprite());
     }
     for (const auto &it : enemies) {
-        sprites.push_back(it->getSprite());
+        sprites.emplace_back(it->getSprite());
     }
     if (player!=nullptr) {
-        sprites.push_back(player->getSprite());
+        sprites.emplace_back(player->getSprite());
     }
     return sprites;
 }
@@ -89,14 +89,14 @@ EntityManager::EntityManager(const EntityManager &_entityManager) {
         return;
     }
     
-    //background = std::make_unique<std::list<std::shared_ptr<Entity>>>(copyEntityList(*_entityManager.background));
+    //background = std::make_unique<std::list<std::shared_ptr<BaseEntity>>>(copyEntityList(*_entityManager.background));
 }
 
 EntityManager &EntityManager::operator=(const EntityManager &_entityManager) {
     if (this == &_entityManager) {
         return *this;
     }
-    //background = std::make_unique<std::list<std::shared_ptr<Entity>>>(copyEntityList(*_entityManager.background));
+    //background = std::make_unique<std::list<std::shared_ptr<BaseEntity>>>(copyEntityList(*_entityManager.background));
     return *this;
 }
 
@@ -108,7 +108,7 @@ void EntityManager::setPlayer(std::unique_ptr<Player> _player) {
     player = std::move(_player);
 }
 
-void EntityManager::removeAll() {
+void EntityManager::clearAll() {
     player.reset();
     background.clear();
     enemies.clear();
@@ -120,8 +120,8 @@ int EntityManager::getOutOfBoundsCount() {
 
 /*
 
-std::list<std::shared_ptr<Entity>> EntityManager::copyEntityList(const std::list<std::shared_ptr<Entity>> &_list) {
-    std::list<std::shared_ptr<Entity>> l;
+std::list<std::shared_ptr<BaseEntity>> EntityManager::copyEntityList(const std::list<std::shared_ptr<BaseEntity>> &_list) {
+    std::list<std::shared_ptr<BaseEntity>> l;
     for (const auto & it : _list) {
         l.push_back(it);
     }

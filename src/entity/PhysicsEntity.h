@@ -3,10 +3,10 @@
 
 
 //TODO: change rigidbody raw ptr to smart ptr
-#include "Entity.h"
+#include "BaseEntity.h"
 #pragma once
 
-class PhysicsEntity : public Entity {
+class PhysicsEntity : public BaseEntity {
 public:
     PhysicsEntity(const sf::Texture &_texture, float _mass, float _friction, Rect<float> _localBounds);
     ~PhysicsEntity() override;

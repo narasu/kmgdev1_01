@@ -5,12 +5,13 @@
 TextureManager::TextureManager() {
 
     textureMap = std::map<std::string, std::shared_ptr<sf::Texture>> {
-        { "splash_screen", newTexture("assets/ui/splash_screen.png") },
+        { "splash", newTexture("assets/ui/splash_screen.png") },
         { "title", newTexture("assets/ui/title.png") },
         { "start_text", newTexture("assets/ui/start_text.png") },
         { "end_text", newTexture("assets/ui/end_text.png") },
         { "score", newTexture("assets/ui/score.png") },
         { "numbers", newTexture("assets/ui/numbers.png") },
+        { "heart", newTexture("assets/ui/heart.png") },
         { "player", newTexture("assets/entities/player.png") },
         { "grass", newTexture("assets/entities/grass.png") },
         { "enemy01", newTexture("assets/entities/enemy_crustachnid_sheet.png") },

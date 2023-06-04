@@ -1,19 +1,19 @@
 #include <iostream>
-#include "Entity.h"
+#include "BaseEntity.h"
 
-Entity::Entity(const sf::Texture &_texture)  {
+BaseEntity::BaseEntity(const sf::Texture &_texture)  {
     sprite = std::make_unique<sf::Sprite>();
     sprite->setTexture(_texture);
 }
 
-Entity::Entity(const Entity &_entity) {
+BaseEntity::BaseEntity(const BaseEntity &_entity) {
     if (this == &_entity) {
         return;
     }
     sprite = std::make_unique<sf::Sprite>(*_entity.sprite);
 }
 
-Entity &Entity::operator=(const Entity &_entity) {
+BaseEntity &BaseEntity::operator=(const BaseEntity &_entity) {
     if (this == &_entity) {
         return *this;
     }
@@ -21,15 +21,15 @@ Entity &Entity::operator=(const Entity &_entity) {
     return *this;
 }
 
-sf::Sprite& Entity::getSprite() {
+sf::Sprite& BaseEntity::getSprite() {
     return *sprite;
 }
 
-Vector2<float> Entity::getPosition() {
+Vector2<float> BaseEntity::getPosition() {
     return position;
 }
 
-bool Entity::isDestroyed() {
+bool BaseEntity::isDestroyed() {
     return destroyed;
 }
 
