@@ -1,9 +1,10 @@
-
 #include "Managers.h"
+
+//TODO: Re-implement assignment operator and copy constructor
 
 TextureManager::TextureManager() {
 
-    textureMap = new std::map<std::string, std::shared_ptr<sf::Texture>> {
+    textureMap = std::map<std::string, std::shared_ptr<sf::Texture>> {
         { "splash_screen", newTexture("assets/sprites/splash_screen.png") },
         { "title", newTexture("assets/sprites/title.png") },
         { "player", newTexture("assets/sprites/player.png") },
@@ -15,10 +16,10 @@ TextureManager::TextureManager() {
 }
 
 std::shared_ptr<sf::Texture> TextureManager::getTexture(const std::string& _name) {
-    if (auto search = textureMap->find(_name); search == textureMap->end()) {
+    if (auto search = textureMap.find(_name); search == textureMap.end()) {
         return nullptr;
     }
-    return textureMap->at(_name);
+    return textureMap.at(_name);
 }
 
 std::shared_ptr<sf::Texture> TextureManager::newTexture(const std::string& _path) {
@@ -33,14 +34,14 @@ TextureManager::TextureManager(const TextureManager &_textureManager) {
     if (this == &_textureManager) {
         return;
     }
-    textureMap = new std::map<std::string, std::shared_ptr<sf::Texture>>(copyTextureMap(*_textureManager.textureMap));
+    //textureMap = std::map<std::string, std::shared_ptr<sf::Texture>>(copyTextureMap(_textureManager.textureMap));
 }
 
 TextureManager &TextureManager::operator=(const TextureManager &_textureManager) {
     if (this == &_textureManager) {
         return *this;
     }
-    textureMap = new std::map<std::string, std::shared_ptr<sf::Texture>>(copyTextureMap(*_textureManager.textureMap));
+    //textureMap = std::map<std::string, std::shared_ptr<sf::Texture>>(copyTextureMap(_textureManager.textureMap));
     return *this;
 }
 
@@ -48,9 +49,7 @@ TextureManager::~TextureManager() {
     /*for (std::map<std::string, std::shared_ptr<sf::Texture>>::const_iterator it = textureMap->begin(); it != textureMap->end(); ++it) {
         delete (*it).second;
     }*/
-    textureMap->clear();
-    delete textureMap;
-    textureMap = nullptr;
+    textureMap.clear();
 }
 
 std::map<std::string, std::shared_ptr<sf::Texture>> TextureManager::copyTextureMap(std::map<std::string, std::shared_ptr<sf::Texture>> &_map) {

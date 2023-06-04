@@ -1,7 +1,8 @@
 #include "Managers.h"
 
-
 #include <algorithm>
+
+//TODO: Re-implement assignment operator and copy constructor
 
 EntityManager::EntityManager() {
     enemies = std::vector<std::unique_ptr<Enemy>>();
@@ -60,8 +61,8 @@ void EntityManager::addEnemy(std::unique_ptr<Enemy> _enemy) {
     enemies.push_back(std::move(_enemy));
 }
 
-std::vector<sf::Sprite> EntityManager::getSprites() {
-    std::vector<sf::Sprite> sprites;
+std::vector<std::reference_wrapper<sf::Sprite>> EntityManager::getSprites() {
+    std::vector<std::reference_wrapper<sf::Sprite>> sprites;
     for (const auto &it : background) {
         sprites.push_back(it->getSprite());
     }
@@ -102,6 +103,12 @@ Player &EntityManager::getPlayer() {
 
 void EntityManager::setPlayer(std::unique_ptr<Player> _player) {
     player = std::move(_player);
+}
+
+void EntityManager::removeAll() {
+    player.reset();
+    background.clear();
+    enemies.clear();
 }
 
 /*

@@ -1,6 +1,8 @@
 // Base for entities which have physics
 // Intended for other classes to inherit from, not to instantiate by itself
 
+
+//TODO: change rigidbody raw ptr to smart ptr
 #include "Entity.h"
 #pragma once
 
@@ -10,8 +12,7 @@ public:
     ~PhysicsEntity() override;
     void update(float _delta) override;
     Rect<float> getBoundsGlobal();
-    virtual void onCollision();
-    bool isDestroyed() override;
+    virtual void onCollision() = 0;
 protected:
     Rigidbody* rigidbody;
     Rect<float> bounds;

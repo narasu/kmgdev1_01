@@ -1,9 +1,10 @@
 #include "Managers.h"
 #include "../GameData.h"
 
-GameManager::GameManager(std::shared_ptr<EntityManager> _entityManager, std::shared_ptr<TextureManager> _textureManager) :
-entityManager(_entityManager), textureManager(_textureManager){
+//TODO: implement copy constructor and assignment operator
 
+GameManager::GameManager(std::shared_ptr<EntityManager> _entityManager, std::shared_ptr<InterfaceManager> _interfaceManager) :
+entityManager(_entityManager), interfaceManager(_interfaceManager) {
     state = "start";
     stateEnter();
 }
@@ -16,12 +17,14 @@ void GameManager::stateEnter() {
     else if (state == "start") {
         // create player, title, background, press key text
         entityManager->setPlayer(
-                std::make_unique<Player>(*textureManager->getTexture("player"), BOUNDS.at("player"))
+                std::make_unique<Player>(*textureManager.getTexture("player"), BOUNDS.at("player"))
                 );
     }
 
     else if (state == "play") {
+        std::cout << "play state entered" << std::endl;
         // create spawner, health, score
+        spawner = std::make_unique<Spawner>(SPAWN_INTERVAL[0]);
     }
 
     else if (state == "lose") {
@@ -30,19 +33,43 @@ void GameManager::stateEnter() {
 
 }
 
-void GameManager::stateUpdate(float _delta) {
+void GameManager::stateUpdate() {
+    auto deltaTime = deltaClock.restart();
+
     if (state == "splash") {
         // if timer runs out, go to start state
     }
 
     else if (state == "start") {
-        // if key is pressed, go to play state
+        entityManager->updateAll(deltaTime.asSeconds());
+
+        // go to play state when the player moves
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            switchState("play");
+            return;
+        }
     }
 
     else if (state == "play") {
-        // run update calls here? this might get messy
+        if (entityManager->getPlayer().isDestroyed()) {
+            switchState("lose");
+            return;
+        }
 
-        // and what about draw calls?
+        // spawn a random enemy every few seconds
+        if (spawner->updateTimer(deltaTime.asSeconds())) {
+            int random123 = rand() % 3 + 1;
+            std::string randomEnemy = "enemy0" + std::to_string(random123);
+            entityManager->addEnemy(
+                    spawner->spawnEnemy(
+                            *textureManager.getTexture(randomEnemy),
+                            BOUNDS.at(randomEnemy),
+                            entityManager->getPlayer().getPosition().x)
+            );
+        }
+
+        entityManager->updateAll(deltaTime.asSeconds());
+        // draw calls here maybe?
     }
 
     else if (state == "lose") {
@@ -60,7 +87,8 @@ void GameManager::stateExit() {
     }
 
     else if (state == "play") {
-        // delete entitymanager and health
+        // delete all entities and health
+        entityManager->removeAll();
     }
 
     else if (state == "lose") {
@@ -68,7 +96,7 @@ void GameManager::stateExit() {
     }
 }
 
-void GameManager::stateSwitch(std::string _state) {
+void GameManager::switchState(std::string _state) {
     stateExit();
     state = _state;
     stateEnter();

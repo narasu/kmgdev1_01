@@ -12,6 +12,6 @@ public:
     std::shared_ptr<sf::Texture> newTexture(const std::string& _path);
     std::shared_ptr<sf::Texture> getTexture(const std::string& _name);
 private:
-    std::map<std::string, std::shared_ptr<sf::Texture>> *textureMap;
+    std::map<std::string, std::shared_ptr<sf::Texture>> textureMap;
     std::map<std::string, std::shared_ptr<sf::Texture>> copyTextureMap(std::map<std::string, std::shared_ptr<sf::Texture>> &_map);
 };

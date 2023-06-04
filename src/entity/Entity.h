@@ -1,8 +1,5 @@
-// Base for objects in the game that require sprite logic
+// Base for sprite objects
 // Intended for other classes to inherit from, not to instantiate by itself
-
-#ifndef KMGDEV1_01_ENTITY_H
-#define KMGDEV1_01_ENTITY_H
 
 #include <SFML/Graphics.hpp>
 #include <memory>
@@ -15,19 +12,12 @@ public:
     Entity(const Entity& _entity); //copy constructor
     Entity& operator=(const Entity& _entity); //assignment operator
     virtual ~Entity() = default;
-    virtual void update(float _delta);
+    virtual void update(float _delta) = 0;
     virtual sf::Sprite& getSprite();
     virtual Vector2<float> getPosition();
-    virtual bool isDestroyed() = 0; //gets called each frame by EntityManager which handles the actual destroying
+    virtual bool isDestroyed(); //gets called each frame by EntityManager which handles the actual destroying
 protected:
     std::unique_ptr<sf::Sprite> sprite;
     Vector2<float> position = V2_ZERO<float>;
-    Vector2<float> origin;
     bool destroyed = false;
 };
-
-class PhysicsEntity;
-
-#include "PhysicsEntity.h"
-
-#endif

@@ -7,7 +7,6 @@
 namespace Hiro {
     template <typename T>
     struct Rect {
-    public:
         Vector2<T> min;
         Vector2<T> max;
         T x;

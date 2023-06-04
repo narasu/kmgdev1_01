@@ -1,5 +1,4 @@
-#include "Entity.h"
-
+#include "PhysicsEntity.h"
 
 PhysicsEntity::PhysicsEntity(const sf::Texture &_texture, float _mass, float _friction, Rect<float> _localBounds) : Entity(_texture), bounds(_localBounds)  {
     rigidbody = new Rigidbody(_mass, _friction);
@@ -7,7 +6,6 @@ PhysicsEntity::PhysicsEntity(const sf::Texture &_texture, float _mass, float _fr
 PhysicsEntity::~PhysicsEntity() {
     delete rigidbody;
     rigidbody = nullptr;
-    //delete collisionShape
 }
 
 void PhysicsEntity::update(float _delta) {
@@ -19,17 +17,12 @@ void PhysicsEntity::update(float _delta) {
         rigidbody->setVelocity(V2_ZERO<float>);
     }
 
-    Entity::update(_delta);
+    // round to whole numbers to prevent sub-pixel positions
+    // does this make everything jittery and also slightly inaccurate? yes
+    // but it really sells the arcade aesthetic, so it's here to stay
+    sprite->setPosition(roundf(position.x), roundf(position.y));
 }
 
 Rect<float> PhysicsEntity::getBoundsGlobal() {
     return Rect<float>(bounds.x + position.x, bounds.y + position.y, bounds.w, bounds.h);
-}
-
-void PhysicsEntity::onCollision() {
-    std::cout << "collision" << std::endl;
-}
-
-bool PhysicsEntity::isDestroyed() {
-    return destroyed;
 }

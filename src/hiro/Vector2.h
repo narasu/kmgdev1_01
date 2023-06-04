@@ -9,7 +9,6 @@
 namespace Hiro {
     template <class T>
     struct Vector2 {
-    public:
         T x, y;
 
         Vector2() {

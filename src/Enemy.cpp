@@ -23,7 +23,7 @@ void Enemy::update(float _delta) {
     float amplitude = 20.0f;
     float x = std::cos(t) * amplitude;
 
-    rigidbody->addForce(x, 15.0f);
+    rigidbody->addForce(x, ENEMY_SPEED[0]);
     PhysicsEntity::update(_delta);
 
     // if the bottom of the screen is reached, flag as destroyed so EntityManager knows to delete it
@@ -33,6 +33,6 @@ void Enemy::update(float _delta) {
 }
 
 void Enemy::onCollision() {
-    PhysicsEntity::onCollision();
+
     destroyed = true;
 }

@@ -10,7 +10,6 @@ namespace Hiro {
     struct Vector2;
     template <typename T>
     struct Rect;
-
     class Rigidbody;
 }
 

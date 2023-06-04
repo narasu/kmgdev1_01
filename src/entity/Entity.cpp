@@ -4,7 +4,6 @@
 Entity::Entity(const sf::Texture &_texture)  {
     sprite = std::make_unique<sf::Sprite>();
     sprite->setTexture(_texture);
-    origin = Hiro::Vector2<float>(sprite->getTextureRect().width*0.5f, sprite->getTextureRect().height*0.5f);
 }
 
 Entity::Entity(const Entity &_entity) {
@@ -22,18 +21,15 @@ Entity &Entity::operator=(const Entity &_entity) {
     return *this;
 }
 
-void Entity::update(float _delta) {
-    // round to whole numbers to prevent sub-pixel positions
-    // does this make everything jittery and also slightly inaccurate? yes
-    // but it really sells the arcade aesthetic, so it's here to stay
-    sprite->setPosition(roundf(position.x), roundf(position.y));
-}
-
 sf::Sprite& Entity::getSprite() {
     return *sprite;
 }
 
 Vector2<float> Entity::getPosition() {
     return position;
+}
+
+bool Entity::isDestroyed() {
+    return destroyed;
 }
 
