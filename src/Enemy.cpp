@@ -28,6 +28,7 @@ void Enemy::update(float _delta) {
 
     // if the bottom of the screen is reached, flag as destroyed so EntityManager knows to delete it
     if (position.y > VIEWPORT_HEIGHT) {
+        outOfBounds = true;
         destroyed = true;
     }
 }
@@ -35,4 +36,8 @@ void Enemy::update(float _delta) {
 void Enemy::onCollision() {
 
     destroyed = true;
+}
+
+bool Enemy::isOutOfBounds() {
+    return outOfBounds;
 }

@@ -5,18 +5,23 @@
 TextureManager::TextureManager() {
 
     textureMap = std::map<std::string, std::shared_ptr<sf::Texture>> {
-        { "splash_screen", newTexture("assets/sprites/splash_screen.png") },
-        { "title", newTexture("assets/sprites/title.png") },
-        { "player", newTexture("assets/sprites/player.png") },
-        { "grass", newTexture("assets/sprites/grass.png") },
-        { "enemy01", newTexture("assets/sprites/enemy_crustachnid_sheet.png") },
-        { "enemy02", newTexture("assets/sprites/enemy_decaying_mutant_sheet.png") },
-        { "enemy03", newTexture("assets/sprites/enemy_macrobe_sheet.png") }
+        { "splash_screen", newTexture("assets/ui/splash_screen.png") },
+        { "title", newTexture("assets/ui/title.png") },
+        { "start_text", newTexture("assets/ui/start_text.png") },
+        { "end_text", newTexture("assets/ui/end_text.png") },
+        { "score", newTexture("assets/ui/score.png") },
+        { "numbers", newTexture("assets/ui/numbers.png") },
+        { "player", newTexture("assets/entities/player.png") },
+        { "grass", newTexture("assets/entities/grass.png") },
+        { "enemy01", newTexture("assets/entities/enemy_crustachnid_sheet.png") },
+        { "enemy02", newTexture("assets/entities/enemy_decaying_mutant_sheet.png") },
+        { "enemy03", newTexture("assets/entities/enemy_macrobe_sheet.png") }
     };
 }
 
 std::shared_ptr<sf::Texture> TextureManager::getTexture(const std::string& _name) {
     if (auto search = textureMap.find(_name); search == textureMap.end()) {
+        std::cout << "Could not find texture " + _name << std::endl;
         return nullptr;
     }
     return textureMap.at(_name);

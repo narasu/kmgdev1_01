@@ -3,17 +3,21 @@
 
 class InterfaceManager {
 public:
-    InterfaceManager();
+    explicit InterfaceManager(std::shared_ptr<TextureManager> _textureManager);
+    void initializeScore();
     void updateScore(int _score);
     void updateHealth(int _health);
-    sf::Text &getScoreText();
-    sf::Text &getCenterText();
+    std::vector<std::reference_wrapper<sf::Sprite>> getSprites();
+
 private:
-    sf::Font font;
-    sf::Text scoreText;
-    sf::Text centerText;
+    std::shared_ptr<TextureManager> textureManager;
     std::vector<sf::Sprite> health;
+    std::vector<std::unique_ptr<sf::Sprite>> score;
     sf::Sprite title;
     sf::Sprite splash;
+    sf::Sprite number;
+    int numberWidth = 7;
+    int textureMargin = 1;
+    int spacing = 2;
 };
 

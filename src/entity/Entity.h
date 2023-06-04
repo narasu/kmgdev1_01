@@ -1,4 +1,4 @@
-// Base for sprite objects
+// Base for sprite objects that need to be updated each frame
 // Intended for other classes to inherit from, not to instantiate by itself
 
 #include <SFML/Graphics.hpp>

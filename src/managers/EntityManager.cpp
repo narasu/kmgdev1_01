@@ -14,7 +14,7 @@ EntityManager::EntityManager(std::unique_ptr<Player> _player) : EntityManager() 
 }
 
 void EntityManager::updateAll(float _delta) {
-
+    outOfBoundsCount = 0;
     if (player!=nullptr) {
         player->update(_delta);
     }
@@ -34,6 +34,9 @@ void EntityManager::updateAll(float _delta) {
         (*it)->update(_delta);
 
         if ((*it)->isDestroyed()) {
+            if ((*it)->isOutOfBounds()) {
+                outOfBoundsCount++;
+            }
             it = enemies.erase(it);
         }
         else {
@@ -109,6 +112,10 @@ void EntityManager::removeAll() {
     player.reset();
     background.clear();
     enemies.clear();
+}
+
+int EntityManager::getOutOfBoundsCount() {
+    return outOfBoundsCount;
 }
 
 /*

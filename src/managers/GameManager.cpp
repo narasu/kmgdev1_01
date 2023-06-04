@@ -3,8 +3,8 @@
 
 //TODO: implement copy constructor and assignment operator
 
-GameManager::GameManager(std::shared_ptr<EntityManager> _entityManager, std::shared_ptr<InterfaceManager> _interfaceManager) :
-entityManager(_entityManager), interfaceManager(_interfaceManager) {
+GameManager::GameManager(std::shared_ptr<TextureManager> _textureManager, std::shared_ptr<EntityManager> _entityManager, std::shared_ptr<InterfaceManager> _interfaceManager) :
+textureManager(_textureManager), entityManager(_entityManager), interfaceManager(_interfaceManager) {
     state = "start";
     stateEnter();
 }
@@ -17,7 +17,7 @@ void GameManager::stateEnter() {
     else if (state == "start") {
         // create player, title, background, press key text
         entityManager->setPlayer(
-                std::make_unique<Player>(*textureManager.getTexture("player"), BOUNDS.at("player"))
+                std::make_unique<Player>(*textureManager->getTexture("player"), BOUNDS.at("player"))
                 );
     }
 
@@ -25,6 +25,7 @@ void GameManager::stateEnter() {
         std::cout << "play state entered" << std::endl;
         // create spawner, health, score
         spawner = std::make_unique<Spawner>(SPAWN_INTERVAL[0]);
+        interfaceManager->initializeScore();
     }
 
     else if (state == "lose") {
@@ -58,18 +59,23 @@ void GameManager::stateUpdate() {
 
         // spawn a random enemy every few seconds
         if (spawner->updateTimer(deltaTime.asSeconds())) {
+            //TODO: move this bit inside spawner maybe
             int random123 = rand() % 3 + 1;
             std::string randomEnemy = "enemy0" + std::to_string(random123);
             entityManager->addEnemy(
                     spawner->spawnEnemy(
-                            *textureManager.getTexture(randomEnemy),
+                            *textureManager->getTexture(randomEnemy),
                             BOUNDS.at(randomEnemy),
                             entityManager->getPlayer().getPosition().x)
             );
         }
 
         entityManager->updateAll(deltaTime.asSeconds());
-        // draw calls here maybe?
+        int count = entityManager->getOutOfBoundsCount();
+        if (count > 0) {
+            score += SCORE_PER_ENEMY[stage] * count;
+            interfaceManager->updateScore(score);
+        }
     }
 
     else if (state == "lose") {

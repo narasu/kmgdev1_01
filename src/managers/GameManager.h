@@ -4,7 +4,7 @@
 
 class GameManager {
 public:
-    GameManager(std::shared_ptr<EntityManager> _entityManager, std::shared_ptr<InterfaceManager> _interfaceManager);
+    GameManager(std::shared_ptr<TextureManager> _textureManager, std::shared_ptr<EntityManager> _entityManager, std::shared_ptr<InterfaceManager> _interfaceManager);
 
     void stateUpdate();
     void switchState(std::string _state);
@@ -19,7 +19,7 @@ private:
     int stage = 0;
 
     std::unique_ptr<Spawner> spawner;
-    TextureManager textureManager;
+    std::shared_ptr<TextureManager> textureManager;
     std::shared_ptr<EntityManager> entityManager;
     std::shared_ptr<InterfaceManager> interfaceManager;
 };

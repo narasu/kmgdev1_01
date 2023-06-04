@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+
 #include <iostream>
 #include "hiro/Hiro.h"
 #include "managers/Managers.h"
@@ -15,9 +16,11 @@ int main()
     window->setPosition(windowPosition.toSFML());
     window->setFramerateLimit(60);
 
+    auto textureManager = std::make_shared<TextureManager>();
     auto entityManager = std::make_shared<EntityManager>();
-    auto interfaceManager = std::make_shared<InterfaceManager>();
-    auto gameManager = std::make_unique<GameManager>(entityManager, interfaceManager);
+    auto interfaceManager = std::make_shared<InterfaceManager>(textureManager);
+    auto gameManager = std::make_unique<GameManager>(textureManager, entityManager, interfaceManager);
+
 
     while (window->isOpen()) {
         //inputs to close window
@@ -30,11 +33,15 @@ int main()
         gameManager->stateUpdate();
 
         window->clear(sf::Color::Black);
-        window->draw(interfaceManager->getCenterText());
 
         for (auto & it : entityManager->getSprites()) {
             window->draw(it);
         }
+
+        for (auto &it : interfaceManager->getSprites()) {
+            window->draw(it);
+        }
+
         window->display();
     }
 

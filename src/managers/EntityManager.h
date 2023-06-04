@@ -21,12 +21,14 @@ public:
     void removeAll();
     std::vector<std::reference_wrapper<sf::Sprite>> getSprites();
     Player &getPlayer();
+    int getOutOfBoundsCount();
 private:
     void checkCollisions();
     std::unique_ptr<Player> player;
     std::vector<std::unique_ptr<Enemy>> enemies;
     std::vector<std::unique_ptr<Entity>> background;
     std::vector<std::unique_ptr<Entity>> interface;
+    int outOfBoundsCount;
     //std::list<std::shared_ptr<Entity>> copyEntityList(const std::list<std::shared_ptr<Entity>> &_list);
 
 };
