@@ -49,6 +49,7 @@
 # - SFML_INCLUDE_DIR:  the path where SFML headers are located (the directory containing the SFML/Config.hpp file)
 # - SFML_DEPENDENCIES: the list of libraries SFML depends on, in case of static linking
 #
+#
 # example:
 #   find_package(SFML 2 COMPONENTS system window graphics audio REQUIRED)
 #   include_directories(${SFML_INCLUDE_DIR})
