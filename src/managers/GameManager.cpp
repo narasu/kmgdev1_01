@@ -22,8 +22,8 @@ void GameManager::stateEnter() {
         entityManager->setPlayer(
                 std::make_unique<Player>(*textureManager->getTexture("player"), BOUNDS.at("player"))
                 );
-        interfaceManager->displayImage("title", Vector2<float>(VIEWPORT_WIDTH * 0.5f, 20.0f));
-        interfaceManager->displayImage("start_text", Vector2<float>(VIEWPORT_WIDTH * 0.5f, VIEWPORT_HEIGHT * 0.5f));
+        interfaceManager->displayImage("title", Vector2<float>(VIEWPORT_WIDTH * 0.5f, 35.0f));
+        interfaceManager->displayImage("start_text", Vector2<float>(VIEWPORT_WIDTH * 0.5f, VIEWPORT_HEIGHT * 0.5f + 20.0f));
     }
 
     else if (state == "play") {
@@ -68,8 +68,7 @@ void GameManager::stateUpdate() {
         }
 
         // spawn a random enemy every few seconds
-        if (spawner->updateTimer(deltaTime.asSeconds())) {
-            //TODO: move this bit inside spawner maybe
+        if (spawner->intervalReached(deltaTime.asSeconds())) {
             int random123 = rand() % 3 + 1;
             std::string randomEnemy = "enemy0" + std::to_string(random123);
             entityManager->addEnemy(
