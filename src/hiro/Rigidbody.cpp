@@ -1,16 +1,13 @@
-//
-// Created by Yamada on 28-5-2023.
-//
 #include "Hiro.h"
-
 #include <iostream>
 
 namespace Hiro {
-    Rigidbody::Rigidbody() : mass(1.0f), friction(.5f) {}
+    Rigidbody::Rigidbody() : mass(1.0f) {}
 
-    Rigidbody::Rigidbody(float _mass, float _friction) : mass(_mass), friction(_friction){}
+    Rigidbody::Rigidbody(float _mass) : mass(_mass) {}
 
     void Rigidbody::addForce(Vector2<float> _force) {
+        friction = _force.sqrMagnitude() > 0 ? _force.magnitude() : friction;
         velocity += _force / mass;
     }
     void Rigidbody::addForce(float _forceX, float _forceY) {
@@ -29,7 +26,7 @@ namespace Hiro {
         else {
             f = -velocity;
         }
-        addForce(f);
+        addForce(f * frictionMult);
     }
 
     float Rigidbody::getFriction() {
@@ -46,6 +43,10 @@ namespace Hiro {
     void Rigidbody::setVelocity(float _xVel, float _yVel) {
         velocity.x = _xVel;
         velocity.y = _yVel;
+    }
+
+    void Rigidbody::setFrictionMult(float _frictionMult) {
+        frictionMult = _frictionMult;
     }
 
 

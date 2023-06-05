@@ -1,5 +1,5 @@
 #include "Managers.h"
-#include "../Spawner.h"
+#include "../spawner/Spawner.h"
 #pragma once
 
 class GameManager {
@@ -8,8 +8,7 @@ public:
 
     void stateUpdate();
     void switchState(std::string _state);
-    std::string getState();
-
+    int getStage();
 private:
     void stateEnter();
     void stateExit();

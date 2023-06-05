@@ -15,7 +15,7 @@ public:
     virtual void update(float _delta) = 0;
     virtual sf::Sprite& getSprite();
     virtual Vector2<float> getPosition();
-    virtual bool isDestroyed(); //gets called each frame by EntityManager which handles the actual destroying
+    virtual const bool isDestroyed(); //gets called each frame by EntityManager which handles the actual destroying
 protected:
     std::unique_ptr<sf::Sprite> sprite;
     Vector2<float> position = V2_ZERO<float>;

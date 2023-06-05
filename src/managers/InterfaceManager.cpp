@@ -1,10 +1,5 @@
-//
-// Created by Yamada on 4-6-2023.
-//
-
 #include "Managers.h"
 #include "../GameData.h"
-#include "InterfaceManager.h"
 
 
 InterfaceManager::InterfaceManager(std::shared_ptr<TextureManager> _textureManager) : textureManager(_textureManager){
@@ -13,13 +8,17 @@ InterfaceManager::InterfaceManager(std::shared_ptr<TextureManager> _textureManag
 
 void InterfaceManager::initializeScoreAndHealth(Vector2<int> _offset) {
     baseOffset = _offset;
+
+    // initialize 6 digits at value 0
     for (int i=0; i<6; i++) {
         auto s = std::make_unique<sf::Sprite>(*textureManager->getTexture("numbers"));
         s->setTextureRect(sf::IntRect(0, 0, numberWidth, 7));
         s->setPosition(baseOffset.x + 45.0f + (numberWidth + spacing) * i, baseOffset.y);
         score.emplace_back(std::move(s));
     }
-    for (int i=0; i<HEALTH; i++) {
+
+    // initialize heart for each point of health
+    for (int i=0; i < START_HEALTH; i++) {
         auto s = std::make_unique<sf::Sprite>(*textureManager->getTexture("heart"));
         s->setPosition(VIEWPORT_WIDTH - baseOffset.x - (s->getTexture()->getSize().x) * (i + 1) - spacing * i, baseOffset.y);
         health.emplace_back(std::move(s));
@@ -35,8 +34,9 @@ void InterfaceManager::updateScore(int _score) {
 
     int i = 0;
     for (auto it = score.end() - 1; it >= score.begin(); it--) {
-
         int n = 0;
+
+        // split digits of score value, back to front
         if (i > 0) {
             n = _score / static_cast<int>(pow(10, i)) % 10;
         }
@@ -44,25 +44,19 @@ void InterfaceManager::updateScore(int _score) {
             n = _score % 10;
         }
 
-        sf::IntRect r = sf::IntRect((numberWidth + textureMargin) * n, 0, numberWidth, numberWidth);
-        (*it)->setTextureRect(r);
+        // set current sprite to correct digit
+        Rect<int> r = Rect<int>((numberWidth + textureMargin) * n, 0, numberWidth, numberWidth);
+        (*it)->setTextureRect(r.toSFML());
         i++;
     }
 }
 
 void InterfaceManager::showFinalScore() {
-    //bool nReached = false;
+    // move the score to the center of the screen
     int i=0;
     for (auto it = score.begin() ; it < score.end(); it++) {
         (*it)->setPosition(VIEWPORT_WIDTH*0.5f + (numberWidth + spacing) * i, VIEWPORT_HEIGHT *0.5f);
         i++;
-        /*if (!nReached && (*it)->getTextureRect().left == 0 && score.size() > 1) {
-            it = score.erase(it);
-            nReached = true;
-        }
-        else {
-            i++;
-        }*/
     }
 }
 
@@ -71,10 +65,12 @@ void InterfaceManager::updateHealth(int _health) {
     if (h == 0) {
         return;
     }
+    //for each health lost, remove a heart from the vector
     while (h < 0) {
         health.pop_back();
         h+=1;
     }
+    //for each health gained, add a heart (currently unused)
     while (h > 0) {
         auto s = std::make_unique<sf::Sprite>(*textureManager->getTexture("heart"));
         s->setPosition(VIEWPORT_WIDTH - baseOffset.x - (s->getLocalBounds().width + spacing) * (h+1) + spacing, baseOffset.y);

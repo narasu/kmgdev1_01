@@ -15,13 +15,15 @@ const std::map<std::string, Hiro::Rect<float>> BOUNDS {
         {"enemy03", Rect<float>(1.0f, 1.0f, 12.0f, 11.0f)} //macrobe
 };
 
-const Vector2<float> PLAYER_START { 160.f, 155.f };
-const int HEALTH = 3;
+const Vector2<float> PLAYER_START { 156.f, 155.f };
+const int START_HEALTH = 3;
 
-const std::vector<int> SCORE_THRESHOLD { 1000, 2000, 4000 };
-const float SPAWN_INTERVAL[4] { 3.0f, 2.0f, 1.0f, 0.5f };
-const float ENEMY_SPEED[4] { 18.0f, 20.0f, 25.0f, 30.0f };
-const int SCORE_PER_ENEMY[4] { 100, 150, 175, 200 };
+// score threshold determines when the game increases in difficulty
+const std::array<int, 4> SCORE_THRESHOLD { 1000, 4000, 10000, 20000 };
 
-const std::string START_TEXT = "PRESS LEFT OR RIGHT ARROW KEYS TO MOVE";
-const std::string END_TEXT = "YOU DIED \n PRESS ANY KEY TO RESTART";
+// values to be applied on each stage of game difficulty (array sizes need to be 1 greater than SCORE_THRESHOLD)
+const std::array<float, 5> ENEMY_SPAWN_INTERVAL { 2.9f, 2.35f, 1.65f, 1.4f, 1.2f };
+const std::array<float, 5> GRASS_SPAWN_INTERVAL { 3.25f, 3.1f, 2.8f, 2.5f, 2.4f };
+const std::array<float, 5> STAGE_SPEED { 13.0f, 25.0f, 35.0f, 44.0f, 58.0f };
+const std::array<float, 5> ENEMY_FORCE_Y { 25.0f, 45.0f, 60.0f, 85.0f, 105.0f };
+const std::array<float, 5> SCORE_PER_ENEMY { 100, 125, 150, 200, 225 };

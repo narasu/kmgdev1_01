@@ -35,13 +35,13 @@ int main()
 
         window->clear(sf::Color::Black);
 
-        for (auto & it : entityManager->getSprites()) {
+        for (const auto & it : entityManager->getSprites()) {
             window->draw(it);
         }
 
 
-        r.setFillColor(sf::Color::Black);
-        window->draw(r);
+        /*r.setFillColor(sf::Color::Black);
+        window->draw(r);*/
 
         for (auto &it : interfaceManager->getSprites()) {
             window->draw(it);

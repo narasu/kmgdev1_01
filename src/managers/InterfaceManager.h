@@ -1,3 +1,6 @@
+//HUD, text and title images
+//note: all text is sprites as I couldn't get SFML to render text without anti-aliasing
+
 #include "Managers.h"
 #pragma once
 

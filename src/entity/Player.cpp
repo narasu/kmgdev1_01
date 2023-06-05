@@ -1,10 +1,10 @@
 #include <iostream>
 #include "Player.h"
-#include "GameData.h"
+#include "../GameData.h"
 
-Player::Player(const sf::Texture &_texture, Rect<float> _localBounds) : PhysicsEntity(_texture, 5.0f, 145.0f, _localBounds) {
+Player::Player(const sf::Texture &_texture, Rect<float> _localBounds) : PhysicsEntity(_texture, 5.0f, _localBounds) {
     position = PLAYER_START;
-    health = HEALTH;
+    health = START_HEALTH;
 }
 
 void Player::update(float _delta) {
@@ -14,6 +14,16 @@ void Player::update(float _delta) {
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         direction+=1;
+    }
+
+    //prevent player moving off screen
+    if (rigidbody->getVelocity().x < 0 && position.x <= 0) {
+        rigidbody->setVelocity(V2_ZERO<float>);
+        position.x=0;
+    }
+    else if (rigidbody->getVelocity().x > 0 && position.x >= VIEWPORT_WIDTH - bounds.w) {
+        rigidbody->setVelocity(V2_ZERO<float>);
+        position.x= VIEWPORT_WIDTH - bounds.w;
     }
     rigidbody->addForce(moveSpeed * direction, .0f);
     PhysicsEntity::update(_delta);

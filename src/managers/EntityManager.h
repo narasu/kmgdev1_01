@@ -2,8 +2,10 @@
 #include <list>
 #include "Managers.h"
 #include "../entity/BaseEntity.h"
-#include "../Player.h"
-#include "../Enemy.h"
+#include "../entity/Player.h"
+#include "../entity/Enemy.h"
+#include "../entity/Grass.h"
+
 #pragma once
 
 class EntityManager {
@@ -16,17 +18,19 @@ public:
     void updateAll(float _delta);
     void setPlayer(std::unique_ptr<Player> _player);
     void addEnemy(std::unique_ptr<Enemy> _enemy);
-    void addBackground(std::unique_ptr<BaseEntity> _entity);
+    void addGrass(std::unique_ptr<Grass> _grass);
     void clearAll();
-    std::vector<std::reference_wrapper<sf::Sprite>> getSprites();
     Player &getPlayer();
-    int getOutOfBoundsCount();
+    const std::vector<std::unique_ptr<Enemy>>& getEnemies();
+    const std::vector<std::unique_ptr<Grass>>& getGrass();
+    std::vector<std::reference_wrapper<sf::Sprite>> getSprites();
+    int getEnemyOutOfBoundsCount();
 private:
     void checkCollisions();
     std::unique_ptr<Player> player;
     std::vector<std::unique_ptr<Enemy>> enemies;
-    std::vector<std::unique_ptr<BaseEntity>> background;
-    int outOfBoundsCount;
+    std::vector<std::unique_ptr<Grass>> grass;
+    int enemyOutOfBoundsCount;
     //std::list<std::shared_ptr<BaseEntity>> copyEntityList(const std::list<std::shared_ptr<BaseEntity>> &_list);
 
 };

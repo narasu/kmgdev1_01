@@ -29,7 +29,7 @@ Vector2<float> BaseEntity::getPosition() {
     return position;
 }
 
-bool BaseEntity::isDestroyed() {
+const bool BaseEntity::isDestroyed() {
     return destroyed;
 }
 

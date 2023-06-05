@@ -4,7 +4,38 @@ project(kmgdev1_01)
 set(CMAKE_CXX_STANDARD 17)
 
 
-add_executable(kmgdev1_01 src/main.cpp src/hiro/Hiro.h src/entity/BaseEntity.h src/entity/BaseEntity.cpp src/entity/PhysicsEntity.h src/entity/PhysicsEntity.cpp src/Player.h src/Player.cpp src/Enemy.cpp src/Enemy.h src/Spawner.cpp src/Spawner.h src/Animator.cpp src/Animator.h src/managers/Managers.h src/managers/TextureManager.cpp src/managers/TextureManager.h src/managers/EntityManager.cpp src/managers/EntityManager.h src/hiro/Vector2.h src/hiro/Rigidbody.h src/hiro/Rigidbody.cpp src/hiro/Rect.h src/hiro/Mathf.h src/GameData.h src/managers/GameManager.cpp src/managers/GameManager.h src/managers/InterfaceManager.cpp src/managers/InterfaceManager.h)
+add_executable(kmgdev1_01
+        src/main.cpp
+        src/hiro/Hiro.h
+        src/hiro/Vector2.h
+        src/hiro/Rigidbody.h
+        src/hiro/Rigidbody.cpp
+        src/hiro/Rect.h
+        src/hiro/Mathf.h
+        src/GameData.h
+        src/managers/Managers.h
+        src/managers/TextureManager.cpp
+        src/managers/TextureManager.h
+        src/managers/EntityManager.cpp
+        src/managers/EntityManager.h
+        src/managers/GameManager.cpp
+        src/managers/GameManager.h
+        src/managers/InterfaceManager.cpp
+        src/managers/InterfaceManager.h
+        src/entity/BaseEntity.h
+        src/entity/BaseEntity.cpp
+        src/entity/PhysicsEntity.h
+        src/entity/PhysicsEntity.cpp
+        src/entity/Player.h
+        src/entity/Player.cpp
+        src/entity/Enemy.cpp
+        src/entity/Enemy.h
+        src/entity/Grass.h
+        src/entity/Grass.cpp
+        src/entity/Animator.cpp
+        src/entity/Animator.h
+        src/spawner/Spawner.cpp
+        src/spawner/Spawner.h src/spawner/SpawnType.h)
 
 include_directories(C:/SFML/include)
 

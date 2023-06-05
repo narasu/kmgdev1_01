@@ -1,10 +1,10 @@
 // Executive class that handles game states with a basic finite state machine
-//
 
 #include "Managers.h"
 #include "../GameData.h"
 
 //TODO: implement copy constructor and assignment operator
+//TODO: replace strings with enums
 
 GameManager::GameManager(std::shared_ptr<TextureManager> _textureManager, std::shared_ptr<EntityManager> _entityManager, std::shared_ptr<InterfaceManager> _interfaceManager) :
 textureManager(_textureManager), entityManager(_entityManager), interfaceManager(_interfaceManager) {
@@ -18,7 +18,20 @@ void GameManager::stateEnter() {
     }
 
     else if (state == "start") {
-        spawner = std::make_unique<Spawner>(SPAWN_INTERVAL[0]);
+        spawner = std::make_unique<Spawner>(ENEMY_SPAWN_INTERVAL[stage], GRASS_SPAWN_INTERVAL[stage]);
+
+        //spawn some grass right away to avoid timer delay
+        entityManager->addGrass(
+                spawner->spawnGrass(
+                        *textureManager->getTexture("grass"),
+                        STAGE_SPEED[stage])
+        );
+        entityManager->addGrass(
+                spawner->spawnGrass(
+                        *textureManager->getTexture("grass"),
+                        STAGE_SPEED[stage])
+        );
+
         entityManager->setPlayer(
                 std::make_unique<Player>(*textureManager->getTexture("player"), BOUNDS.at("player"))
                 );
@@ -53,7 +66,25 @@ void GameManager::stateUpdate() {
     }
 
     else if (state == "start") {
+
+        spawner->updateTimer(SpawnType::GRASS, deltaTime.asSeconds());
+
+        //spawn grass
+        if (spawner->intervalReached(SpawnType::GRASS, deltaTime.asSeconds())) {
+            entityManager->addGrass(
+                    spawner->spawnGrass(
+                            *textureManager->getTexture("grass"),
+                            STAGE_SPEED[stage])
+            );
+            entityManager->addGrass(
+                    spawner->spawnGrass(
+                            *textureManager->getTexture("grass"),
+                            STAGE_SPEED[stage])
+            );
+        }
+
         entityManager->updateAll(deltaTime.asSeconds());
+
         // go to play state when the player moves
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
             switchState("play");
@@ -66,20 +97,38 @@ void GameManager::stateUpdate() {
             switchState("lose");
             return;
         }
+        spawner->updateTimer(SpawnType::GRASS, deltaTime.asSeconds());
+        spawner->updateTimer(SpawnType::ENEMY, deltaTime.asSeconds());
 
-        // spawn a random enemy every few seconds
-        if (spawner->intervalReached(deltaTime.asSeconds())) {
+        // spawn grass
+        if (spawner->intervalReached(SpawnType::GRASS, deltaTime.asSeconds())) {
+            entityManager->addGrass(
+                    spawner->spawnGrass(
+                            *textureManager->getTexture("grass"),
+                            STAGE_SPEED[stage])
+            );
+            entityManager->addGrass(
+                    spawner->spawnGrass(
+                            *textureManager->getTexture("grass"),
+                            STAGE_SPEED[stage])
+            );
+        }
+
+        // spawn enemies
+        if (spawner->intervalReached(SpawnType::ENEMY, deltaTime.asSeconds())) {
             int random123 = rand() % 3 + 1;
             std::string randomEnemy = "enemy0" + std::to_string(random123);
             entityManager->addEnemy(
                     spawner->spawnEnemy(
                             *textureManager->getTexture(randomEnemy),
                             BOUNDS.at(randomEnemy),
+                            ENEMY_FORCE_Y[stage],
                             entityManager->getPlayer().getPosition().x)
             );
         }
 
         int playerHealth = entityManager->getPlayer().getHealth();
+
         entityManager->updateAll(deltaTime.asSeconds());
 
         //if health has changed last update, update health UI
@@ -88,14 +137,22 @@ void GameManager::stateUpdate() {
         }
 
         //if any enemies are below the bottom of the screen, increment the score and send the new value to UI
-        int count = entityManager->getOutOfBoundsCount();
+        int count = entityManager->getEnemyOutOfBoundsCount();
         if (count > 0) {
             score += SCORE_PER_ENEMY[stage] * count;
             interfaceManager->updateScore(score);
 
-            /*if (stage < SCORE_THRESHOLD.size() && score > SCORE_THRESHOLD.at(stage)) {
-                stage++;
-            }*/
+            if (stage < SCORE_THRESHOLD.size() && score >= SCORE_THRESHOLD.at(stage)) {
+                stage+=1;
+                /*for (auto & it : entityManager->getEnemies()) {
+                    it->setForceY(ENEMY_FORCE_Y[stage]);
+                }*/
+                for (auto & it : entityManager->getGrass()) {
+                    it->setSpeedY(STAGE_SPEED[stage]);
+                }
+                spawner->setSpawnInterval(SpawnType::ENEMY, ENEMY_SPAWN_INTERVAL[stage]);
+                spawner->setSpawnInterval(SpawnType::GRASS, GRASS_SPAWN_INTERVAL[stage]);
+            }
         }
     }
 
@@ -135,6 +192,6 @@ void GameManager::switchState(std::string _state) {
     stateEnter();
 }
 
-std::string GameManager::getState() {
-    return state;
+int GameManager::getStage() {
+    return stage;
 }

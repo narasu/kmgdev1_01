@@ -1,3 +1,4 @@
+//forward declaration of managers
 #ifndef KMGDEV1_01_MANAGERS_H
 #define KMGDEV1_01_MANAGERS_H
 
