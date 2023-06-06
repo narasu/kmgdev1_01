@@ -1,14 +1,7 @@
 #include "Managers.h"
 #include <algorithm>
 
-//TODO: Re-implement assignment operator and copy constructor
-
-EntityManager::EntityManager() {
-    enemies = std::vector<std::unique_ptr<Enemy>>();
-    grass = std::vector<std::unique_ptr<Grass>>();
-}
-
-EntityManager::EntityManager(std::unique_ptr<Player> _player) : EntityManager() {
+EntityManager::EntityManager(std::unique_ptr<Player> _player) {
     player = std::move(_player);
 }
 
@@ -20,15 +13,27 @@ EntityManager::EntityManager(const EntityManager &_entityManager) {
     if (this == &_entityManager) {
         return;
     }
-
-    //background = std::make_unique<std::list<std::shared_ptr<BaseEntity>>>(copyEntityList(*_entityManager.background));
+    player = std::make_unique<Player>(*_entityManager.player);
+    for (auto & it : _entityManager.enemies) {
+        enemies.push_back(std::make_unique<Enemy>(*it));
+    }
+    for (auto & it : _entityManager.grass) {
+        grass.push_back(std::make_unique<Grass>(*it));
+    }
 }
 
 EntityManager &EntityManager::operator=(const EntityManager &_entityManager) {
     if (this == &_entityManager) {
         return *this;
     }
-    //background = std::make_unique<std::list<std::shared_ptr<BaseEntity>>>(copyEntityList(*_entityManager.background));
+    clearAll(); //not sure if necessary
+    player = std::make_unique<Player>(*_entityManager.player);
+    for (auto & it : _entityManager.enemies) {
+        enemies.push_back(std::make_unique<Enemy>(*it));
+    }
+    for (auto & it : _entityManager.grass) {
+        grass.push_back(std::make_unique<Grass>(*it));
+    }
     return *this;
 }
 
@@ -51,7 +56,6 @@ void EntityManager::updateAll(float _delta) {
 
     for(auto it = enemies.begin(); it != enemies.end();) {
         (*it)->update(_delta);
-
         if ((*it)->isDestroyed()) {
             if ((*it)->isOutOfBounds()) {
                 enemyOutOfBoundsCount+=1;
@@ -79,28 +83,10 @@ void EntityManager::checkCollisions() {
     }
 }
 
-void EntityManager::setPlayer(std::unique_ptr<Player> _player) {
-    player = std::move(_player);
-}
-
-void EntityManager::addEnemy(std::unique_ptr<Enemy> _enemy) {
-    enemies.emplace_back(std::move(_enemy));
-}
-
-void EntityManager::addGrass(std::unique_ptr<Grass> _grass) {
-    grass.emplace_back(std::move(_grass));
-}
-
-Player &EntityManager::getPlayer() {
-    return *player;
-}
-
-const std::vector<std::unique_ptr<Enemy>>& EntityManager::getEnemies() {
-    return enemies;
-}
-
-const std::vector<std::unique_ptr<Grass>>& EntityManager::getGrass() {
-    return grass;
+void EntityManager::clearAll() {
+    player.reset();
+    grass.clear();
+    enemies.clear();
 }
 
 std::vector<std::reference_wrapper<sf::Sprite>> EntityManager::getSprites() {
@@ -116,28 +102,3 @@ std::vector<std::reference_wrapper<sf::Sprite>> EntityManager::getSprites() {
     }
     return s;
 }
-
-int EntityManager::getEnemyOutOfBoundsCount() {
-    return enemyOutOfBoundsCount;
-}
-
-void EntityManager::clearAll() {
-    player.reset();
-    grass.clear();
-    enemies.clear();
-}
-
-
-
-
-/*
-
-std::list<std::shared_ptr<BaseEntity>> EntityManager::copyEntityList(const std::list<std::shared_ptr<BaseEntity>> &_list) {
-    std::list<std::shared_ptr<BaseEntity>> l;
-    for (const auto & it : _list) {
-        l.push_back(it);
-    }
-    return l;
-}
-
-*/

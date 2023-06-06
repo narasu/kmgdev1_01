@@ -2,9 +2,9 @@
 #include <iostream>
 
 namespace Hiro {
-    Rigidbody::Rigidbody() : mass(1.0f) {}
+    Rigidbody::Rigidbody() : mass(1.0f), frictionMult(1.0f) {}
 
-    Rigidbody::Rigidbody(float _mass) : mass(_mass) {}
+    Rigidbody::Rigidbody(float _mass, float _frictionMult) : mass(_mass), frictionMult(_frictionMult) {}
 
     void Rigidbody::addForce(Vector2<float> _force) {
         friction = _force.sqrMagnitude() > 0 ? _force.magnitude() : friction;
@@ -29,13 +29,6 @@ namespace Hiro {
         addForce(f * frictionMult);
     }
 
-    float Rigidbody::getFriction() {
-        return friction;
-    }
-
-    Vector2<float> Rigidbody::getVelocity() {
-        return velocity;
-    }
     void Rigidbody::setVelocity(Vector2<float> _velocity) {
         velocity = _velocity;
     }

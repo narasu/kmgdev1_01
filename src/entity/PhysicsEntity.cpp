@@ -1,11 +1,23 @@
 #include "PhysicsEntity.h"
 
-PhysicsEntity::PhysicsEntity(const sf::Texture &_texture, float _mass, Rect<float> _localBounds) : BaseEntity(_texture), bounds(_localBounds)  {
-    rigidbody = new Rigidbody(_mass);
+PhysicsEntity::PhysicsEntity(const sf::Texture &_texture, float _mass, float _frictionMult, Rect<float> _localBounds) : BaseEntity(_texture), bounds(_localBounds)  {
+    rigidbody = std::make_unique<Rigidbody>(_mass, _frictionMult);
 }
-PhysicsEntity::~PhysicsEntity() {
-    delete rigidbody;
-    rigidbody = nullptr;
+
+PhysicsEntity::PhysicsEntity(const PhysicsEntity &_entity) : BaseEntity(_entity) {
+    if (this == &_entity) {
+        return;
+    }
+    rigidbody = std::make_unique<Rigidbody>(*_entity.rigidbody);
+}
+
+PhysicsEntity &PhysicsEntity::operator=(const PhysicsEntity &_entity) {
+    if (this == &_entity) {
+        return *this;
+    }
+    sprite = std::make_unique<sf::Sprite>(*_entity.sprite);
+    rigidbody = std::make_unique<Rigidbody>(*_entity.rigidbody);
+    return *this;
 }
 
 void PhysicsEntity::update(float _delta) {
@@ -26,3 +38,5 @@ void PhysicsEntity::update(float _delta) {
 Rect<float> PhysicsEntity::getBoundsGlobal() {
     return Rect<float>(bounds.x + position.x, bounds.y + position.y, bounds.w, bounds.h);
 }
+
+

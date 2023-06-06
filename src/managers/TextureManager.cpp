@@ -1,7 +1,5 @@
 #include "Managers.h"
 
-//TODO: Re-implement assignment operator and copy constructor
-
 TextureManager::TextureManager() {
 
     textureMap = std::map<std::string, std::shared_ptr<sf::Texture>> {
@@ -33,6 +31,7 @@ std::shared_ptr<sf::Texture> TextureManager::newTexture(const std::string& _path
     if (texture->loadFromFile(_path)) {
         return texture;
     }
+    // SFML already prints its own error message if loading fails
     return nullptr;
 }
 
@@ -40,31 +39,21 @@ TextureManager::TextureManager(const TextureManager &_textureManager) {
     if (this == &_textureManager) {
         return;
     }
-    //textureMap = std::map<std::string, std::shared_ptr<sf::Texture>>(copyTextureMap(_textureManager.textureMap));
+    for (auto & it : _textureManager.textureMap) {
+        textureMap.insert(it);
+    }
 }
 
 TextureManager &TextureManager::operator=(const TextureManager &_textureManager) {
     if (this == &_textureManager) {
         return *this;
     }
-    //textureMap = std::map<std::string, std::shared_ptr<sf::Texture>>(copyTextureMap(_textureManager.textureMap));
+    for (auto & it : _textureManager.textureMap) {
+        textureMap.insert(it);
+    }
     return *this;
 }
 
 TextureManager::~TextureManager() {
-    /*for (std::map<std::string, std::shared_ptr<sf::Texture>>::const_iterator it = textureMap->begin(); it != textureMap->end(); ++it) {
-        delete (*it).second;
-    }*/
     textureMap.clear();
-}
-
-std::map<std::string, std::shared_ptr<sf::Texture>> TextureManager::copyTextureMap(std::map<std::string, std::shared_ptr<sf::Texture>> &_map) {
-    std::map<std::string, std::shared_ptr<sf::Texture>> m;
-    for (auto it = _map.begin(); it != _map.end(); ++it) {
-        m.insert(
-                std::map<std::string, std::shared_ptr<sf::Texture>>::value_type(
-                        it->first, _map.at(it->first))
-        );
-    }
-    return m;
 }

@@ -1,14 +1,15 @@
 #include "Managers.h"
-#include "../spawner/Spawner.h"
+
 #pragma once
 
 class GameManager {
 public:
     GameManager(std::shared_ptr<TextureManager> _textureManager, std::shared_ptr<EntityManager> _entityManager, std::shared_ptr<InterfaceManager> _interfaceManager);
-
+    GameManager(const GameManager&  _gameManager); //copy constructor
+    GameManager& operator=(const GameManager& _gameManager); //assignment operator
     void stateUpdate();
     void switchState(std::string _state);
-    int getStage();
+    int getStage() { return stage; }
 private:
     void stateEnter();
     void stateExit();

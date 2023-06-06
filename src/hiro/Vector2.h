@@ -11,7 +11,7 @@ namespace Hiro {
     struct Vector2 {
         T x, y;
 
-        Vector2() {
+        Vector2() : x(0), y(0){
             static_assert(std::is_arithmetic_v<T>);
         }
 

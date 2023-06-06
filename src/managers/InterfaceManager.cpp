@@ -1,9 +1,42 @@
 #include "Managers.h"
 #include "../GameData.h"
 
+InterfaceManager::InterfaceManager(std::shared_ptr<TextureManager> _textureManager) : textureManager(_textureManager) { }
 
-InterfaceManager::InterfaceManager(std::shared_ptr<TextureManager> _textureManager) : textureManager(_textureManager){
+InterfaceManager::InterfaceManager(const InterfaceManager &_interfaceManager) {
+    if (this == &_interfaceManager) {
+        return;
+    }
+    textureManager = _interfaceManager.textureManager;
+    for (auto &it : _interfaceManager.health) {
+        health.emplace_back(std::make_unique<sf::Sprite>(*it));
+    }
+    for (auto &it : _interfaceManager.score) {
+        score.emplace_back(std::make_unique<sf::Sprite>(*it));
+    }
+    for (auto &it : _interfaceManager.images) {
+        images.emplace_back(std::make_unique<sf::Sprite>(*it));
+    }
+}
 
+InterfaceManager &InterfaceManager::operator=(const InterfaceManager &_interfaceManager) {
+    if (this == &_interfaceManager) {
+        return *this;
+    }
+
+    textureManager = _interfaceManager.textureManager;
+    clearHealth();
+    clearImages();
+    clearScore();
+    for (auto &it : _interfaceManager.health) {
+        health.emplace_back(std::make_unique<sf::Sprite>(*it));
+    }
+    for (auto &it : _interfaceManager.score) {
+        score.emplace_back(std::make_unique<sf::Sprite>(*it));
+    }
+    for (auto &it : _interfaceManager.images) {
+        images.emplace_back(std::make_unique<sf::Sprite>(*it));
+    }
 }
 
 void InterfaceManager::initializeScoreAndHealth(Vector2<int> _offset) {
@@ -93,25 +126,13 @@ std::vector<std::reference_wrapper<sf::Sprite>> InterfaceManager::getSprites() {
     return sprites;
 }
 
-void InterfaceManager::displayImage(std::string _texture, Vector2<float> _position, bool _centered) {
+void InterfaceManager::displayImage(const std::string& _texture, Vector2<float> _position, bool _centered) {
     auto s = std::make_unique<sf::Sprite>(*textureManager->getTexture(_texture));
     if (_centered) {
         _position -= Vector2<float>(s->getLocalBounds().width*0.5f, s->getLocalBounds().height*0.5f);
     }
     s->setPosition(_position.toSFML());
     images.emplace_back(std::move(s));
-}
-
-void InterfaceManager::clearImages() {
-    images.clear();
-}
-
-void InterfaceManager::clearHealth() {
-    health.clear();
-}
-
-void InterfaceManager::clearScore() {
-    score.clear();
 }
 
 

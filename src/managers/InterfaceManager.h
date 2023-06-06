@@ -7,14 +7,16 @@
 class InterfaceManager {
 public:
     explicit InterfaceManager(std::shared_ptr<TextureManager> _textureManager);
+    InterfaceManager(const InterfaceManager&  _interfaceManager); //copy constructor
+    InterfaceManager& operator=(const InterfaceManager& _interfaceManager); //assignment operator
     void initializeScoreAndHealth(Vector2<int> _offset);
     void updateScore(int _score);
     void showFinalScore();
     void updateHealth(int _health);
-    void displayImage(std::string _texture, Vector2<float> _position, bool _centered = true);
-    void clearImages();
-    void clearHealth();
-    void clearScore();
+    void displayImage(const std::string& _texture, Vector2<float> _position, bool _centered = true);
+    void clearImages() { images.clear(); }
+    void clearHealth() { health.clear(); }
+    void clearScore() { score.clear(); }
     std::vector<std::reference_wrapper<sf::Sprite>> getSprites();
 
 private:

@@ -9,7 +9,7 @@ public:
     void onCollision() override;
     int getHealth();
 private:
-    float moveSpeed = 150.f;
+    float moveSpeed;
     int health;
 
 };

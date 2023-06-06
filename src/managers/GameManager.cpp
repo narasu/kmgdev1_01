@@ -3,11 +3,12 @@
 #include "Managers.h"
 #include "../GameData.h"
 
-//TODO: implement copy constructor and assignment operator
 //TODO: replace strings with enums
+//TODO: IF I HAVE THAT MUCH TIME AND ENERGY i can separate the states into separate classes
 
 GameManager::GameManager(std::shared_ptr<TextureManager> _textureManager, std::shared_ptr<EntityManager> _entityManager, std::shared_ptr<InterfaceManager> _interfaceManager) :
 textureManager(_textureManager), entityManager(_entityManager), interfaceManager(_interfaceManager) {
+    spawner = std::make_unique<Spawner>(textureManager, entityManager);
     state = "splash";
     stateEnter();
 }
@@ -18,19 +19,7 @@ void GameManager::stateEnter() {
     }
 
     else if (state == "start") {
-        spawner = std::make_unique<Spawner>(ENEMY_SPAWN_INTERVAL[stage], GRASS_SPAWN_INTERVAL[stage]);
-
-        //spawn some grass right away to avoid timer delay
-        entityManager->addGrass(
-                spawner->spawnGrass(
-                        *textureManager->getTexture("grass"),
-                        STAGE_SPEED[stage])
-        );
-        entityManager->addGrass(
-                spawner->spawnGrass(
-                        *textureManager->getTexture("grass"),
-                        STAGE_SPEED[stage])
-        );
+        spawner->setTimerActive(GRASS, true);
 
         entityManager->setPlayer(
                 std::make_unique<Player>(*textureManager->getTexture("player"), BOUNDS.at("player"))
@@ -40,13 +29,22 @@ void GameManager::stateEnter() {
     }
 
     else if (state == "play") {
-
-        auto offset = Vector2<int>(6,3);
-        interfaceManager->displayImage("score", Vector2<float>(offset.x, offset.y), false);
-        interfaceManager->initializeScoreAndHealth(offset);
+        if (stage == 0) {
+            auto offset = Vector2<int>(6,3);
+            interfaceManager->displayImage("score", Vector2<float>(offset.x, offset.y), false);
+            interfaceManager->initializeScoreAndHealth(offset);
+        }
+        spawner->setTimerActive(ENEMY, true);
     }
 
     else if (state == "lose") {
+        spawner->setTimerActive(GRASS, false);
+        spawner->setTimerActive(ENEMY, false);
+
+        entityManager->clearAll();
+        interfaceManager->clearHealth();
+        interfaceManager->clearImages();
+
         interfaceManager->displayImage("end_text", Vector2<float>(VIEWPORT_WIDTH * 0.5f, VIEWPORT_HEIGHT * 0.5f - 12.0f));
         interfaceManager->displayImage("score", Vector2<float>(VIEWPORT_WIDTH * 0.5f - 50.0f, VIEWPORT_HEIGHT * 0.5f), false);
         interfaceManager->showFinalScore();
@@ -67,22 +65,7 @@ void GameManager::stateUpdate() {
 
     else if (state == "start") {
 
-        spawner->updateTimer(SpawnType::GRASS, deltaTime.asSeconds());
-
-        //spawn grass
-        if (spawner->intervalReached(SpawnType::GRASS, deltaTime.asSeconds())) {
-            entityManager->addGrass(
-                    spawner->spawnGrass(
-                            *textureManager->getTexture("grass"),
-                            STAGE_SPEED[stage])
-            );
-            entityManager->addGrass(
-                    spawner->spawnGrass(
-                            *textureManager->getTexture("grass"),
-                            STAGE_SPEED[stage])
-            );
-        }
-
+        spawner->update(stage, deltaTime.asSeconds());
         entityManager->updateAll(deltaTime.asSeconds());
 
         // go to play state when the player moves
@@ -92,41 +75,38 @@ void GameManager::stateUpdate() {
         }
     }
 
+    else if (state == "stage_up") {
+        spawner->update(stage, deltaTime.asSeconds());
+        entityManager->updateAll(deltaTime.asSeconds());
+
+        //if any enemies are below the bottom of the screen, increment the score and send the new value to UI
+        int count = entityManager->getEnemyOutOfBoundsCount();
+        if (count > 0) {
+            score += SCORE_PER_ENEMY[stage] * count;
+            interfaceManager->updateScore(score);
+        }
+
+        if (entityManager->getEnemies().empty()) {
+            stage+=1;
+            for (auto & it : entityManager->getGrass()) {
+                it->setSpeedY(STAGE_SPEED[stage]);
+            }
+            spawner->setSpawnInterval(SpawnType::ENEMY, ENEMY_SPAWN_INTERVAL[stage]);
+            spawner->setSpawnInterval(SpawnType::GRASS, GRASS_SPAWN_INTERVAL[stage]);
+            switchState("play");
+        }
+
+    }
+
     else if (state == "play") {
         if (entityManager->getPlayer().isDestroyed()) {
             switchState("lose");
             return;
         }
-        spawner->updateTimer(SpawnType::GRASS, deltaTime.asSeconds());
-        spawner->updateTimer(SpawnType::ENEMY, deltaTime.asSeconds());
+        spawner->update(stage, deltaTime.asSeconds(), entityManager->getPlayer().getPosition().x);
 
-        // spawn grass
-        if (spawner->intervalReached(SpawnType::GRASS, deltaTime.asSeconds())) {
-            entityManager->addGrass(
-                    spawner->spawnGrass(
-                            *textureManager->getTexture("grass"),
-                            STAGE_SPEED[stage])
-            );
-            entityManager->addGrass(
-                    spawner->spawnGrass(
-                            *textureManager->getTexture("grass"),
-                            STAGE_SPEED[stage])
-            );
-        }
 
-        // spawn enemies
-        if (spawner->intervalReached(SpawnType::ENEMY, deltaTime.asSeconds())) {
-            int random123 = rand() % 3 + 1;
-            std::string randomEnemy = "enemy0" + std::to_string(random123);
-            entityManager->addEnemy(
-                    spawner->spawnEnemy(
-                            *textureManager->getTexture(randomEnemy),
-                            BOUNDS.at(randomEnemy),
-                            ENEMY_FORCE_Y[stage],
-                            entityManager->getPlayer().getPosition().x)
-            );
-        }
-
+        // temp store pre-update player health
         int playerHealth = entityManager->getPlayer().getHealth();
 
         entityManager->updateAll(deltaTime.asSeconds());
@@ -143,15 +123,7 @@ void GameManager::stateUpdate() {
             interfaceManager->updateScore(score);
 
             if (stage < SCORE_THRESHOLD.size() && score >= SCORE_THRESHOLD.at(stage)) {
-                stage+=1;
-                /*for (auto & it : entityManager->getEnemies()) {
-                    it->setForceY(ENEMY_FORCE_Y[stage]);
-                }*/
-                for (auto & it : entityManager->getGrass()) {
-                    it->setSpeedY(STAGE_SPEED[stage]);
-                }
-                spawner->setSpawnInterval(SpawnType::ENEMY, ENEMY_SPAWN_INTERVAL[stage]);
-                spawner->setSpawnInterval(SpawnType::GRASS, GRASS_SPAWN_INTERVAL[stage]);
+                switchState("stage_up");
             }
         }
     }
@@ -175,12 +147,11 @@ void GameManager::stateExit() {
     }
 
     else if (state == "play") {
-        entityManager->clearAll();
-        interfaceManager->clearHealth();
-        interfaceManager->clearImages();
+        spawner->setTimerActive(ENEMY, false);
     }
 
     else if (state == "lose") {
+
         interfaceManager->clearScore();
         interfaceManager->clearImages();
     }
@@ -192,6 +163,23 @@ void GameManager::switchState(std::string _state) {
     stateEnter();
 }
 
-int GameManager::getStage() {
-    return stage;
+GameManager::GameManager(const GameManager &_gameManager) {
+    if (this == &_gameManager) {
+        return;
+    }
+    spawner = std::make_unique<Spawner>(*_gameManager.spawner);
+    textureManager = _gameManager.textureManager;
+    entityManager = _gameManager.entityManager;
+    interfaceManager = _gameManager.interfaceManager;
+}
+
+GameManager &GameManager::operator=(const GameManager &_gameManager) {
+    if (this == &_gameManager) {
+        return *this;
+    }
+    spawner = std::make_unique<Spawner>(*_gameManager.spawner);
+    textureManager = _gameManager.textureManager;
+    entityManager = _gameManager.entityManager;
+    interfaceManager = _gameManager.interfaceManager;
+    return *this;
 }

@@ -10,7 +10,7 @@ class BaseEntity  {
 public:
     explicit BaseEntity(const sf::Texture &_texture);
     BaseEntity(const BaseEntity& _entity); //copy constructor
-    BaseEntity& operator=(const BaseEntity& _entity); //assignment operator
+    virtual BaseEntity& operator=(const BaseEntity& _entity); //assignment operator
     virtual ~BaseEntity() = default;
     virtual void update(float _delta) = 0;
     virtual sf::Sprite& getSprite();

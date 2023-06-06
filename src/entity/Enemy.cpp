@@ -4,10 +4,9 @@
 
 
 Enemy::Enemy(const sf::Texture &_texture, Vector2<float> _startPosition, Rect<float> _localBounds, float _yForce) :
-        PhysicsEntity(_texture, 3.0f, _localBounds), yForce(_yForce) {
+        PhysicsEntity(_texture, 3.0f, 0.98f, _localBounds), yForce(_yForce) {
     position = _startPosition;
     int cellCount = 2;
-    rigidbody->setFrictionMult(0.98f);
     animator = Animator(*sprite, static_cast<int>(_texture.getSize().x) / cellCount, static_cast<int>(_texture.getSize().y), cellCount, 2);
 }
 

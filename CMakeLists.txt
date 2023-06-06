@@ -13,6 +13,9 @@ add_executable(kmgdev1_01
         src/hiro/Rect.h
         src/hiro/Mathf.h
         src/GameData.h
+        src/spawner/Spawner.cpp
+        src/spawner/Spawner.h
+        src/spawner/SpawnType.h
         src/managers/Managers.h
         src/managers/TextureManager.cpp
         src/managers/TextureManager.h
@@ -34,8 +37,7 @@ add_executable(kmgdev1_01
         src/entity/Grass.cpp
         src/entity/Animator.cpp
         src/entity/Animator.h
-        src/spawner/Spawner.cpp
-        src/spawner/Spawner.h src/spawner/SpawnType.h)
+        )
 
 include_directories(C:/SFML/include)
 
