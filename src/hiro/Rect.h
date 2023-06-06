@@ -1,5 +1,4 @@
 // It's a rectangle. It does rectangle things.
-//TODO: make SFML conversion
 #include "Hiro.h"
 #include <SFML/Graphics.hpp>
 #pragma once
