@@ -42,12 +42,9 @@ add_executable(kmgdev1_01
         src/entity/Animator.h
         src/managers/SoundType.h src/Sound.cpp src/Sound.h)
 
-include_directories(C:/SFML/include)
-
-
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake_modules")
-find_package(SFML REQUIRED system window graphics audio)
+find_package(SFML REQUIRED system window graphics audio main)
 if (SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(kmgdev1_01 ${SFML_LIBRARIES})
