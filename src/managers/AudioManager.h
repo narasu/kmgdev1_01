@@ -10,6 +10,8 @@ public:
     AudioManager& operator=(const AudioManager &_audioManager);
     void playMusic() { music->play(); }
     void stopMusic() { music->stop(); }
+    void increaseMusicPitch(float _pitch) { music->setPitch(music->getPitch() + _pitch);}
+    void resetMusicPitch() { music->setPitch(1.0f); }
     void playSound(SoundType _soundType);
 private:
     void copy(const AudioManager &_audioManager);

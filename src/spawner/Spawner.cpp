@@ -17,7 +17,7 @@ void Spawner::update(int _stage, float _delta, float _playerX) {
     if (timerActive[GRASS]) {
         time[GRASS] += _delta;
         if (intervalReached(GRASS)) {
-            spawnGrass(_stage, 2);
+            spawnGrass(_stage, rand() % 2 + 1);
         }
     }
 }
@@ -32,12 +32,12 @@ bool Spawner::intervalReached(SpawnType _type) {
 
 void Spawner::spawnEnemy(int _stage, int _count, float _playerX) {
     while (_count > 0) {
-        auto randomPosition = generateRandomPosition(lastSpawn[ENEMY], 60.0f);
+        auto randomPosition = generateRandomPosition(lastSpawn[ENEMY], 15.0f);
 
-        // chance that the enemy will spawn at the player's position, never twice in a row
+        // chance that the enemy will spawn directly above the player, never twice in a row
         if (!biasTriggered) {
             int randomChance = rand() % 100;
-            if (randomChance > 30) {
+            if (randomChance > 40) {
                 float b = _playerX - randomPosition;
                 //randomPosition += fabsf(_playerX - randomPosition) * Mathf::signf(b) * 0.85f;
                 randomPosition = _playerX;
@@ -76,7 +76,7 @@ void Spawner::spawnEnemy(int _stage, int _count, float _playerX) {
 void Spawner::spawnGrass(int _stage, int _count) {
 
     while (_count > 0) {
-        auto randomPosition = generateRandomPosition(lastSpawn[GRASS], 100.0f);
+        auto randomPosition = generateRandomPosition(lastSpawn[GRASS], 25.0f);
         entityManager->addGrass(
                 std::make_unique<Grass>(
                         *textureManager->getTexture("grass"),
@@ -104,11 +104,11 @@ float Spawner::generateRandomPosition(float _last, float _offset) {
 
     // keep spawns within the play area, on the opposite side to avoid negating previous offset
     auto vpWidthf = static_cast<float>(VIEWPORT_WIDTH);
-    if (randomPosition < 5.0f) {
-        randomPosition += vpWidthf - 10.0f;
+    if (randomPosition < 2.0f) {
+        randomPosition += vpWidthf - 4.0f;
     }
-    else if (randomPosition > vpWidthf - 5.0f) {
-        randomPosition -= vpWidthf - 10.0f;
+    else if (randomPosition > vpWidthf - 2.0f) {
+        randomPosition -= vpWidthf - 4.0f;
     }
 
     return randomPosition;

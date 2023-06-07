@@ -18,9 +18,9 @@ void Enemy::update(float _delta) {
     animator.animate(*sprite, _delta);
 
     // sine-based horizontal movement
-    float t = position.y * 0.2f;
+    tSin += yForce * _delta * 0.1f;
     float amplitude = 7.5f;
-    float x = std::sin(t) * amplitude;
+    float x = std::sin(tSin) * amplitude;
 
     // note: i experimented with applying x = std::cos(t) * amplitude as force to the rigidbody
     // which works, but is much less predictable and harder to fine-tune

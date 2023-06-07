@@ -14,4 +14,5 @@ private:
     bool outOfBounds = false;
     float yForce;
     float startX;
+    float tSin = .0f;
 };

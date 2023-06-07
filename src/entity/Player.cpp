@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "../GameData.h"
 
-Player::Player(const sf::Texture &_texture, Rect<float> _localBounds) : PhysicsEntity(_texture, 10.0f, 0.99f, _localBounds) {
+Player::Player(const sf::Texture &_texture, Rect<float> _localBounds) : PhysicsEntity(_texture, 20.0f, 0.99f, _localBounds) {
     position = PLAYER_START;
     health = START_HEALTH;
     moveSpeed = PLAYER_SPEED;

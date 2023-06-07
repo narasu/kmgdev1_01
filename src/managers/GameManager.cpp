@@ -18,6 +18,7 @@ void GameManager::stateEnter() {
     }
 
     else if (state == StartState) {
+
         spawner->setTimerActive(GRASS, true);
 
         entityManager->setPlayer(
@@ -25,11 +26,12 @@ void GameManager::stateEnter() {
                 );
         interfaceManager->displayImage("title", Vector2<float>(VIEWPORT_WIDTH * 0.5f, 35.0f));
         interfaceManager->displayImage("start_text", Vector2<float>(VIEWPORT_WIDTH * 0.5f, VIEWPORT_HEIGHT * 0.5f + 20.0f));
+
     }
 
     else if (state == PlayState) {
         if (stage == 0) {
-            auto offset = Vector2<int>(2,2);
+            auto offset = Vector2<int>(3,3);
             interfaceManager->displayImage("score", Vector2<float>(offset.x, offset.y), false);
             interfaceManager->initializeScoreAndHealth(offset);
             audioManager->playMusic();
@@ -45,6 +47,8 @@ void GameManager::stateEnter() {
         spawner->setTimerActive(GRASS, false);
         spawner->setTimerActive(ENEMY, false);
 
+        stage = 0;
+        audioManager->resetMusicPitch();
         audioManager->stopMusic();
         entityManager->clearAll();
         interfaceManager->clearHealth();
@@ -99,6 +103,7 @@ void GameManager::stateUpdate() {
             }
             spawner->setSpawnInterval(SpawnType::ENEMY, ENEMY_SPAWN_INTERVAL[stage]);
             spawner->setSpawnInterval(SpawnType::GRASS, GRASS_SPAWN_INTERVAL[stage]);
+            audioManager->increaseMusicPitch(0.125f);
             switchState(PlayState);
         }
 
@@ -166,6 +171,7 @@ void GameManager::stateExit() {
     else if (state == LoseState) {
         interfaceManager->clearScore();
         interfaceManager->clearImages();
+
     }
 }
 
