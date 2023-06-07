@@ -35,6 +35,7 @@ InterfaceManager &InterfaceManager::operator=(const InterfaceManager &_interface
     for (auto &it : _interfaceManager.images) {
         images.emplace_back(std::make_unique<sf::Sprite>(*it));
     }
+    return *this;
 }
 
 void InterfaceManager::initializeScoreAndHealth(Vector2<int> _offset) {

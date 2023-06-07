@@ -2,7 +2,6 @@
 // as well as delegating between other managers
 
 #include "Managers.h"
-#include "../GameData.h"
 
 GameManager::GameManager(std::shared_ptr<TextureManager> _textureManager, std::shared_ptr<EntityManager> _entityManager, std::shared_ptr<InterfaceManager> _interfaceManager) :
 textureManager(_textureManager), entityManager(_entityManager), interfaceManager(_interfaceManager) {
@@ -92,7 +91,7 @@ void GameManager::stateUpdate() {
         //if any enemies are below the bottom of the screen, increment the score and send the new value to UI
         int count = entityManager->getEnemyOutOfBoundsCount();
         if (count > 0) {
-            score += SCORE_PER_ENEMY[stage] * count;
+            score += SCORE_PER_ENEMY[stage] * static_cast<float>(count);
             interfaceManager->updateScore(score);
         }
 
@@ -141,10 +140,10 @@ void GameManager::stateUpdate() {
         //if any enemies are below the bottom of the screen, increment the score and send the new value to UI
         int count = entityManager->getEnemyOutOfBoundsCount();
         if (count > 0) {
-            score += SCORE_PER_ENEMY[stage] * count;
+            score += SCORE_PER_ENEMY[stage] * static_cast<float>(count);
             interfaceManager->updateScore(score);
 
-            if (stage < SCORE_THRESHOLD.size() && score >= SCORE_THRESHOLD.at(stage)) {
+            if (stage < std::size(SCORE_THRESHOLD) && score >= SCORE_THRESHOLD.at(stage)) {
                 switchState(StageUpState);
             }
         }

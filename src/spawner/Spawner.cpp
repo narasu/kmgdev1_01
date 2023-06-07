@@ -38,8 +38,6 @@ void Spawner::spawnEnemy(int _stage, int _count, float _playerX) {
         if (!biasTriggered) {
             int randomChance = rand() % 100;
             if (randomChance > 40) {
-                float b = _playerX - randomPosition;
-                //randomPosition += fabsf(_playerX - randomPosition) * Mathf::signf(b) * 0.85f;
                 randomPosition = _playerX;
                 biasTriggered = true;
             }
