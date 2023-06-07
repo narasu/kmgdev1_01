@@ -11,7 +11,7 @@ public:
     bool isOutOfBounds();
 private:
     Animator animator;
-    bool outOfBounds;
+    bool outOfBounds = false;
     float yForce;
     float startX;
 };

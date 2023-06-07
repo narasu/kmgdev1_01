@@ -34,7 +34,7 @@ void Spawner::spawnEnemy(int _stage, int _count, float _playerX) {
     while (_count > 0) {
         auto randomPosition = generateRandomPosition(lastSpawn[ENEMY], 60.0f);
 
-        // chance that the enemy will spawn closer to the player, never twice in a row
+        // chance that the enemy will spawn at the player's position, never twice in a row
         if (!biasTriggered) {
             int randomChance = rand() % 100;
             if (randomChance > 30) {
@@ -48,7 +48,6 @@ void Spawner::spawnEnemy(int _stage, int _count, float _playerX) {
             biasTriggered = false;
         }
 
-        keepWithinBounds(randomPosition);
 
         // get random texture, never the same twice
         int random123 = rand() % 3 + 1;
@@ -78,7 +77,6 @@ void Spawner::spawnGrass(int _stage, int _count) {
 
     while (_count > 0) {
         auto randomPosition = generateRandomPosition(lastSpawn[GRASS], 100.0f);
-        keepWithinBounds(randomPosition);
         entityManager->addGrass(
                 std::make_unique<Grass>(
                         *textureManager->getTexture("grass"),
@@ -104,24 +102,18 @@ float Spawner::generateRandomPosition(float _last, float _offset) {
         p = _last - randomPosition;
     }
 
-    // chance for additional displacement
-    auto randomChance = rand() % 100;
-    if (randomChance > 65) {
-        randomPosition += static_cast<float>((rand() % 10 + 5) * -Mathf::sign(p));
+    // keep spawns within the play area, on the opposite side to avoid negating previous offset
+    auto vpWidthf = static_cast<float>(VIEWPORT_WIDTH);
+    if (randomPosition < 5.0f) {
+        randomPosition += vpWidthf - 10.0f;
     }
+    else if (randomPosition > vpWidthf - 5.0f) {
+        randomPosition -= vpWidthf - 10.0f;
+    }
+
     return randomPosition;
 }
 
-void Spawner::keepWithinBounds(float &_position) {
-    // keep spawns within the play area, on the opposite side to avoid negating previous offset
-    auto vpWidthf = static_cast<float>(VIEWPORT_WIDTH);
-    if (_position < 5.0f) {
-        _position += vpWidthf - 10.0f;
-    }
-    else if (_position > vpWidthf - 5.0f) {
-        _position -= vpWidthf - 10.0f;
-    }
-}
 
 void Spawner::setTimerActive(SpawnType _type, bool _active) {
     if (timerActive[_type] != _active) {

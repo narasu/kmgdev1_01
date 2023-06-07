@@ -4,8 +4,8 @@
 
 using namespace Hiro;
 
-const int VIEWPORT_WIDTH = 320;
-const int VIEWPORT_HEIGHT = 180;
+const int VIEWPORT_WIDTH = 135; //135
+const int VIEWPORT_HEIGHT = 240; //240
 const int HUD_HEIGHT = 11;
 
 const float MUSIC_VOLUME = 25.0f;
@@ -18,7 +18,7 @@ const std::map<std::string, Hiro::Rect<float>> BOUNDS {
         {"enemy03", Rect<float>(1.0f, 1.0f, 12.0f, 11.0f)} //macrobe
 };
 
-const Vector2<float> PLAYER_START { 156.f, 155.f };
+const Vector2<float> PLAYER_START { 63.5f, 215.f };
 const float PLAYER_SPEED = 75.0f;
 const int START_HEALTH = 3;
 

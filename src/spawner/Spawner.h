@@ -21,7 +21,6 @@ public:
 private:
     bool intervalReached(SpawnType _type);
     float generateRandomPosition(float _last, float _offset);
-    void keepWithinBounds(float &_position);
     std::shared_ptr<TextureManager> textureManager;
     std::shared_ptr<EntityManager> entityManager;
     std::map<SpawnType, float> spawnIntervals = {{SpawnType::ENEMY, ENEMY_SPAWN_INTERVAL[0]}, {SpawnType::GRASS, GRASS_SPAWN_INTERVAL[0]}};

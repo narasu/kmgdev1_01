@@ -29,7 +29,7 @@ void GameManager::stateEnter() {
 
     else if (state == PlayState) {
         if (stage == 0) {
-            auto offset = Vector2<int>(6,3);
+            auto offset = Vector2<int>(2,2);
             interfaceManager->displayImage("score", Vector2<float>(offset.x, offset.y), false);
             interfaceManager->initializeScoreAndHealth(offset);
             audioManager->playMusic();

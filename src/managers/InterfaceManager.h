@@ -23,9 +23,9 @@ private:
     std::vector<std::unique_ptr<sf::Sprite>> health;
     std::vector<std::unique_ptr<sf::Sprite>> score;
     std::vector<std::unique_ptr<sf::Sprite>> images;
-    Vector2<int> baseOffset = Vector2<int>(20, 5);
+    Vector2<int> baseOffset = Vector2<int>(2, 2);
     int numberWidth = 7;
     int textureMargin = 1;
-    int spacing = 2;
+    int spacing = 1;
 };
 

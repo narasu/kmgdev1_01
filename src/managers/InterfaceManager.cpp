@@ -43,7 +43,7 @@ void InterfaceManager::initializeScoreAndHealth(Vector2<int> _offset) {
     // initialize 6 digits at value 0
     for (int i=0; i<6; i++) {
         auto s = std::make_unique<sf::Sprite>(*textureManager->getTexture("numbers"));
-        s->setTextureRect(sf::IntRect(0, 0, numberWidth, 7));
+        s->setTextureRect(sf::IntRect(0, 0, numberWidth, numberWidth));
         s->setPosition(baseOffset.x + 45.0f + (numberWidth + spacing) * i, baseOffset.y);
         score.emplace_back(std::move(s));
     }
@@ -86,7 +86,7 @@ void InterfaceManager::showFinalScore() {
     // move the score to the center of the screen
     int i=0;
     for (auto it = score.begin() ; it < score.end(); it++) {
-        (*it)->setPosition(VIEWPORT_WIDTH*0.5f + (numberWidth + spacing) * i, VIEWPORT_HEIGHT *0.5f);
+        (*it)->setPosition(roundf(VIEWPORT_WIDTH*0.5f) + (numberWidth + spacing) * i, roundf(VIEWPORT_HEIGHT *0.5f));
         i++;
     }
 }

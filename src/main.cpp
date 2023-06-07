@@ -11,8 +11,8 @@ int main()
 {
     //game initialization
     auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(VIEWPORT_WIDTH, VIEWPORT_HEIGHT), "Alien Exile");
-    Vector2<unsigned int> windowSize(1280, 720);
-    Vector2<int> windowPosition(sf::VideoMode::getDesktopMode().width/2 - windowSize.x/2, sf::VideoMode::getDesktopMode().height/2 - windowSize.y/2);
+    Vector2<unsigned int> windowSize(540, 960);
+    Vector2<int> windowPosition(sf::VideoMode::getDesktopMode().width/2 - windowSize.x/2, 0);
     window->setSize(windowSize.toSFML());
     window->setPosition(windowPosition.toSFML());
     window->setFramerateLimit(60);
