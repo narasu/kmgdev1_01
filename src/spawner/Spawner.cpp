@@ -32,20 +32,23 @@ bool Spawner::intervalReached(SpawnType _type) {
 
 void Spawner::spawnEnemy(int _stage, int _count, float _playerX) {
     while (_count > 0) {
-        auto randomPosition = generateRandomPosition(lastSpawn[ENEMY], 20.0f);
+        auto randomPosition = generateRandomPosition(lastSpawn[ENEMY], 60.0f);
 
         // chance that the enemy will spawn closer to the player, never twice in a row
         if (!biasTriggered) {
             int randomChance = rand() % 100;
             if (randomChance > 30) {
                 float b = _playerX - randomPosition;
-                randomPosition += fabsf(_playerX - randomPosition) * Mathf::signf(b) * 0.85f;
+                //randomPosition += fabsf(_playerX - randomPosition) * Mathf::signf(b) * 0.85f;
+                randomPosition = _playerX;
                 biasTriggered = true;
             }
         }
         else {
             biasTriggered = false;
         }
+
+        keepWithinBounds(randomPosition);
 
         // get random texture, never the same twice
         int random123 = rand() % 3 + 1;
@@ -68,12 +71,14 @@ void Spawner::spawnEnemy(int _stage, int _count, float _playerX) {
         );
         _count--;
     }
+    enemySpawned = true;
 }
 
 void Spawner::spawnGrass(int _stage, int _count) {
 
     while (_count > 0) {
         auto randomPosition = generateRandomPosition(lastSpawn[GRASS], 100.0f);
+        keepWithinBounds(randomPosition);
         entityManager->addGrass(
                 std::make_unique<Grass>(
                         *textureManager->getTexture("grass"),
@@ -85,7 +90,7 @@ void Spawner::spawnGrass(int _stage, int _count) {
     }
 }
 
-float Spawner::generateRandomPosition(float &_last, float _offset) {
+float Spawner::generateRandomPosition(float _last, float _offset) {
     auto randomPosition = static_cast<float>(rand() % VIEWPORT_WIDTH);
     // move next spawn away from the last one
     float p = _last - randomPosition;
@@ -104,17 +109,18 @@ float Spawner::generateRandomPosition(float &_last, float _offset) {
     if (randomChance > 65) {
         randomPosition += static_cast<float>((rand() % 10 + 5) * -Mathf::sign(p));
     }
+    return randomPosition;
+}
 
+void Spawner::keepWithinBounds(float &_position) {
     // keep spawns within the play area, on the opposite side to avoid negating previous offset
     auto vpWidthf = static_cast<float>(VIEWPORT_WIDTH);
-    if (randomPosition < 5.0f) {
-        randomPosition += vpWidthf - 10.0f;
+    if (_position < 5.0f) {
+        _position += vpWidthf - 10.0f;
     }
-    else if (randomPosition > vpWidthf - 5.0f) {
-        randomPosition -= vpWidthf - 10.0f;
+    else if (_position > vpWidthf - 5.0f) {
+        _position -= vpWidthf - 10.0f;
     }
-    _last = randomPosition;
-    return randomPosition;
 }
 
 void Spawner::setTimerActive(SpawnType _type, bool _active) {
@@ -139,7 +145,7 @@ Spawner::Spawner(const Spawner &_spawner) {
     lastSpawn = _spawner.lastSpawn;
 }
 
-Spawner Spawner::operator=(const Spawner &_spawner) {
+Spawner &Spawner::operator=(const Spawner &_spawner) {
     if (this == &_spawner) {
         return *this;
     }
@@ -151,3 +157,5 @@ Spawner Spawner::operator=(const Spawner &_spawner) {
     lastSpawn = _spawner.lastSpawn;
     return *this;
 }
+
+

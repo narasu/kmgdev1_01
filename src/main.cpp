@@ -4,6 +4,7 @@
 #include "hiro/Hiro.h"
 #include "managers/Managers.h"
 #include "GameData.h"
+#include "Sound.h"
 
 using namespace Hiro;
 int main()
@@ -18,8 +19,8 @@ int main()
     sf::RectangleShape r = sf::RectangleShape(Vector2<float>(VIEWPORT_WIDTH, HUD_HEIGHT).toSFML());
 
     auto textureManager = std::make_shared<TextureManager>();
-    auto entityManager = std::make_shared<EntityManager>();
     auto interfaceManager = std::make_shared<InterfaceManager>(textureManager);
+    auto entityManager = std::make_shared<EntityManager>();
     auto gameManager = std::make_unique<GameManager>(textureManager, entityManager, interfaceManager);
 
 

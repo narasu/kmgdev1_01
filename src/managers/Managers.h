@@ -10,12 +10,14 @@ class TextureManager;
 class EntityManager;
 class GameManager;
 class InterfaceManager;
-class Spawner;
+class AudioManager;
+class Spawner; // had to declare this here because it wouldn't link properly otherwise
 
 #include "TextureManager.h"
 #include "EntityManager.h"
 #include "GameManager.h"
 #include "InterfaceManager.h"
+#include "AudioManager.h"
 #include "../spawner/Spawner.h"
 
 #endif //KMGDEV1_01_MANAGERS_H

@@ -13,9 +13,9 @@ public:
     virtual BaseEntity& operator=(const BaseEntity& _entity); //assignment operator
     virtual ~BaseEntity() = default;
     virtual void update(float _delta) = 0;
-    virtual sf::Sprite& getSprite();
-    virtual Vector2<float> getPosition();
-    virtual const bool isDestroyed(); //gets called each frame by EntityManager which handles the actual destroying
+    virtual sf::Sprite& getSprite() { return *sprite; }
+    virtual Vector2<float> getPosition() { return position; }
+    virtual const bool isDestroyed() { return destroyed; } //gets called each frame by EntityManager which handles the actual destroying
 protected:
     std::unique_ptr<sf::Sprite> sprite;
     Vector2<float> position = V2_ZERO<float>;

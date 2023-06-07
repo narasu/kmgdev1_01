@@ -10,8 +10,8 @@
 class EntityManager {
 public:
     EntityManager() = default;
-    explicit EntityManager(std::unique_ptr<Player> _player);
-    ~EntityManager();
+    explicit EntityManager(std::unique_ptr<Player> _player) { player = std::move(_player); }
+    ~EntityManager() { clearAll(); }
     EntityManager(const EntityManager&  _entityManager); //copy constructor
     EntityManager& operator=(const EntityManager& _entityManager); //assignment operator
     void updateAll(float _delta);
@@ -24,12 +24,15 @@ public:
     const std::vector<std::unique_ptr<Enemy>>& getEnemies() { return enemies; }
     const std::vector<std::unique_ptr<Grass>>& getGrass() { return grass; }
     int getEnemyOutOfBoundsCount() { return enemyOutOfBoundsCount; }
+    bool isPlayerHit() { return playerHit; }
+    void playerHitCallback() { playerHit = false; }
 private:
     void checkCollisions();
     std::unique_ptr<Player> player;
     std::vector<std::unique_ptr<Enemy>> enemies;
     std::vector<std::unique_ptr<Grass>> grass;
     int enemyOutOfBoundsCount = 0;
+    bool playerHit = false;
     //std::list<std::shared_ptr<BaseEntity>> copyEntityList(const std::list<std::shared_ptr<BaseEntity>> &_list);
 
 };

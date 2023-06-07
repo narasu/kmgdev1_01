@@ -1,14 +1,6 @@
 #include "Managers.h"
 #include <algorithm>
 
-EntityManager::EntityManager(std::unique_ptr<Player> _player) {
-    player = std::move(_player);
-}
-
-EntityManager::~EntityManager() {
-    clearAll();
-}
-
 EntityManager::EntityManager(const EntityManager &_entityManager) {
     if (this == &_entityManager) {
         return;
@@ -77,6 +69,7 @@ void EntityManager::checkCollisions() {
 
     for (const auto& e : enemies) {
         if (Rect<float>::isOverlapping(e->getBoundsGlobal(), player->getBoundsGlobal())) {
+            playerHit = true;
             e->onCollision();
             player->onCollision();
         }

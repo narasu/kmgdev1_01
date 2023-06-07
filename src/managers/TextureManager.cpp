@@ -53,7 +53,3 @@ TextureManager &TextureManager::operator=(const TextureManager &_textureManager)
     }
     return *this;
 }
-
-TextureManager::~TextureManager() {
-    textureMap.clear();
-}

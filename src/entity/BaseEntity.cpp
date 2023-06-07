@@ -20,16 +20,3 @@ BaseEntity &BaseEntity::operator=(const BaseEntity &_entity) {
     sprite = std::make_unique<sf::Sprite>(*_entity.sprite);
     return *this;
 }
-
-sf::Sprite& BaseEntity::getSprite() {
-    return *sprite;
-}
-
-Vector2<float> BaseEntity::getPosition() {
-    return position;
-}
-
-const bool BaseEntity::isDestroyed() {
-    return destroyed;
-}
-

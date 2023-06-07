@@ -1,12 +1,11 @@
-//HUD, text and title images
-//note: all text is sprites as I couldn't get SFML to render text without anti-aliasing
-
+// HUD, text and title images
+// note: all text is sprites as I couldn't get SFML to render text without anti-aliasing
 #include "Managers.h"
 #pragma once
 
 class InterfaceManager {
 public:
-    explicit InterfaceManager(std::shared_ptr<TextureManager> _textureManager);
+    explicit InterfaceManager(std::shared_ptr<TextureManager> _textureManager) : textureManager(_textureManager) {}
     InterfaceManager(const InterfaceManager&  _interfaceManager); //copy constructor
     InterfaceManager& operator=(const InterfaceManager& _interfaceManager); //assignment operator
     void initializeScoreAndHealth(Vector2<int> _offset);

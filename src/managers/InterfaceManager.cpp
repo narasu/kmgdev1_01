@@ -1,8 +1,6 @@
 #include "Managers.h"
 #include "../GameData.h"
 
-InterfaceManager::InterfaceManager(std::shared_ptr<TextureManager> _textureManager) : textureManager(_textureManager) { }
-
 InterfaceManager::InterfaceManager(const InterfaceManager &_interfaceManager) {
     if (this == &_interfaceManager) {
         return;

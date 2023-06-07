@@ -21,7 +21,3 @@ void Grass::update(float _delta) {
     // but it really sells the arcade aesthetic, so it's here to stay
     sprite->setPosition(roundf(position.x), roundf(position.y));
 }
-
-void Grass::setSpeedY(float _speed) {
-    speedY = _speed;
-}
