@@ -4,15 +4,15 @@
 
 using namespace Hiro;
 
-const int VIEWPORT_WIDTH = 135; //135
-const int VIEWPORT_HEIGHT = 240; //240
+const int VIEWPORT_WIDTH = 135;
+const int VIEWPORT_HEIGHT = 240;
 const int HUD_HEIGHT = 11;
 
 const float MUSIC_VOLUME = 25.0f;
 const float SFX_VOLUME = 30.0f;
 
 const std::map<std::string, Hiro::Rect<float>> BOUNDS {
-        {"player", Rect<float>(.0f, 2.0f, 6.0f, 8.0f)}, //player
+        {"player", Rect<float>(.0f, 2.0f, 6.0f, 8.0f)},
         {"enemy01", Rect<float>(1.0f, 1.0f, 12.0f, 19.0f)}, //crustachnid
         {"enemy02", Rect<float>(1.0f, 6.0f, 12.0f, 23.0f)}, //decaying_mutant
         {"enemy03", Rect<float>(1.0f, 1.0f, 12.0f, 11.0f)} //macrobe
