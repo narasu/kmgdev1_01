@@ -302,6 +302,7 @@ void Rigidbody::applyFriction() {
 All assets in this game, with the exception of assets listed below in the Sources & Credits section, are custom-made and free to use under the MIT license.
 
 ## Sources & Credits
+Made with [SFML 2.5.1](https://www.sfml-dev.org/)
 [SFML Documentation](https://www.sfml-dev.org/documentation/2.5.1/index.php)  
 [FindSFML CMake file](https://github.com/CaffeinatedTech/nibbles/blob/main/nibbles-01/cmake_modules/FindSFML.cmake)  
 [Generics in C++](https://www.geeksforgeeks.org/generics-in-c/)  
@@ -310,7 +311,7 @@ EDG-8 color palette by [Endesga](https://twitter.com/ENDESGA)
   
 Tools used:  
 CLion  
-SFML 2.5.1  
+
 Aseprite  
 Beepbox  
 SFXR  
