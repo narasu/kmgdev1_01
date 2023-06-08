@@ -15,11 +15,11 @@ add_executable(kmgdev1_01
         src/GameData.h
         src/spawner/Spawner.cpp
         src/spawner/Spawner.h
-        src/spawner/SpawnType.h
+        src/enums/SpawnType.h
         src/managers/Managers.h
         src/managers/TextureManager.cpp
         src/managers/TextureManager.h
-        src/managers/StateType.h
+        src/enums/StateType.h
         src/managers/AudioManager.cpp
         src/managers/AudioManager.h
         src/managers/EntityManager.cpp
@@ -40,7 +40,7 @@ add_executable(kmgdev1_01
         src/entity/Grass.cpp
         src/entity/Animator.cpp
         src/entity/Animator.h
-        src/managers/SoundType.h src/Sound.cpp src/Sound.h)
+        src/enums/SoundType.h src/audio/Sound.cpp src/audio/Sound.h)
 
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake_modules")

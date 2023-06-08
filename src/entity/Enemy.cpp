@@ -25,8 +25,6 @@ void Enemy::update(float _delta) {
     // note: i experimented with applying x = std::cos(t) * amplitude as force to the rigidbody
     // which works, but is much less predictable and harder to fine-tune
     position.x = startX + x;
-
-
     rigidbody->addForce(.0f, yForce);
     PhysicsEntity::update(_delta);
 

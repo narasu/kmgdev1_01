@@ -11,11 +11,11 @@ class EntityManager {
 public:
     EntityManager() = default;
     explicit EntityManager(std::unique_ptr<Player> _player) { player = std::move(_player); }
-    ~EntityManager() { clearAll(); }
+    ~EntityManager() { reset(); }
     EntityManager(const EntityManager&  _entityManager); //copy constructor
     EntityManager& operator=(const EntityManager& _entityManager); //assignment operator
     void updateAll(float _delta);
-    void clearAll();
+    void reset();
     std::vector<std::reference_wrapper<sf::Sprite>> getSprites();
     Player &getPlayer() { return *player; }
     void setPlayer(std::unique_ptr<Player> _player) { player = std::move(_player); }

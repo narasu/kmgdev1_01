@@ -1,7 +1,7 @@
 #include "Managers.h"
 #include <SFML/Audio.hpp>
-#include "SoundType.h"
-#include "../Sound.h"
+#include "../enums/SoundType.h"
+#include "../audio/Sound.h"
 #pragma once
 class AudioManager {
 public:

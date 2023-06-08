@@ -18,7 +18,7 @@ EntityManager &EntityManager::operator=(const EntityManager &_entityManager) {
     if (this == &_entityManager) {
         return *this;
     }
-    clearAll(); //not sure if necessary
+    reset(); //not sure if necessary
     player = std::make_unique<Player>(*_entityManager.player);
     for (auto & it : _entityManager.enemies) {
         enemies.push_back(std::make_unique<Enemy>(*it));
@@ -76,10 +76,12 @@ void EntityManager::checkCollisions() {
     }
 }
 
-void EntityManager::clearAll() {
+void EntityManager::reset() {
     player.reset();
     grass.clear();
     enemies.clear();
+    enemyOutOfBoundsCount = 0;
+    playerHit = false;
 }
 
 std::vector<std::reference_wrapper<sf::Sprite>> EntityManager::getSprites() {

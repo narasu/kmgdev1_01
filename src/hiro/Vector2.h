@@ -11,13 +11,9 @@ namespace Hiro {
     struct Vector2 {
         T x, y;
 
-        Vector2() : x(0), y(0){
-            static_assert(std::is_arithmetic_v<T>);
-        }
+        Vector2() : x(0), y(0){ static_assert(std::is_arithmetic_v<T>); }
 
-        Vector2<T>(T _x, T _y) : x(_x), y(_y) {
-            static_assert(std::is_arithmetic_v<T>);
-        }
+        Vector2<T>(T _x, T _y) : x(_x), y(_y) {static_assert(std::is_arithmetic_v<T>);}
 
         Vector2<T>& operator=(const Vector2<T>& _rhVector2) {
             x = _rhVector2.x;

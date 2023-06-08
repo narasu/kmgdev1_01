@@ -18,7 +18,7 @@ void GameManager::stateEnter() {
 
     else if (state == StartState) {
 
-        spawner->setTimerActive(GRASS, true);
+        spawner->setTimerActive(GrassSpawn, true);
 
         entityManager->setPlayer(
                 std::make_unique<Player>(*textureManager->getTexture("player"), BOUNDS.at("player"))
@@ -35,21 +35,21 @@ void GameManager::stateEnter() {
             interfaceManager->initializeScoreAndHealth(offset);
             audioManager->playMusic();
         }
-        spawner->setTimerActive(ENEMY, true);
+        spawner->setTimerActive(EnemySpawn, true);
     }
 
     else if (state == StageUpState) {
-        spawner->setTimerActive(ENEMY, false);
+        spawner->setTimerActive(EnemySpawn, false);
     }
 
     else if (state == LoseState) {
-        spawner->setTimerActive(GRASS, false);
-        spawner->setTimerActive(ENEMY, false);
+        spawner->setTimerActive(GrassSpawn, false);
+        spawner->setTimerActive(EnemySpawn, false);
 
         stage = 0;
         audioManager->resetMusicPitch();
         audioManager->stopMusic();
-        entityManager->clearAll();
+        entityManager->reset();
         interfaceManager->clearHealth();
         interfaceManager->clearImages();
 
@@ -100,12 +100,11 @@ void GameManager::stateUpdate() {
             for (auto & it : entityManager->getGrass()) {
                 it->setSpeedY(STAGE_SPEED[stage]);
             }
-            spawner->setSpawnInterval(SpawnType::ENEMY, ENEMY_SPAWN_INTERVAL[stage]);
-            spawner->setSpawnInterval(SpawnType::GRASS, GRASS_SPAWN_INTERVAL[stage]);
+            spawner->setSpawnInterval(SpawnType::EnemySpawn, ENEMY_SPAWN_INTERVAL[stage]);
+            spawner->setSpawnInterval(SpawnType::GrassSpawn, GRASS_SPAWN_INTERVAL[stage]);
             audioManager->increaseMusicPitch(0.125f);
             switchState(PlayState);
         }
-
     }
 
     else if (state == PlayState) {
@@ -113,28 +112,25 @@ void GameManager::stateUpdate() {
             switchState(LoseState);
             return;
         }
+
         spawner->update(stage, deltaTime.asSeconds(), entityManager->getPlayer().getPosition().x);
         if (spawner->isEnemySpawned()) {
-            std::cout << "enemy is spawned " << std::endl;
             audioManager->playSound(EnemySpawnSound);
             spawner->spawnCallback();
         }
 
-
         // temp store pre-update player health
         int playerHealth = entityManager->getPlayer().getHealth();
-
         entityManager->updateAll(deltaTime.asSeconds());
-
-        if (entityManager->isPlayerHit()) {
-            std::cout << "player is hit " << std::endl;
-            audioManager->playSound(PlayerHitSound);
-            entityManager->playerHitCallback();
-        }
 
         //if health has changed last update, update health UI
         if (playerHealth != entityManager->getPlayer().getHealth()) {
             interfaceManager->updateHealth(entityManager->getPlayer().getHealth());
+        }
+
+        if (entityManager->isPlayerHit()) {
+            audioManager->playSound(PlayerHitSound);
+            entityManager->playerHitCallback();
         }
 
         //if any enemies are below the bottom of the screen, increment the score and send the new value to UI

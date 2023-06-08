@@ -4,7 +4,7 @@
 #include "hiro/Hiro.h"
 #include "managers/Managers.h"
 #include "GameData.h"
-#include "Sound.h"
+#include "audio/Sound.h"
 
 using namespace Hiro;
 int main()
@@ -39,10 +39,6 @@ int main()
         for (const auto & it : entityManager->getSprites()) {
             window->draw(it);
         }
-
-
-        /*r.setFillColor(sf::Color::Black);
-        window->draw(r);*/
 
         for (auto &it : interfaceManager->getSprites()) {
             window->draw(it);
