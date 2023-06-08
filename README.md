@@ -299,7 +299,7 @@ void Rigidbody::applyFriction() {
 ```
 
 ## License
-All art and audio in the game, as well as all code hosted on this repository, are custom-made and free to use under the MIT license.
+All assets in this game, with the exception of assets listed below in the Sources & Credits section, are custom-made and free to use under the MIT license.
 
 ## Sources & Credits
 [SFML Documentation](https://www.sfml-dev.org/documentation/2.5.1/index.php)  
