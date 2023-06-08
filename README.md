@@ -311,7 +311,6 @@ EDG-8 color palette by [Endesga](https://twitter.com/ENDESGA)
   
 Tools used:  
 CLion  
-
 Aseprite  
 Beepbox  
 SFXR  
