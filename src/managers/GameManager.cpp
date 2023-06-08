@@ -17,7 +17,10 @@ void GameManager::stateEnter() {
     }
 
     else if (state == StartState) {
-
+        stage = 0;
+        score = 0;
+        spawner->setSpawnInterval(GrassSpawn, GRASS_SPAWN_INTERVAL[0]);
+        spawner->setSpawnInterval(EnemySpawn, ENEMY_SPAWN_INTERVAL[0]);
         spawner->setTimerActive(GrassSpawn, true);
 
         entityManager->setPlayer(
@@ -46,7 +49,7 @@ void GameManager::stateEnter() {
         spawner->setTimerActive(GrassSpawn, false);
         spawner->setTimerActive(EnemySpawn, false);
 
-        stage = 0;
+
         audioManager->resetMusicPitch();
         audioManager->stopMusic();
         entityManager->reset();
