@@ -15,13 +15,7 @@ namespace Hiro {
             return;
         }
         Vector2<float> oppositeDirection = -(velocity.normalized());
-        Vector2<float> f;
-        if (pow(friction, 2) <= velocity.sqrMagnitude()) {
-            f = oppositeDirection * friction;
-        }
-        else {
-            f = -velocity;
-        }
+        Vector2<float> f = oppositeDirection * friction;
         addForce(f * frictionMult);
     }
 }
