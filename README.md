@@ -201,7 +201,7 @@ void Player::onCollision() {
 How forces are calculated in the rigidbody is detailed in the next section.  
 
 ## Math
-For this game (as per the specification of the assignment) I wrote some custom math classes. Most essential is [Vector2][10]. It's a template class which stores any type of number as x and y. Any non-ambiguous operation is defined in an operator overload. 
+For this game I wrote some custom math classes. Most essential is [Vector2][10]. It's a template class which stores any type of number as x and y. Any non-ambiguous operation is defined in an operator overload. 
 ```
 Vector2<T>& operator=(const Vector2<T>& _rhVector2) {
 	x = _rhVector2.x;
